@@ -1,0 +1,52 @@
+{"properties": [
+  {
+    "name": "mq.config.channel",
+    "type": "java.lang.String",
+    "description": "A description for 'mq.config.channel'"
+  },
+  {
+    "name": "mq.config.host",
+    "type": "java.lang.String",
+    "description": "A description for 'mq.config.host'"
+  },
+  {
+    "name": "mq.config.response_queue",
+    "type": "java.lang.String",
+    "description": "A description for 'mq.config.response_queue'"
+  },
+  {
+    "name": "mq.config.request_queue",
+    "type": "java.lang.String",
+    "description": "A description for 'mq.config.request_queue'"
+  },
+  {
+    "name": "mq.config.queue_manager",
+    "type": "java.lang.String",
+    "description": "A description for 'mq.config.queue_manager'"
+  },
+  {
+    "name": "mq.config.port",
+    "type": "java.lang.Number",
+    "description": "A description for 'mq.config.port'"
+  },
+  {
+    "name": "mq.config.pool_jms",
+    "type": "java.lang.Number",
+    "description": "A description for 'mq.config.pool_jms'"
+  },
+  {
+    "name": "mq.config.delay_reconnect",
+    "type": "java.lang.Number",
+    "description": "A description for 'mq.config.delay_reconnect'"
+  },
+  {
+    "name": "mq.config.living_time",
+    "type": "java.lang.Number",
+    "description": "A description for 'mq.config.living_time'"
+  },
+  {
+    "name": "mq.config.char_set",
+    "type": "java.lang.Number",
+    "description": "A description for 'mq.config.char_set'"
+  }
+]}
