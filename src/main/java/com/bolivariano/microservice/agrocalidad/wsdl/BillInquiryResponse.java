@@ -8,9 +8,9 @@ import jakarta.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para BillInquiryResponse complex type.</p>
+ * <p>Java class for BillInquiryResponse complex type</p>.
  * 
- * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.</p>
+ * <p>The following schema fragment specifies the expected content contained within this class.</p>
  * 
  * <pre>{@code
  * <complexType name="BillInquiryResponse">
@@ -68,7 +68,7 @@ public class BillInquiryResponse {
     protected String partialPayment;
 
     /**
-     * Obtiene el valor de la propiedad switchAuditNumber.
+     * Gets the value of the switchAuditNumber property.
      * 
      * @return
      *     possible object is
@@ -80,7 +80,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Define el valor de la propiedad switchAuditNumber.
+     * Sets the value of the switchAuditNumber property.
      * 
      * @param value
      *     allowed object is
@@ -92,7 +92,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Obtiene el valor de la propiedad resultCode.
+     * Gets the value of the resultCode property.
      * 
      * @return
      *     possible object is
@@ -104,7 +104,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Define el valor de la propiedad resultCode.
+     * Sets the value of the resultCode property.
      * 
      * @param value
      *     allowed object is
@@ -116,7 +116,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Obtiene el valor de la propiedad errorMessage.
+     * Gets the value of the errorMessage property.
      * 
      * @return
      *     possible object is
@@ -128,7 +128,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Define el valor de la propiedad errorMessage.
+     * Sets the value of the errorMessage property.
      * 
      * @param value
      *     allowed object is
@@ -140,7 +140,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Obtiene el valor de la propiedad amount.
+     * Gets the value of the amount property.
      * 
      * @return
      *     possible object is
@@ -152,7 +152,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Define el valor de la propiedad amount.
+     * Sets the value of the amount property.
      * 
      * @param value
      *     allowed object is
@@ -164,7 +164,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Obtiene el valor de la propiedad responseData.
+     * Gets the value of the responseData property.
      * 
      * @return
      *     possible object is
@@ -176,7 +176,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Define el valor de la propiedad responseData.
+     * Sets the value of the responseData property.
      * 
      * @param value
      *     allowed object is
@@ -188,7 +188,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Obtiene el valor de la propiedad commissionsClient.
+     * Gets the value of the commissionsClient property.
      * 
      * @return
      *     possible object is
@@ -200,7 +200,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Define el valor de la propiedad commissionsClient.
+     * Sets the value of the commissionsClient property.
      * 
      * @param value
      *     allowed object is
@@ -212,7 +212,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Obtiene el valor de la propiedad commissionsComerce.
+     * Gets the value of the commissionsComerce property.
      * 
      * @return
      *     possible object is
@@ -224,7 +224,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Define el valor de la propiedad commissionsComerce.
+     * Sets the value of the commissionsComerce property.
      * 
      * @param value
      *     allowed object is
@@ -236,7 +236,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Obtiene el valor de la propiedad billerCutoverDate.
+     * Gets the value of the billerCutoverDate property.
      * 
      * @return
      *     possible object is
@@ -248,7 +248,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Define el valor de la propiedad billerCutoverDate.
+     * Sets the value of the billerCutoverDate property.
      * 
      * @param value
      *     allowed object is
@@ -260,7 +260,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Obtiene el valor de la propiedad partialPayment.
+     * Gets the value of the partialPayment property.
      * 
      * @return
      *     possible object is
@@ -272,7 +272,7 @@ public class BillInquiryResponse {
     }
 
     /**
-     * Define el valor de la propiedad partialPayment.
+     * Sets the value of the partialPayment property.
      * 
      * @param value
      *     allowed object is

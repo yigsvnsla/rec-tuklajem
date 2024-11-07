@@ -8,9 +8,9 @@ import jakarta.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Clase Java para BillPaymentRequest complex type.</p>
+ * <p>Java class for BillPaymentRequest complex type</p>.
  * 
- * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.</p>
+ * <p>The following schema fragment specifies the expected content contained within this class.</p>
  * 
  * <pre>{@code
  * <complexType name="BillPaymentRequest">
@@ -120,7 +120,7 @@ public class BillPaymentRequest {
     protected String aditionalData;
 
     /**
-     * Obtiene el valor de la propiedad channel.
+     * Gets the value of the channel property.
      * 
      */
     public int getChannel() {
@@ -128,7 +128,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad channel.
+     * Sets the value of the channel property.
      * 
      */
     public void setChannel(int value) {
@@ -136,7 +136,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad primaryAcctNumber.
+     * Gets the value of the primaryAcctNumber property.
      * 
      * @return
      *     possible object is
@@ -148,7 +148,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad primaryAcctNumber.
+     * Sets the value of the primaryAcctNumber property.
      * 
      * @param value
      *     allowed object is
@@ -160,7 +160,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad txCode.
+     * Gets the value of the txCode property.
      * 
      * @return
      *     possible object is
@@ -172,7 +172,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad txCode.
+     * Sets the value of the txCode property.
      * 
      * @param value
      *     allowed object is
@@ -184,7 +184,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad acquirerAuditNumber.
+     * Gets the value of the acquirerAuditNumber property.
      * 
      * @return
      *     possible object is
@@ -196,7 +196,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad acquirerAuditNumber.
+     * Sets the value of the acquirerAuditNumber property.
      * 
      * @param value
      *     allowed object is
@@ -208,7 +208,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad transactionTime.
+     * Gets the value of the transactionTime property.
      * 
      * @return
      *     possible object is
@@ -220,7 +220,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad transactionTime.
+     * Sets the value of the transactionTime property.
      * 
      * @param value
      *     allowed object is
@@ -232,7 +232,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad transactionDate.
+     * Gets the value of the transactionDate property.
      * 
      * @return
      *     possible object is
@@ -244,7 +244,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad transactionDate.
+     * Sets the value of the transactionDate property.
      * 
      * @param value
      *     allowed object is
@@ -256,7 +256,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad acquirerInstitutionID.
+     * Gets the value of the acquirerInstitutionID property.
      * 
      * @return
      *     possible object is
@@ -268,7 +268,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad acquirerInstitutionID.
+     * Sets the value of the acquirerInstitutionID property.
      * 
      * @param value
      *     allowed object is
@@ -280,7 +280,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad track2.
+     * Gets the value of the track2 property.
      * 
      * @return
      *     possible object is
@@ -292,7 +292,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad track2.
+     * Sets the value of the track2 property.
      * 
      * @param value
      *     allowed object is
@@ -304,7 +304,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad terminalID.
+     * Gets the value of the terminalID property.
      * 
      * @return
      *     possible object is
@@ -316,7 +316,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad terminalID.
+     * Sets the value of the terminalID property.
      * 
      * @param value
      *     allowed object is
@@ -328,7 +328,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad currencyCode.
+     * Gets the value of the currencyCode property.
      * 
      */
     public int getCurrencyCode() {
@@ -336,7 +336,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad currencyCode.
+     * Sets the value of the currencyCode property.
      * 
      */
     public void setCurrencyCode(int value) {
@@ -344,7 +344,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad billReference.
+     * Gets the value of the billReference property.
      * 
      * @return
      *     possible object is
@@ -356,7 +356,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad billReference.
+     * Sets the value of the billReference property.
      * 
      * @param value
      *     allowed object is
@@ -368,7 +368,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad billServiceCode.
+     * Gets the value of the billServiceCode property.
      * 
      */
     public int getBillServiceCode() {
@@ -376,7 +376,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad billServiceCode.
+     * Sets the value of the billServiceCode property.
      * 
      */
     public void setBillServiceCode(int value) {
@@ -384,7 +384,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad billCompanyCode.
+     * Gets the value of the billCompanyCode property.
      * 
      */
     public int getBillCompanyCode() {
@@ -392,7 +392,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad billCompanyCode.
+     * Sets the value of the billCompanyCode property.
      * 
      */
     public void setBillCompanyCode(int value) {
@@ -400,7 +400,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad medio.
+     * Gets the value of the medio property.
      * 
      * @return
      *     possible object is
@@ -412,7 +412,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad medio.
+     * Sets the value of the medio property.
      * 
      * @param value
      *     allowed object is
@@ -424,7 +424,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad branchId.
+     * Gets the value of the branchId property.
      * 
      * @return
      *     possible object is
@@ -436,7 +436,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad branchId.
+     * Sets the value of the branchId property.
      * 
      * @param value
      *     allowed object is
@@ -448,7 +448,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad accountId1.
+     * Gets the value of the accountId1 property.
      * 
      * @return
      *     possible object is
@@ -460,7 +460,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad accountId1.
+     * Sets the value of the accountId1 property.
      * 
      * @param value
      *     allowed object is
@@ -472,7 +472,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad amount.
+     * Gets the value of the amount property.
      * 
      * @return
      *     possible object is
@@ -484,7 +484,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad amount.
+     * Sets the value of the amount property.
      * 
      * @param value
      *     allowed object is
@@ -496,7 +496,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad formaPago.
+     * Gets the value of the formaPago property.
      * 
      * @return
      *     possible object is
@@ -508,7 +508,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad formaPago.
+     * Sets the value of the formaPago property.
      * 
      * @param value
      *     allowed object is
@@ -520,7 +520,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad indicatorReversal.
+     * Gets the value of the indicatorReversal property.
      * 
      * @return
      *     possible object is
@@ -532,7 +532,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad indicatorReversal.
+     * Sets the value of the indicatorReversal property.
      * 
      * @param value
      *     allowed object is
@@ -544,7 +544,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad trazabilidad.
+     * Gets the value of the trazabilidad property.
      * 
      * @return
      *     possible object is
@@ -556,7 +556,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad trazabilidad.
+     * Sets the value of the trazabilidad property.
      * 
      * @param value
      *     allowed object is
@@ -568,7 +568,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad unicidad.
+     * Gets the value of the unicidad property.
      * 
      * @return
      *     possible object is
@@ -580,7 +580,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad unicidad.
+     * Sets the value of the unicidad property.
      * 
      * @param value
      *     allowed object is
@@ -592,7 +592,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Obtiene el valor de la propiedad aditionalData.
+     * Gets the value of the aditionalData property.
      * 
      * @return
      *     possible object is
@@ -604,7 +604,7 @@ public class BillPaymentRequest {
     }
 
     /**
-     * Define el valor de la propiedad aditionalData.
+     * Sets the value of the aditionalData property.
      * 
      * @param value
      *     allowed object is

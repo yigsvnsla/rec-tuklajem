@@ -3,7 +3,6 @@ package com.bolivariano.microservice.agrocalidad.mq;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jms.annotation.EnableJms;
 
 import com.ibm.mq.jakarta.jms.MQConnectionFactory;
 import com.ibm.mq.jakarta.jms.MQQueueConnectionFactory;
@@ -14,7 +13,6 @@ import lombok.Data;
 
 @Data
 @Configuration
-@EnableJms
 @ConfigurationProperties(prefix = "mq.config")
 public class MqConfiguration {
     

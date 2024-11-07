@@ -1,11 +1,14 @@
 package com.bolivariano.microservice.agrocalidad.services;
 
+import org.springframework.stereotype.Service;
+
 import com.bolivariano.microservice.agrocalidad.interfaces.Recaudation;
 
-public class ConsumerServiceImpl implements Recaudation{
+@Service
+public class ProviderService implements Recaudation {
 
     @Override
-    public void consulting() {
+    public String consulting(String message) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'consulting'");
     }
@@ -22,4 +25,6 @@ public class ConsumerServiceImpl implements Recaudation{
         throw new UnsupportedOperationException("Unimplemented method 'revertPayment'");
     }
     
+
+
 }

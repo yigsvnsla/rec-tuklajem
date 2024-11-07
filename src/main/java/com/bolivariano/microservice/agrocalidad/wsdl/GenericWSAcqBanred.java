@@ -19,7 +19,7 @@ import jakarta.xml.ws.WebServiceFeature;
  * Generated source version: 3.0
  * 
  */
-@WebServiceClient(name = "GenericWSAcqBanred", targetNamespace = "http://tempuri.org/", wsdlLocation = "file:/home/yigs-isc/agrocalidad/src/main/resources/wsdl/GenericWSAcqMotorPago.wsdl")
+@WebServiceClient(name = "GenericWSAcqBanred", targetNamespace = "http://tempuri.org/", wsdlLocation = "file:/home/yigs/agrocalidad/src/main/resources/wsdl/GenericWSAcqMotorPago.wsdl")
 public class GenericWSAcqBanred
     extends Service
 {
@@ -32,7 +32,7 @@ public class GenericWSAcqBanred
         URL url = null;
         WebServiceException e = null;
         try {
-            url = new URL("file:/home/yigs-isc/agrocalidad/src/main/resources/wsdl/GenericWSAcqMotorPago.wsdl");
+            url = new URL("file:/home/yigs/agrocalidad/src/main/resources/wsdl/GenericWSAcqMotorPago.wsdl");
         } catch (MalformedURLException ex) {
             e = new WebServiceException(ex);
         }

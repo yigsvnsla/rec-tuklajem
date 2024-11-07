@@ -3,7 +3,7 @@ package com.bolivariano.microservice.agrocalidad.interfaces;
 public interface Recaudation {
 
 
-    public void consulting();
+    public String consulting(String message);
 
     public void payment();
 
