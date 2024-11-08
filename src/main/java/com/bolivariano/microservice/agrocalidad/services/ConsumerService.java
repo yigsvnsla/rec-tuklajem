@@ -24,7 +24,7 @@ public class ConsumerService implements Recaudation {
     }
 
     public void consulting(MessageInputProcessDTO messageInputProcess) throws JmsException {
-        System.out.println(messageInputProcess.toString());
+        System.out.println(messageInputProcess);
 
         jmsConfigProducer.sendMessage("DEV.QUEUE.1", "Hello World!", "1010");
     }

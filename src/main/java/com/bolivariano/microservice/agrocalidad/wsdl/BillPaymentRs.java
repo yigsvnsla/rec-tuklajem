@@ -9,9 +9,9 @@ import jakarta.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for anonymous complex type</p>.
+ * <p>Clase Java para anonymous complex type.</p>
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.</p>
+ * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.</p>
  * 
  * <pre>{@code
  * <complexType>
@@ -38,7 +38,7 @@ public class BillPaymentRs {
     protected BillPaymentResponse billPaymentResponse;
 
     /**
-     * Gets the value of the billPaymentResponse property.
+     * Obtiene el valor de la propiedad billPaymentResponse.
      * 
      * @return
      *     possible object is
@@ -50,7 +50,7 @@ public class BillPaymentRs {
     }
 
     /**
-     * Sets the value of the billPaymentResponse property.
+     * Define el valor de la propiedad billPaymentResponse.
      * 
      * @param value
      *     allowed object is

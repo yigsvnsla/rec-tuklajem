@@ -525,3 +525,13 @@ Content-Type: application/json
     "usuario": "msilvag"
   }
 }
+
+
+###
+POST https://servicioscalt.andinave.com:9068/api/bc/token HTTP/1.1
+Content-Type: application/json
+
+{
+    "userName":"DevCalt2024", 
+    "password":"Calt2024"
+}

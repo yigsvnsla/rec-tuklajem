@@ -8,9 +8,9 @@ import jakarta.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for BillPaymentReversalResponse complex type</p>.
+ * <p>Clase Java para BillPaymentReversalResponse complex type.</p>
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.</p>
+ * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.</p>
  * 
  * <pre>{@code
  * <complexType name="BillPaymentReversalResponse">
@@ -60,7 +60,7 @@ public class BillPaymentReversalResponse {
     protected String standIN;
 
     /**
-     * Gets the value of the switchAuditNumber property.
+     * Obtiene el valor de la propiedad switchAuditNumber.
      * 
      * @return
      *     possible object is
@@ -72,7 +72,7 @@ public class BillPaymentReversalResponse {
     }
 
     /**
-     * Sets the value of the switchAuditNumber property.
+     * Define el valor de la propiedad switchAuditNumber.
      * 
      * @param value
      *     allowed object is
@@ -84,7 +84,7 @@ public class BillPaymentReversalResponse {
     }
 
     /**
-     * Gets the value of the resultCode property.
+     * Obtiene el valor de la propiedad resultCode.
      * 
      * @return
      *     possible object is
@@ -96,7 +96,7 @@ public class BillPaymentReversalResponse {
     }
 
     /**
-     * Sets the value of the resultCode property.
+     * Define el valor de la propiedad resultCode.
      * 
      * @param value
      *     allowed object is
@@ -108,7 +108,7 @@ public class BillPaymentReversalResponse {
     }
 
     /**
-     * Gets the value of the errorMessage property.
+     * Obtiene el valor de la propiedad errorMessage.
      * 
      * @return
      *     possible object is
@@ -120,7 +120,7 @@ public class BillPaymentReversalResponse {
     }
 
     /**
-     * Sets the value of the errorMessage property.
+     * Define el valor de la propiedad errorMessage.
      * 
      * @param value
      *     allowed object is
@@ -132,7 +132,7 @@ public class BillPaymentReversalResponse {
     }
 
     /**
-     * Gets the value of the responseData property.
+     * Obtiene el valor de la propiedad responseData.
      * 
      * @return
      *     possible object is
@@ -144,7 +144,7 @@ public class BillPaymentReversalResponse {
     }
 
     /**
-     * Sets the value of the responseData property.
+     * Define el valor de la propiedad responseData.
      * 
      * @param value
      *     allowed object is
@@ -156,7 +156,7 @@ public class BillPaymentReversalResponse {
     }
 
     /**
-     * Gets the value of the billerCutoverDate property.
+     * Obtiene el valor de la propiedad billerCutoverDate.
      * 
      * @return
      *     possible object is
@@ -168,7 +168,7 @@ public class BillPaymentReversalResponse {
     }
 
     /**
-     * Sets the value of the billerCutoverDate property.
+     * Define el valor de la propiedad billerCutoverDate.
      * 
      * @param value
      *     allowed object is
@@ -180,7 +180,7 @@ public class BillPaymentReversalResponse {
     }
 
     /**
-     * Gets the value of the sequenceAcquire property.
+     * Obtiene el valor de la propiedad sequenceAcquire.
      * 
      * @return
      *     possible object is
@@ -192,7 +192,7 @@ public class BillPaymentReversalResponse {
     }
 
     /**
-     * Sets the value of the sequenceAcquire property.
+     * Define el valor de la propiedad sequenceAcquire.
      * 
      * @param value
      *     allowed object is
@@ -204,7 +204,7 @@ public class BillPaymentReversalResponse {
     }
 
     /**
-     * Gets the value of the standIN property.
+     * Obtiene el valor de la propiedad standIN.
      * 
      * @return
      *     possible object is
@@ -216,7 +216,7 @@ public class BillPaymentReversalResponse {
     }
 
     /**
-     * Sets the value of the standIN property.
+     * Define el valor de la propiedad standIN.
      * 
      * @param value
      *     allowed object is

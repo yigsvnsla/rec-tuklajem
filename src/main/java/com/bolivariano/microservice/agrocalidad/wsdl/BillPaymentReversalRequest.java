@@ -8,9 +8,9 @@ import jakarta.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for BillPaymentReversalRequest complex type</p>.
+ * <p>Clase Java para BillPaymentReversalRequest complex type.</p>
  * 
- * <p>The following schema fragment specifies the expected content contained within this class.</p>
+ * <p>El siguiente fragmento de esquema especifica el contenido que se espera que haya en esta clase.</p>
  * 
  * <pre>{@code
  * <complexType name="BillPaymentReversalRequest">
@@ -132,7 +132,7 @@ public class BillPaymentReversalRequest {
     protected String aditionalData;
 
     /**
-     * Gets the value of the channel property.
+     * Obtiene el valor de la propiedad channel.
      * 
      */
     public int getChannel() {
@@ -140,7 +140,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the channel property.
+     * Define el valor de la propiedad channel.
      * 
      */
     public void setChannel(int value) {
@@ -148,7 +148,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the primaryAcctNumber property.
+     * Obtiene el valor de la propiedad primaryAcctNumber.
      * 
      * @return
      *     possible object is
@@ -160,7 +160,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the primaryAcctNumber property.
+     * Define el valor de la propiedad primaryAcctNumber.
      * 
      * @param value
      *     allowed object is
@@ -172,7 +172,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the txCode property.
+     * Obtiene el valor de la propiedad txCode.
      * 
      * @return
      *     possible object is
@@ -184,7 +184,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the txCode property.
+     * Define el valor de la propiedad txCode.
      * 
      * @param value
      *     allowed object is
@@ -196,7 +196,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the acquirerAuditNumber property.
+     * Obtiene el valor de la propiedad acquirerAuditNumber.
      * 
      * @return
      *     possible object is
@@ -208,7 +208,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the acquirerAuditNumber property.
+     * Define el valor de la propiedad acquirerAuditNumber.
      * 
      * @param value
      *     allowed object is
@@ -220,7 +220,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the transactionTime property.
+     * Obtiene el valor de la propiedad transactionTime.
      * 
      * @return
      *     possible object is
@@ -232,7 +232,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the transactionTime property.
+     * Define el valor de la propiedad transactionTime.
      * 
      * @param value
      *     allowed object is
@@ -244,7 +244,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the transactionDate property.
+     * Obtiene el valor de la propiedad transactionDate.
      * 
      * @return
      *     possible object is
@@ -256,7 +256,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the transactionDate property.
+     * Define el valor de la propiedad transactionDate.
      * 
      * @param value
      *     allowed object is
@@ -268,7 +268,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the acquirerInstitutionID property.
+     * Obtiene el valor de la propiedad acquirerInstitutionID.
      * 
      * @return
      *     possible object is
@@ -280,7 +280,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the acquirerInstitutionID property.
+     * Define el valor de la propiedad acquirerInstitutionID.
      * 
      * @param value
      *     allowed object is
@@ -292,7 +292,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the track2 property.
+     * Obtiene el valor de la propiedad track2.
      * 
      * @return
      *     possible object is
@@ -304,7 +304,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the track2 property.
+     * Define el valor de la propiedad track2.
      * 
      * @param value
      *     allowed object is
@@ -316,7 +316,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the terminalID property.
+     * Obtiene el valor de la propiedad terminalID.
      * 
      * @return
      *     possible object is
@@ -328,7 +328,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the terminalID property.
+     * Define el valor de la propiedad terminalID.
      * 
      * @param value
      *     allowed object is
@@ -340,7 +340,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the currencyCode property.
+     * Obtiene el valor de la propiedad currencyCode.
      * 
      */
     public int getCurrencyCode() {
@@ -348,7 +348,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the currencyCode property.
+     * Define el valor de la propiedad currencyCode.
      * 
      */
     public void setCurrencyCode(int value) {
@@ -356,7 +356,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the billReference property.
+     * Obtiene el valor de la propiedad billReference.
      * 
      * @return
      *     possible object is
@@ -368,7 +368,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the billReference property.
+     * Define el valor de la propiedad billReference.
      * 
      * @param value
      *     allowed object is
@@ -380,7 +380,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the billServiceCode property.
+     * Obtiene el valor de la propiedad billServiceCode.
      * 
      */
     public int getBillServiceCode() {
@@ -388,7 +388,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the billServiceCode property.
+     * Define el valor de la propiedad billServiceCode.
      * 
      */
     public void setBillServiceCode(int value) {
@@ -396,7 +396,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the billCompanyCode property.
+     * Obtiene el valor de la propiedad billCompanyCode.
      * 
      */
     public int getBillCompanyCode() {
@@ -404,7 +404,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the billCompanyCode property.
+     * Define el valor de la propiedad billCompanyCode.
      * 
      */
     public void setBillCompanyCode(int value) {
@@ -412,7 +412,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the switchAuditNumber property.
+     * Obtiene el valor de la propiedad switchAuditNumber.
      * 
      * @return
      *     possible object is
@@ -424,7 +424,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the switchAuditNumber property.
+     * Define el valor de la propiedad switchAuditNumber.
      * 
      * @param value
      *     allowed object is
@@ -436,7 +436,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the sequenceAcquire property.
+     * Obtiene el valor de la propiedad sequenceAcquire.
      * 
      * @return
      *     possible object is
@@ -448,7 +448,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the sequenceAcquire property.
+     * Define el valor de la propiedad sequenceAcquire.
      * 
      * @param value
      *     allowed object is
@@ -460,7 +460,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the billerCutoverDate property.
+     * Obtiene el valor de la propiedad billerCutoverDate.
      * 
      * @return
      *     possible object is
@@ -472,7 +472,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the billerCutoverDate property.
+     * Define el valor de la propiedad billerCutoverDate.
      * 
      * @param value
      *     allowed object is
@@ -484,7 +484,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the medio property.
+     * Obtiene el valor de la propiedad medio.
      * 
      * @return
      *     possible object is
@@ -496,7 +496,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the medio property.
+     * Define el valor de la propiedad medio.
      * 
      * @param value
      *     allowed object is
@@ -508,7 +508,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the branchId property.
+     * Obtiene el valor de la propiedad branchId.
      * 
      * @return
      *     possible object is
@@ -520,7 +520,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the branchId property.
+     * Define el valor de la propiedad branchId.
      * 
      * @param value
      *     allowed object is
@@ -532,7 +532,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the accountId1 property.
+     * Obtiene el valor de la propiedad accountId1.
      * 
      * @return
      *     possible object is
@@ -544,7 +544,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the accountId1 property.
+     * Define el valor de la propiedad accountId1.
      * 
      * @param value
      *     allowed object is
@@ -556,7 +556,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the amount property.
+     * Obtiene el valor de la propiedad amount.
      * 
      * @return
      *     possible object is
@@ -568,7 +568,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the amount property.
+     * Define el valor de la propiedad amount.
      * 
      * @param value
      *     allowed object is
@@ -580,7 +580,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the formaPago property.
+     * Obtiene el valor de la propiedad formaPago.
      * 
      * @return
      *     possible object is
@@ -592,7 +592,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the formaPago property.
+     * Define el valor de la propiedad formaPago.
      * 
      * @param value
      *     allowed object is
@@ -604,7 +604,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the indicatorReversal property.
+     * Obtiene el valor de la propiedad indicatorReversal.
      * 
      * @return
      *     possible object is
@@ -616,7 +616,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the indicatorReversal property.
+     * Define el valor de la propiedad indicatorReversal.
      * 
      * @param value
      *     allowed object is
@@ -628,7 +628,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the trazabilidad property.
+     * Obtiene el valor de la propiedad trazabilidad.
      * 
      * @return
      *     possible object is
@@ -640,7 +640,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the trazabilidad property.
+     * Define el valor de la propiedad trazabilidad.
      * 
      * @param value
      *     allowed object is
@@ -652,7 +652,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the unicidad property.
+     * Obtiene el valor de la propiedad unicidad.
      * 
      * @return
      *     possible object is
@@ -664,7 +664,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the unicidad property.
+     * Define el valor de la propiedad unicidad.
      * 
      * @param value
      *     allowed object is
@@ -676,7 +676,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Gets the value of the aditionalData property.
+     * Obtiene el valor de la propiedad aditionalData.
      * 
      * @return
      *     possible object is
@@ -688,7 +688,7 @@ public class BillPaymentReversalRequest {
     }
 
     /**
-     * Sets the value of the aditionalData property.
+     * Define el valor de la propiedad aditionalData.
      * 
      * @param value
      *     allowed object is

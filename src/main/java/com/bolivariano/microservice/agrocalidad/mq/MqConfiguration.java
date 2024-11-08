@@ -44,6 +44,11 @@ public class MqConfiguration {
         // factory.setConnectionNameList(connectionName);
         return factory;
     }
+
+
+
+
+    
 }
 
 

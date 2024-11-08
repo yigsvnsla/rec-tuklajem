@@ -48,5 +48,20 @@
     "name": "mq.config.char_set",
     "type": "java.lang.Number",
     "description": "A description for 'mq.config.char_set'"
+  },
+  {
+    "name": "rest.config.read_timeout",
+    "type": "java.lang.Number",
+    "description": "A description for 'rest.config.read_timeout'"
+  },
+  {
+    "name": "rest.config.connect_timeout",
+    "type": "java.lang.Number",
+    "description": "A description for 'rest.config.connect_timeout'"
+  },
+  {
+    "name": "rest.config.base_url",
+    "type": "java.lang.String",
+    "description": "A description for 'rest.config.base_url'"
   }
 ]}
