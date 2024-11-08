@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 
 import com.ibm.mq.jakarta.jms.MQConnectionFactory;
 import com.ibm.mq.jakarta.jms.MQQueueConnectionFactory;
+import com.ibm.msg.client.jakarta.wmq.WMQConstants;
 import com.ibm.msg.client.jakarta.wmq.common.CommonConstants;
 
 import jakarta.jms.JMSException;
@@ -21,6 +22,8 @@ public class MqConfiguration {
     private String queue_manager;
     private String request_queue;
     private String response_queue;
+    private String user;
+    private String password;
     private Number port;
     private Number pool_jms;
     private Number delay_reconnect;
@@ -36,9 +39,9 @@ public class MqConfiguration {
         factory.setQueueManager(this.queue_manager);
         factory.setTransportType(CommonConstants.WMQ_CM_CLIENT); // Tipo de transporte TCP/IP
         factory.setIntProperty(CommonConstants.WMQ_CLIENT_RECONNECT_OPTIONS, CommonConstants.WMQ_CLIENT_RECONNECT);
+        factory.setStringProperty(WMQConstants.USERID, this.user);
+        factory.setStringProperty(WMQConstants.PASSWORD, this.password);
         // factory.setConnectionNameList(connectionName);
-        // factory.setStringProperty(WMQConstants.USERID, user);
-        // factory.setStringProperty(WMQConstants.PASSWORD, password);
         return factory;
     }
 }

@@ -17,3 +17,4 @@ public class JmsConfig {
         return jmsTemplate;
     }
 }
+    

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import com.bolivariano.microservice.agrocalidad.dtos.ErrorResponseDto;
+import com.bolivariano.microservice.agrocalidad.dtos.ErrorResponseDTO;
 import com.bolivariano.microservice.agrocalidad.exception.ResponseExecption;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -26,9 +26,9 @@ public class ControllerAdvice {
 
     @ResponseStatus()
     @ExceptionHandler(value = ResponseExecption.class)
-    public ResponseEntity<ErrorResponseDto> handlerResponseExecption(ResponseExecption ex) {
+    public ResponseEntity<ErrorResponseDTO> handlerResponseExecption(ResponseExecption ex) {
 
-        ErrorResponseDto errorResponseDto = new ErrorResponseDto();
+        ErrorResponseDTO errorResponseDto = new ErrorResponseDTO();
 
         errorResponseDto.setCause(ex.getClass().getName());
         errorResponseDto.setMessage(ex.getMessage());
@@ -42,9 +42,9 @@ public class ControllerAdvice {
     @ResponseStatus()
     @ExceptionHandler(value = NoSuchElementException.class)
     // IllegalArgumentException - if id is null.
-    public ResponseEntity<ErrorResponseDto> handlerNoSuchElementException(NoSuchElementException ex) {
+    public ResponseEntity<ErrorResponseDTO> handlerNoSuchElementException(NoSuchElementException ex) {
 
-        ErrorResponseDto errorResponseDto = new ErrorResponseDto();
+        ErrorResponseDTO errorResponseDto = new ErrorResponseDTO();
 
         errorResponseDto.setCause(ex.getClass().getName());
         errorResponseDto.setMessage(ex.getMessage());
@@ -56,11 +56,11 @@ public class ControllerAdvice {
 
     @ResponseStatus(code = HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(value = IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponseDto> handlerIllegalArgumentException(IllegalArgumentException ex) {
+    public ResponseEntity<ErrorResponseDTO> handlerIllegalArgumentException(IllegalArgumentException ex) {
         // IllegalArgumentException-in case the given entities or one of its entities is
         // null.
 
-        ErrorResponseDto errorResponseDto = new ErrorResponseDto();
+        ErrorResponseDTO errorResponseDto = new ErrorResponseDTO();
 
         errorResponseDto.setCause(ex.getClass().getName());
         errorResponseDto.setMessage(ex.getMessage());
@@ -74,10 +74,9 @@ public class ControllerAdvice {
 
     @ResponseStatus()
     @ExceptionHandler(value = JmsException.class)
-    public ResponseEntity<ErrorResponseDto> handlerJmsException(JmsException ex) {
+    public ResponseEntity<ErrorResponseDTO> handlerJmsException(JmsException ex) {
 
-        ex.printStackTrace();
-        ErrorResponseDto errorResponseDto = new ErrorResponseDto();
+        ErrorResponseDTO errorResponseDto = new ErrorResponseDTO();
         errorResponseDto.setCause(ex.getClass().getName());
         errorResponseDto.setMessage(ex.getMessage());
         errorResponseDto.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.name());

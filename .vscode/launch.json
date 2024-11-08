@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AgrocalidadApplication<agrocalidad>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.bolivariano.microservice.agrocalidad.AgrocalidadApplication",
+            "projectName": "agrocalidad",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

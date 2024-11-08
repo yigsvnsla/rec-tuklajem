@@ -5,19 +5,19 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.jms.annotation.EnableJms;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
+import lombok.extern.log4j.Log4j2;
+
+@Log4j2
 @SpringBootApplication()
 @EnableConfigurationProperties()
 @EnableJms
 public class AgrocalidadApplication {
 
-    static final Logger logger = LoggerFactory.getLogger(AgrocalidadApplication.class);
 
     public static void main(String... args) {
         SpringApplication.run(AgrocalidadApplication.class, args);
-        logger.info("📦 MicroService running");
+        log.info("📦 MicroService running");
     }
 
 }
