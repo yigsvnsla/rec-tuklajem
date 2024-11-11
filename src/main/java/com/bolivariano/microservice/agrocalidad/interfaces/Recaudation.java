@@ -6,7 +6,7 @@ import com.bolivariano.microservice.agrocalidad.dtos.MessageInputProcessDTO;
 
 public interface Recaudation {
 
-    public void consulting(MessageInputProcessDTO messageInputProcess) throws JmsException;
+    public void consulting(MessageInputProcessDTO messageInputProcess, String correlationId) throws JmsException;
 
     public void payment();
 

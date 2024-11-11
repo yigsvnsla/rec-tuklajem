@@ -21,6 +21,7 @@ Content-Type: application/json
       "codigoEmpresa": "18786",
       "codigoTipoBanca": "BP",
       "codigoTipoIdentificador": "SOL",
+      "identificador": "654654654",
       "datosAdicionales": {
         "datoAdicional": [
           {
@@ -518,8 +519,7 @@ Content-Type: application/json
             "visible": null
           }
         ]
-      },
-      "identificador": "654654654"
+      }
     },
     "transaccion": "3925",
     "usuario": "msilvag"
@@ -527,7 +527,7 @@ Content-Type: application/json
 }
 
 
-###
+### GET TOKEN
 POST https://servicioscalt.andinave.com:9068/api/bc/token HTTP/1.1
 Content-Type: application/json
 
@@ -535,3 +535,16 @@ Content-Type: application/json
     "userName":"DevCalt2024", 
     "password":"Calt2024"
 }
+
+### GET Debt
+POST https://servicioscalt.andinave.com:9068/api/bc/ConsultaDeuda HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzEzNDA3OTUsImV4cCI6MTczMTM0MjU5NSwiaWF0IjoxNzMxMzQwNzk1LCJpc3MiOiIqIiwiYXVkIjoiKiJ9.hxD37nYUNA77rzlV0zrtItz8KDe-pYGO_sk7TfNjt-c
+
+{
+  "Identificador": "22004422",
+  "terminal": "D00561",
+  "fecha": "20190106",
+  "hora": "101940"
+}
+

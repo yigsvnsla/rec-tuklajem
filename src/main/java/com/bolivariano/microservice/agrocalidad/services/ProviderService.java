@@ -1,19 +1,22 @@
 package com.bolivariano.microservice.agrocalidad.services;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jms.JmsException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
 
-import com.bolivariano.microservice.agrocalidad.dtos.MessageInputProcessDTO;
+import com.auth0.jwt.JWT;
+import com.bolivariano.microservice.agrocalidad.dtos.DebtRequestDTO;
+import com.bolivariano.microservice.agrocalidad.dtos.DebtResponseDTO;
 import com.bolivariano.microservice.agrocalidad.dtos.SingInDTO;
 import com.bolivariano.microservice.agrocalidad.dtos.TokenDTO;
-import com.bolivariano.microservice.agrocalidad.interfaces.Recaudation;
 
 @Service
-public class ProviderService implements Recaudation {
+public class ProviderService {
 
-    TokenDTO token;
+    private TokenDTO token;
 
     @Autowired
     private RestClient restClient;
@@ -21,22 +24,30 @@ public class ProviderService implements Recaudation {
     private String user = "DevCalt2024";
     private String password = "Calt2024";
 
+    private String getToken() {
 
-    public TokenDTO singIn() {
+        if (this.token == null)
+            this.token = this.genToken();
+        if (this.token != null && JWT.decode(token.getAccess_token()).getExpiresAt().before(new Date())) {
+            this.token = this.genToken();
+        }
 
+        return this.token.getAccess_token();
+
+    }
+
+    private TokenDTO genToken() {
         SingInDTO singInDTO = new SingInDTO();
 
         singInDTO.setUserName(this.user);
         singInDTO.setPassword(this.password);
 
-
-        this.token = this.restClient.post()
+        return this.restClient.post()
+                .uri("/api/bc/token")
                 .body(singInDTO)
                 .retrieve()
                 .toEntity(TokenDTO.class)
                 .getBody();
-
-        return null;
     }
 
     public void payment() {
@@ -47,8 +58,17 @@ public class ProviderService implements Recaudation {
         throw new UnsupportedOperationException("Unimplemented method 'revertPayment'");
     }
 
-    public void consulting(MessageInputProcessDTO messageInputProcess) throws JmsException {
-        throw new UnsupportedOperationException("Unimplemented method 'consulting'");
+    public DebtResponseDTO getDebt(DebtRequestDTO debtDTO) {
+
+        String token = this.getToken();
+
+        return this.restClient.post()
+                .uri("/api/bc/ConsultaDeuda")
+                .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", token))
+                .body(debtDTO)
+                .retrieve()
+                .toEntity(DebtResponseDTO.class)
+                .getBody();
     }
 
 }

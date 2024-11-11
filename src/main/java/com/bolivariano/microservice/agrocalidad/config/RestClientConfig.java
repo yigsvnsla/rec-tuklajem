@@ -1,4 +1,4 @@
-package com.bolivariano.microservice.agrocalidad.jms;
+package com.bolivariano.microservice.agrocalidad.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +13,7 @@ import lombok.Data;
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "rest.config")
-public class ConfigRestClient {
+public class RestClientConfig {
     
     private Number read_timeout;
     private Number connect_timeout;

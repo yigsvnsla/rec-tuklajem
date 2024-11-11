@@ -1,4 +1,4 @@
-package com.bolivariano.microservice.agrocalidad.jms;
+package com.bolivariano.microservice.agrocalidad.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

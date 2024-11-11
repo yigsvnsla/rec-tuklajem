@@ -1,19 +1,41 @@
 package com.bolivariano.microservice.agrocalidad.services;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.jms.JmsException;
 import org.springframework.stereotype.Service;
 
+import com.bolivariano.microservice.agrocalidad.config.MqConfig;
+import com.bolivariano.microservice.agrocalidad.dtos.DebtRequestDTO;
+import com.bolivariano.microservice.agrocalidad.dtos.DebtResponseDTO;
+import com.bolivariano.microservice.agrocalidad.dtos.MessageAditionalDataDTO;
+import com.bolivariano.microservice.agrocalidad.dtos.MessageInputConsultDTO;
 import com.bolivariano.microservice.agrocalidad.dtos.MessageInputProcessDTO;
-import com.bolivariano.microservice.agrocalidad.interfaces.Recaudation;
-import com.bolivariano.microservice.agrocalidad.jms.JmsConfigProducer;
+import com.bolivariano.microservice.agrocalidad.dtos.MessageOutputConsultDTO;
+import com.bolivariano.microservice.agrocalidad.dtos.MessageOutputProcessDTO;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.extern.log4j.Log4j2;
 
+import com.bolivariano.microservice.agrocalidad.exception.ResponseExecption;
+
+@Log4j2
 @Service
-public class ConsumerService implements Recaudation {
+public class ConsumerService {
 
     @Autowired
-    private JmsConfigProducer jmsConfigProducer;
+    private ObjectMapper objectMapper;
+
+    @Autowired
+    private JmsService jmsService;
+
+    @Autowired
+    private ProviderService providerService;
 
     public void payment() {
         throw new UnsupportedOperationException("Unimplemented method 'payment'");
@@ -23,9 +45,54 @@ public class ConsumerService implements Recaudation {
         throw new UnsupportedOperationException("Unimplemented method 'revertPayment'");
     }
 
-    public void consulting(MessageInputProcessDTO messageInputProcess) throws JmsException {
-        System.out.println(messageInputProcess);
+    public void consulting(MessageInputConsultDTO messageInputProcess, String correlationId) throws JsonProcessingException{
+        MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
+        MessageOutputConsultDTO messageOutputConsultDTO = new MessageOutputConsultDTO();
 
-        jmsConfigProducer.sendMessage("DEV.QUEUE.1", "Hello World!", "1010");
+        DebtRequestDTO debtRequest = new DebtRequestDTO();
+        String identifier = messageInputProcess.getServicio().getIdentificador();
+        MessageAditionalDataDTO[] aditionalData = messageInputProcess.getServicio().getDatosAdicionales().getDatoAdicional();
+
+        // DATA BURNING
+        debtRequest.setIdentificador(identifier);
+        debtRequest.setTerminal("D00561");
+        debtRequest.setFecha(messageInputProcess.getFecha());
+        debtRequest.setHora(messageInputProcess.getFecha());
+
+        // log.info(debtRequest);
+
+        DebtResponseDTO debt = this.providerService.getDebt(debtRequest);
+        
+        log.info(debt);
+
+        messageOutputProcessDTO.setEstado("OK");
+        messageOutputProcessDTO.setCodigo("0");
+        messageOutputProcessDTO.setMensajeUsuario("CONSULTA EJECUTADA");
+        messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
+ 
+
+        jmsService.sendMessage(MqConfig.response, messageOutputProcessDTO, correlationId);
+
+    }
+
+    public void stage(String message) throws JmsException, ResponseExecption, JsonMappingException, JsonProcessingException {
+
+        MessageInputProcessDTO messageInputProcessDTO = objectMapper.readValue(message, MessageInputProcessDTO.class); // Deserialización
+
+        // System.out.println(message);
+
+        switch (messageInputProcessDTO.getTipoFlujo()) {
+            case CONSULTA:
+                this.consulting(messageInputProcessDTO.getMensajeEntradaConsultarDeuda(), "0000000");
+                break;
+            case PAGO:
+                this.payment();
+                break;
+            case REVERSO:
+                this.revertPayment();
+                break;
+            default:
+                throw new ResponseExecption(HttpStatus.NOT_ACCEPTABLE, "type operation null");
+        }
     }
 }

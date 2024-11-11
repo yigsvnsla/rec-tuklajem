@@ -21,3 +21,15 @@ public class AgrocalidadApplication {
     }
 
 }
+
+// DATOS PARA LAS PRUEBAS:
+
+// Número   Contrato Nombre
+
+// 22004422 Byron Suarez
+
+// 22004455 Sebastian Rosado
+
+// 22004466 Ramon Cedeño
+
+// 22004477 Gonzalo Fienco

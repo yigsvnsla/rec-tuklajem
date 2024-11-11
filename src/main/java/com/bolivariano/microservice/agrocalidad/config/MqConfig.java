@@ -1,4 +1,4 @@
-package com.bolivariano.microservice.agrocalidad.mq;
+package com.bolivariano.microservice.agrocalidad.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -9,18 +9,23 @@ import com.ibm.mq.jakarta.jms.MQQueueConnectionFactory;
 import com.ibm.msg.client.jakarta.wmq.WMQConstants;
 import com.ibm.msg.client.jakarta.wmq.common.CommonConstants;
 
+import jakarta.annotation.PostConstruct;
 import jakarta.jms.JMSException;
 import lombok.Data;
 
 @Data
 @Configuration
 @ConfigurationProperties(prefix = "mq.config")
-public class MqConfiguration {
-    
+public class MqConfig {
+
+    public static String request;
+    public static String response;
+
+
     private String host;
     private String channel;
     private String queue_manager;
-    private String request_queue;
+    private String request_queue ;
     private String response_queue;
     private String user;
     private String password;
@@ -45,7 +50,11 @@ public class MqConfiguration {
         return factory;
     }
 
-
+    @PostConstruct()
+    private void run(){
+        MqConfig.request = this.getRequest_queue();
+        MqConfig.response = this.getResponse_queue();
+    }
 
 
     
