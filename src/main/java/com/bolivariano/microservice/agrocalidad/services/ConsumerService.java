@@ -1,7 +1,6 @@
 package com.bolivariano.microservice.agrocalidad.services;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -45,37 +44,59 @@ public class ConsumerService {
         throw new UnsupportedOperationException("Unimplemented method 'revertPayment'");
     }
 
-    public void consulting(MessageInputConsultDTO messageInputProcess, String correlationId) throws JsonProcessingException{
+    public void consulting(MessageInputConsultDTO messageInputProcess, String correlationId)
+            throws JsonProcessingException {
+
         MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
         MessageOutputConsultDTO messageOutputConsultDTO = new MessageOutputConsultDTO();
 
         DebtRequestDTO debtRequest = new DebtRequestDTO();
-        String identifier = messageInputProcess.getServicio().getIdentificador();
-        MessageAditionalDataDTO[] aditionalData = messageInputProcess.getServicio().getDatosAdicionales().getDatoAdicional();
 
-        // DATA BURNING
+        String identifier = messageInputProcess
+                .getServicio()
+                .getIdentificador();
+
+        MessageAditionalDataDTO[] aditionalData = messageInputProcess
+                .getServicio()
+                .getDatosAdicionales()
+                .getDatoAdicional();
+
+        MessageAditionalDataDTO terminal = Arrays.stream(aditionalData)
+                .filter(item -> item.getCodigo().equals("e_term"))
+                .findFirst()
+                .orElse(null);
+
+        // Data Binding
         debtRequest.setIdentificador(identifier);
-        debtRequest.setTerminal("D00561");
+        debtRequest.setTerminal(terminal.getValor());
         debtRequest.setFecha(messageInputProcess.getFecha());
         debtRequest.setHora(messageInputProcess.getFecha());
 
         // log.info(debtRequest);
 
         DebtResponseDTO debt = this.providerService.getDebt(debtRequest);
-        
-        log.info(debt);
 
+        // Mesaje Salida Consulta
+        messageOutputConsultDTO.setMontoMinimo(0.0);
+        messageOutputConsultDTO.setLimiteMontoMinimo(0.0);
+        messageOutputConsultDTO.setMensajeSistema("CONSULTA EJECUTADA");
+        messageOutputConsultDTO.setCodigoError(debt.getCod_respuesta());
+        messageOutputConsultDTO.setNombreCliente(debt.getNom_cliente());
+        messageOutputConsultDTO.setMensajeUsuario(debt.getMsg_respuesta());
+        messageOutputConsultDTO.setIdentificadorDeuda(debt.getIdentificador_deuda());
+
+        // Mensaje de salida proceso;
         messageOutputProcessDTO.setEstado("OK");
         messageOutputProcessDTO.setCodigo("0");
         messageOutputProcessDTO.setMensajeUsuario("CONSULTA EJECUTADA");
         messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
- 
 
         jmsService.sendMessage(MqConfig.response, messageOutputProcessDTO, correlationId);
 
     }
 
-    public void stage(String message) throws JmsException, ResponseExecption, JsonMappingException, JsonProcessingException {
+    public void stage(String message)
+            throws JmsException, ResponseExecption, JsonMappingException, JsonProcessingException {
 
         MessageInputProcessDTO messageInputProcessDTO = objectMapper.readValue(message, MessageInputProcessDTO.class); // Deserialización
 

@@ -516,3 +516,211 @@
     "usuario": "msilvag"
   }
 }
+
+
+{
+  "codigo": "0",
+  "mensajeUsuario": "Consulta ejecutada",
+  "estado": "OK",
+  "mensajeSalidaEjecutarPago": null,
+  "mensajeSalidaConsultarDeuda": {
+    "codigoError": "PROVIDER_70013",
+    "datosAdicionales": null,
+    "fechaVencimiento": null,
+    "formaPago": null,
+    "formaPagoRecibos": null,
+    "identificadorDeuda": null,
+    "limiteMontoMaximo": null,
+    "limiteMontoMinimo": null,
+    "mensajeUsuario": "EMPRESA DESTINO NO DISPONIBLE",
+    "mensajeSistema": "Error al obtener token",
+    "montoMinimo": null,
+    "montoTotal": null,
+    "nombreCliente": null,
+    "recibos": null,
+    "textoAyuda": null
+  }
+}
+
+
+{
+  "codigo": "0",
+  "mensajeUsuario": "Consulta ejecutada",
+  "estado": "OK",
+  "mensajeSalidaEjecutarPago": null,
+  "mensajeSalidaConsultarDeuda": {
+    "codigoError": "0",
+    "fechaVencimiento": "10112022-01-01T00:00:00",
+    "formaPago": null,
+    "formaPagoRecibos": null,
+    "identificadorDeuda": "8170587748",
+    "limiteMontoMaximo": 48.0,
+    "limiteMontoMinimo": 0.0,
+    "mensajeUsuario": "TRANSACCION EXITOSA",
+    "mensajeSistema": null,
+    "montoMinimo": 0.0,
+    "montoTotal": 48.0,
+    "nombreCliente": "RAMIREZ JIMENEZ LUIS URIEL",
+    "textoAyuda": null,
+    "recibos": {
+      "recibo": [
+        {
+          "comprobante": "8170587748",
+          "concepto": "CONTRAPARTIDA",
+          "cuota": "48.00",
+          "datosAdicionales": null,
+          "dato1": "",
+          "dato2": "",
+          "dividendo": "N",
+          "fecha": "10112022",
+          "formaPago": null,
+          "identificador": "CONTRAPARTIDA",
+          "impuesto": "000",
+          "interes": 0.0,
+          "interesesPagados": null,
+          "interesesPendientes": 0.0,
+          "numeroPredial": "8170587748",
+          "pago": 48.0,
+          "referencia": "",
+          "secuencia": "100002983133",
+          "tipoProceso": null,
+          "totalAPagar": 48.0,
+          "valor": 48.0
+        }
+      ]
+    },
+    "datosAdicionales": {
+      "datoAdicional": [
+        {
+          "codigo": "category",
+          "etiqueta": null,
+          "editable": null,
+          "formato": null,
+          "listasSeleccion": null,
+          "longitud": null,
+          "mascara": null,
+          "regexp": null,
+          "tipo": null,
+          "valor": "C",
+          "visible": null
+        },
+        {
+          "codigo": "idRubroBCE",
+          "etiqueta": null,
+          "editable": null,
+          "formato": null,
+          "listasSeleccion": null,
+          "longitud": null,
+          "mascara": null,
+          "regexp": null,
+          "tipo": null,
+          "valor": "",
+          "visible": null
+        },
+        {
+          "codigo": "nameRubroBCE",
+          "etiqueta": null,
+          "editable": null,
+          "formato": null,
+          "listasSeleccion": null,
+          "longitud": null,
+          "mascara": null,
+          "regexp": null,
+          "tipo": null,
+          "valor": "",
+          "visible": null
+        },
+        {
+          "codigo": "fullName",
+          "etiqueta": null,
+          "editable": null,
+          "formato": null,
+          "listasSeleccion": null,
+          "longitud": null,
+          "mascara": null,
+          "regexp": null,
+          "tipo": null,
+          "valor": "RAMIREZ JIMENEZ LUIS URIEL",
+          "visible": null
+        },
+        {
+          "codigo": "documentID",
+          "etiqueta": null,
+          "editable": null,
+          "formato": null,
+          "listasSeleccion": null,
+          "longitud": null,
+          "mascara": null,
+          "regexp": null,
+          "tipo": null,
+          "valor": "8170587748",
+          "visible": null
+        },
+        {
+          "codigo": "documentType",
+          "etiqueta": null,
+          "editable": null,
+          "formato": null,
+          "listasSeleccion": null,
+          "longitud": null,
+          "mascara": null,
+          "regexp": null,
+          "tipo": null,
+          "valor": "IDENTIFICACION",
+          "visible": null
+        },
+        {
+          "codigo": "legalPerson_1_legalTypePerson",
+          "etiqueta": null,
+          "editable": null,
+          "formato": null,
+          "listasSeleccion": null,
+          "longitud": null,
+          "mascara": null,
+          "regexp": null,
+          "tipo": null,
+          "valor": "",
+          "visible": null
+        },
+        {
+          "codigo": "legalPerson_1_legalNameOwner",
+          "etiqueta": null,
+          "editable": null,
+          "formato": null,
+          "listasSeleccion": null,
+          "longitud": null,
+          "mascara": null,
+          "regexp": null,
+          "tipo": null,
+          "valor": "",
+          "visible": null
+        },
+        {
+          "codigo": "legalPerson_1_legalDocumentIDOwner",
+          "etiqueta": null,
+          "editable": null,
+          "formato": null,
+          "listasSeleccion": null,
+          "longitud": null,
+          "mascara": null,
+          "regexp": null,
+          "tipo": null,
+          "valor": "",
+          "visible": null
+        }
+      ]
+    }
+  }
+}
+
+{
+  "cod_cliente": "22004422",
+  "nom_cliente": "Byron Suarez Guzman",
+  "Fecha": "20241112",
+  "hora": "110427",
+  "cod_respuesta": "0",
+  "msg_respuesta": "Transacción aceptada",
+  "identificador_deuda": "1",
+  "importe": 609800,
+  "monto_abierto": false
+}

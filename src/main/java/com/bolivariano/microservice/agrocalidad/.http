@@ -6,7 +6,7 @@ GET http://localhost:8080/
 
 POST http://localhost:8080/message/consult 
 Content-Type: application/json
-
+ 
 {
   "tipoFlujo": "CONSULTA",
   "mensajeEntradaConsultarDeuda": {
@@ -21,7 +21,7 @@ Content-Type: application/json
       "codigoEmpresa": "18786",
       "codigoTipoBanca": "BP",
       "codigoTipoIdentificador": "SOL",
-      "identificador": "654654654",
+      "identificador": "22004422",
       "datosAdicionales": {
         "datoAdicional": [
           {
@@ -539,7 +539,7 @@ Content-Type: application/json
 ### GET Debt
 POST https://servicioscalt.andinave.com:9068/api/bc/ConsultaDeuda HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzEzNDA3OTUsImV4cCI6MTczMTM0MjU5NSwiaWF0IjoxNzMxMzQwNzk1LCJpc3MiOiIqIiwiYXVkIjoiKiJ9.hxD37nYUNA77rzlV0zrtItz8KDe-pYGO_sk7TfNjt-c
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzE0MjY2NzAsImV4cCI6MTczMTQyODQ3MCwiaWF0IjoxNzMxNDI2NjcwLCJpc3MiOiIqIiwiYXVkIjoiKiJ9.K88-Wd8nU6xrQbGNnBEFcxYHJyu8Cl7KPt84f6AwCmc
 
 {
   "Identificador": "22004422",
