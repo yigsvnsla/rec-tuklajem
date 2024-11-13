@@ -1,8 +1,4 @@
 ###
-GET http://localhost:8080/
-
-
-###
 
 POST http://localhost:8080/message/consult 
 Content-Type: application/json
@@ -527,24 +523,36 @@ Content-Type: application/json
 }
 
 
-### GET TOKEN
-POST https://servicioscalt.andinave.com:9068/api/bc/token HTTP/1.1
-Content-Type: application/json
 
+
+### ERROR FORMAT
+
+POST http://localhost:8080/message/consult 
+Content-Type: application/json
+ 
 {
-    "userName":"DevCalt2024", 
-    "password":"Calt2024"
+  "codigo":"6",
+  "mensajeUsuario":"No existe registro (el cliente existe, pero no tiene deuda)",
+  "estado":"OK",
+  "mensajeSalidaConsultarDeuda":{
+    "fechaVencimiento":null,
+    "codigoError":"6",
+    "formaPago":null,
+    "formaPagoRecibos":null,
+    "identificadorDeuda":null,
+    "limiteMontoMaximo":1000.0,
+    "limiteMontoMinimo":20.0,
+    "mensajeUsuario":"No existe registro (el cliente existe, pero no tiene deuda)",
+    "mensajeSistema":"CONSULTA EJECUTADA",
+    "montoMinimo":20.0,
+    "montoTotal":null,
+    "nombreCliente":null,
+    "textoAyuda":null,
+    "recibos":null,
+    "datosAdicionales":null
+  }
 }
 
-### GET Debt
-POST https://servicioscalt.andinave.com:9068/api/bc/ConsultaDeuda HTTP/1.1
-Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzE0MjY2NzAsImV4cCI6MTczMTQyODQ3MCwiaWF0IjoxNzMxNDI2NjcwLCJpc3MiOiIqIiwiYXVkIjoiKiJ9.K88-Wd8nU6xrQbGNnBEFcxYHJyu8Cl7KPt84f6AwCmc
 
-{
-  "Identificador": "22004422",
-  "terminal": "D00561",
-  "fecha": "20190106",
-  "hora": "101940"
-}
+
 

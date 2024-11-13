@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.jms.JmsException;
 import org.springframework.stereotype.Service;
 
 import com.bolivariano.microservice.tuklajem.config.MqConfig;
@@ -17,7 +16,6 @@ import com.bolivariano.microservice.tuklajem.dtos.MessageOutputConsultDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageOutputProcessDTO;
 import com.bolivariano.microservice.tuklajem.exception.ResponseExecption;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.log4j.Log4j2;
@@ -26,96 +24,100 @@ import lombok.extern.log4j.Log4j2;
 @Service
 public class ConsumerService {
 
-    @Autowired
-    private ObjectMapper objectMapper;
+	@Autowired
+	private ObjectMapper objectMapper;
 
-    @Autowired
-    private JmsService jmsService;
+	@Autowired
+	private JmsService jmsService;
 
-    @Autowired
-    private ProviderService providerService;
+	@Autowired
+	private ProviderService providerService;
 
-    private final Double MOUNT_MIN = 20.00;
-    private final Double MOUNT_MAX = 1000.00;
+	private final Double MOUNT_MIN = 20.00;
+	private final Double MOUNT_MAX = 1000.00;
 
-    public void stage(String message)
-            throws JmsException, ResponseExecption, JsonMappingException, JsonProcessingException {
+	public void stage(String message, String correlationId) {
+		try {
 
-        MessageInputProcessDTO messageInputProcessDTO = objectMapper.readValue(message, MessageInputProcessDTO.class); // Deserialización
+			MessageInputProcessDTO messageInputProcessDTO = objectMapper.readValue(message, MessageInputProcessDTO.class); // Deserialización
 
-        switch (messageInputProcessDTO.getTipoFlujo()) {
-            case CONSULTA:
-                this.consulting(messageInputProcessDTO.getMensajeEntradaConsultarDeuda(), "0000000");
-                break;
-            case PAGO:
-                this.payment();
-                break;
-            case REVERSO:
-                this.revertPayment();
-                break;
-            default:
-                throw new ResponseExecption(HttpStatus.NOT_ACCEPTABLE, "type operation null");
-        }
-    }
+			switch (messageInputProcessDTO.getTipoFlujo()) {
+				case CONSULTA:
+					this.consulting(messageInputProcessDTO.getMensajeEntradaConsultarDeuda(), correlationId);
+					break;
+				case PAGO:
+					this.payment();
+					break;
+				case REVERSO:
+					this.revertPayment();
+					break;
+				default:
+					throw new ResponseExecption(HttpStatus.NOT_ACCEPTABLE, "type operation null");
+			}
+		} catch (JsonProcessingException e) {
 
-    public void consulting(MessageInputConsultDTO messageInputProcess, String correlationId)
-            throws JsonProcessingException {
+		}
 
-        log.info("INICIANDO PROCESO DE CONSULTA");
+	}
 
-        MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
-        MessageOutputConsultDTO messageOutputConsultDTO = new MessageOutputConsultDTO();
+	public void consulting(MessageInputConsultDTO messageInputProcess, String correlationId)
+			throws JsonProcessingException {
 
-        DebtRequestDTO debtRequest = new DebtRequestDTO();
+		log.info("INICIANDO PROCESO DE CONSULTA");
 
-        String identifier = messageInputProcess
-                .getServicio()
-                .getIdentificador();
+		MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
+		MessageOutputConsultDTO messageOutputConsultDTO = new MessageOutputConsultDTO();
 
-        MessageAditionalDataDTO[] aditionalData = messageInputProcess
-                .getServicio()
-                .getDatosAdicionales()
-                .getDatoAdicional();
+		DebtRequestDTO debtRequest = new DebtRequestDTO();
 
-        MessageAditionalDataDTO terminal = Arrays.stream(aditionalData)
-                .filter(item -> item.getCodigo().equals("e_term"))
-                .findFirst()
-                .orElse(null);
+		String identifier = messageInputProcess
+				.getServicio()
+				.getIdentificador();
 
-        // Data Binding
-        debtRequest.setIdentificador(identifier);
-        debtRequest.setTerminal(terminal.getValor());
-        debtRequest.setFecha(messageInputProcess.getFecha());
-        debtRequest.setHora(messageInputProcess.getFecha());
+		MessageAditionalDataDTO[] aditionalData = messageInputProcess
+				.getServicio()
+				.getDatosAdicionales()
+				.getDatoAdicional();
 
-        DebtResponseDTO debt = this.providerService.getDebt(debtRequest);
+		MessageAditionalDataDTO terminal = Arrays.stream(aditionalData)
+				.filter(item -> item.getCodigo().equals("e_term"))
+				.findFirst()
+				.orElse(null);
 
-        // Mesaje Salida Consulta
-        messageOutputConsultDTO.setMontoMinimo(this.MOUNT_MIN);
-        messageOutputConsultDTO.setLimiteMontoMinimo(this.MOUNT_MIN);
-        messageOutputConsultDTO.setLimiteMontoMaximo(this.MOUNT_MAX);
-        messageOutputConsultDTO.setMensajeSistema("CONSULTA EJECUTADA");
-        messageOutputConsultDTO.setCodigoError(debt.getCod_respuesta());
-        messageOutputConsultDTO.setNombreCliente(debt.getNom_cliente());
-        messageOutputConsultDTO.setMensajeUsuario(debt.getMsg_respuesta());
-        messageOutputConsultDTO.setIdentificadorDeuda(debt.getIdentificador_deuda());
+		// Data Binding
+		debtRequest.setIdentificador(identifier);
+		debtRequest.setTerminal(terminal.getValor());
+		debtRequest.setFecha(messageInputProcess.getFecha());
+		debtRequest.setHora(messageInputProcess.getFecha());
 
-        // Mensaje de salida proceso;
-        messageOutputProcessDTO.setEstado("OK");
-        messageOutputProcessDTO.setCodigo(debt.getCod_respuesta());
-        messageOutputProcessDTO.setMensajeUsuario(debt.getMsg_respuesta());
-        messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
+		DebtResponseDTO debt = this.providerService.getDebt(debtRequest);
 
-        jmsService.sendMessage(MqConfig.CHANNEL_RESPONSE, messageOutputProcessDTO, correlationId);
+		// Mesaje Salida Consulta
+		messageOutputConsultDTO.setMontoMinimo(this.MOUNT_MIN);
+		messageOutputConsultDTO.setLimiteMontoMinimo(this.MOUNT_MIN);
+		messageOutputConsultDTO.setLimiteMontoMaximo(this.MOUNT_MAX);
+		messageOutputConsultDTO.setMensajeSistema("CONSULTA EJECUTADA");
+		messageOutputConsultDTO.setCodigoError(debt.getCod_respuesta());
+		messageOutputConsultDTO.setNombreCliente(debt.getNom_cliente());
+		messageOutputConsultDTO.setMensajeUsuario(debt.getMsg_respuesta());
+		messageOutputConsultDTO.setIdentificadorDeuda(debt.getIdentificador_deuda());
 
-    }
+		// Mensaje de salida proceso;
+		messageOutputProcessDTO.setEstado("OK");
+		messageOutputProcessDTO.setCodigo(debt.getCod_respuesta());
+		messageOutputProcessDTO.setMensajeUsuario(debt.getMsg_respuesta());
+		messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
 
-    public void payment() {
-        throw new UnsupportedOperationException("Unimplemented method 'payment'");
-    }
+		jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE, messageOutputProcessDTO, correlationId);
 
-    public void revertPayment() {
-        throw new UnsupportedOperationException("Unimplemented method 'revertPayment'");
-    }
+	}
+
+	public void payment() {
+		throw new UnsupportedOperationException("Unimplemented method 'payment'");
+	}
+
+	public void revertPayment() {
+		throw new UnsupportedOperationException("Unimplemented method 'revertPayment'");
+	}
 
 }

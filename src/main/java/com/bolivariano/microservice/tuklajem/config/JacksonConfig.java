@@ -14,7 +14,7 @@ public class JacksonConfig {
     ObjectMapper objectMapper() {
         ObjectMapper objectMapper = new ObjectMapper();
         // Configuración personalizada
-        objectMapper.enable(SerializationFeature.INDENT_OUTPUT); // Formato de salida legible
+        // objectMapper.enable(SerializationFeature.INDENT_OUTPUT); // Formato de salida legible
         objectMapper.registerModule(new JavaTimeModule()); 
         // objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS); // Fecha como ISO en vez de timestamps
         return objectMapper;

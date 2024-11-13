@@ -19,12 +19,21 @@ public class JmsService {
     @Autowired
     private ObjectMapper objectMapper;
 
-    public void sendMessage(String destination, MessageOutputProcessDTO messageContent, String correlationId) throws JsonProcessingException {
+    public void sendResponseMessage(String destination, MessageOutputProcessDTO messageContent, String correlationId) throws JsonProcessingException {
 
         String messageSerialized = this.objectMapper.writeValueAsString(messageContent); // Serialización
 
         jmsTemplate.send(destination, session -> {
             TextMessage message = session.createTextMessage(messageSerialized); // Crear un mensaje de texto
+            message.setJMSCorrelationID(correlationId); // Establecer el Correlation ID
+            return message;
+        });
+    }
+
+    public void sendRequestMessage(String destination, String messageContent, String correlationId) throws JsonProcessingException {
+
+        jmsTemplate.send(destination, session -> {
+            TextMessage message = session.createTextMessage(messageContent); // Crear un mensaje de texto
             message.setJMSCorrelationID(correlationId); // Establecer el Correlation ID
             return message;
         });

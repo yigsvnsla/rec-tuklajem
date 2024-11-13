@@ -5,8 +5,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bolivariano.microservice.tuklajem.config.MqConfig;
 import com.bolivariano.microservice.tuklajem.dtos.MessageInputProcessDTO;
-import com.bolivariano.microservice.tuklajem.services.ConsumerService;
+import com.bolivariano.microservice.tuklajem.services.JmsService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -19,15 +20,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 public class MessageController {
 
     @Autowired
-    private ConsumerService consumerService;
+    private JmsService jmsService;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @PostMapping("/consult")
     public void consulting(@RequestBody MessageInputProcessDTO messageInputProcess) throws JsonProcessingException{
-        String messageSerialized = this.objectMapper.writeValueAsString(messageInputProcess); // Serialización
-        this.consumerService.stage(messageSerialized);
+        String messageSerialized = this.objectMapper.writeValueAsString(messageInputProcess); // Serialización para probar el micro
+        Integer randomId =  (int) (Math.random() * 1000);
+        jmsService.sendRequestMessage(MqConfig.CHANNEL_REQUEST, messageSerialized, String.format("%s", randomId));
     }
     
     public void payment() {

@@ -35,7 +35,7 @@ public class JmsController {
     log.info("Received message is: " + msgText);
     log.info("========================================");
 
-    this.consumerService.stage(msgText);
+    this.consumerService.stage(msgText,correlationId);
   }
 
 
