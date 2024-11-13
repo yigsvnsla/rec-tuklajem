@@ -18,8 +18,8 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "mq.config")
 public class MqConfig {
 
-    public static String request;
-    public static String response;
+    public static String CHANNEL_REQUEST;
+    public static String CHANNEL_RESPONSE;
 
 
     private String host;
@@ -52,12 +52,9 @@ public class MqConfig {
 
     @PostConstruct()
     private void run(){
-        MqConfig.request = this.getRequest_queue();
-        MqConfig.response = this.getResponse_queue();
+        MqConfig.CHANNEL_REQUEST = this.getRequest_queue();
+        MqConfig.CHANNEL_RESPONSE = this.getResponse_queue();
     }
-
-
-    
 }
 
 

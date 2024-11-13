@@ -2,6 +2,7 @@ package com.bolivariano.microservice.agrocalidad.dtos;
 
 import javax.xml.datatype.XMLGregorianCalendar;
 
+import com.bolivariano.microservice.agrocalidad.enums.Channel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.Data;
@@ -17,7 +18,7 @@ public class MessageInputPaymentDTO {
     private XMLGregorianCalendar fechaPago;
 
 
-    private String canal;
+    private Channel canal;
     private String cuenta;
     private String depuracion;
     private String esquemaFirma;

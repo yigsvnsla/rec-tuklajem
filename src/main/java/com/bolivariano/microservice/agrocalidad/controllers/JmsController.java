@@ -22,9 +22,8 @@ public class JmsController {
   @Autowired
   private ConsumerService consumerService;
 
-  @JmsListener(destination = "DEV.QUEUE.1")
+  @JmsListener(destination = "${mq.config.request_queue}")
   public void receiveMessage(Message message) throws JMSException, JsonMappingException, JmsException, JsonProcessingException, ResponseExecption {
-
     String correlationId = message.getJMSCorrelationID(); // Obtener el Correlation ID
     String msgText = ((TextMessage) message).getText(); // Obtener el Contenido del mensaje
     
@@ -40,7 +39,7 @@ public class JmsController {
   }
 
 
-  @JmsListener(destination = "DEV.QUEUE.2")
+  @JmsListener(destination = "${mq.config.response_queue}")
   public void responseMessage(Message message) throws JMSException {
 
     String correlationId = message.getJMSCorrelationID(); // Obtener el Correlation ID
