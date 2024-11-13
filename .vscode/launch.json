@@ -2,11 +2,18 @@
     "configurations": [
         {
             "type": "java",
-            "name": "Spring Boot-AgrocalidadApplication<agrocalidad>",
+            "name": "TuklajemApplication",
+            "request": "launch",
+            "mainClass": "com.bolivariano.microservice.tuklajem.TuklajemApplication",
+            "projectName": "agrocalidad"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot Application<tuklajem>",
             "request": "launch",
             "cwd": "${workspaceFolder}",
-            "mainClass": "com.bolivariano.microservice.agrocalidad.AgrocalidadApplication",
-            "projectName": "agrocalidad",
+            "mainClass": "com.bolivariano.microservice.tuklajem.TuklajemApplication",
+            "projectName": "tuklajem",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }

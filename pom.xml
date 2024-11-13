@@ -10,10 +10,10 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.bolivariano.microservice</groupId>
-	<artifactId>agrocalidad</artifactId>
+	<artifactId>tuklajem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>agrocalidad</name>
-	<description>Demo project agrocalidad for Spring Boot</description>
+	<name>tuklajem</name>
+	<description>Demo project tuklajem for Spring Boot</description>
 	<url />
 	<licenses>
 		<license />
@@ -108,7 +108,7 @@
 				</executions>
 				<configuration>
 					<wsdlDirectory>${project.basedir}/src/main/resources/wsdl/</wsdlDirectory>
-					<packageName>com.bolivariano.microservice.agrocalidad.wsdl</packageName>
+					<packageName>com.bolivariano.microservice.tuklajem.wsdl</packageName>
 					<sourceDestDir>${project.basedir}/src/main/java</sourceDestDir>
 				</configuration>
 			</plugin>
