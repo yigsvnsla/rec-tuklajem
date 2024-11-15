@@ -17,7 +17,7 @@ Content-Type: application/json
       "codigoEmpresa": "18786",
       "codigoTipoBanca": "BP",
       "codigoTipoIdentificador": "SOL",
-      "identificador": "22004422",
+      "identificador": "12004422",
       "datosAdicionales": {
         "datoAdicional": [
           {
@@ -552,6 +552,8 @@ Content-Type: application/json
     "datosAdicionales":null
   }
 }
+
+
 
 
 

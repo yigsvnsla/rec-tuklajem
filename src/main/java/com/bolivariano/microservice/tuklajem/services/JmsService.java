@@ -30,7 +30,7 @@ public class JmsService {
         });
     }
 
-    public void sendRequestMessage(String destination, String messageContent, String correlationId) throws JsonProcessingException {
+    public void sendRequestMessage(String destination, String messageContent, String correlationId){
 
         jmsTemplate.send(destination, session -> {
             TextMessage message = session.createTextMessage(messageContent); // Crear un mensaje de texto

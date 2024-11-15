@@ -46,10 +46,10 @@ public class ConsumerService {
 					this.consulting(messageInputProcessDTO.getMensajeEntradaConsultarDeuda(), correlationId);
 					break;
 				case PAGO:
-					this.payment();
+					// this.payment();
 					break;
 				case REVERSO:
-					this.revertPayment();
+					// this.revertPayment();
 					break;
 				default:
 					throw new ResponseExecption(HttpStatus.NOT_ACCEPTABLE, "type operation null");
@@ -63,7 +63,7 @@ public class ConsumerService {
 	public void consulting(MessageInputConsultDTO messageInputProcess, String correlationId)
 			throws JsonProcessingException {
 
-		log.info("INICIANDO PROCESO DE CONSULTA");
+		log.info("📤 INICIANDO PROCESO DE CONSULTA");
 
 		MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 		MessageOutputConsultDTO messageOutputConsultDTO = new MessageOutputConsultDTO();
@@ -92,6 +92,8 @@ public class ConsumerService {
 
 		DebtResponseDTO debt = this.providerService.getDebt(debtRequest);
 
+
+		
 		// Mesaje Salida Consulta
 		messageOutputConsultDTO.setMontoMinimo(this.MOUNT_MIN);
 		messageOutputConsultDTO.setLimiteMontoMinimo(this.MOUNT_MIN);
@@ -110,14 +112,6 @@ public class ConsumerService {
 
 		jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE, messageOutputProcessDTO, correlationId);
 
-	}
-
-	public void payment() {
-		throw new UnsupportedOperationException("Unimplemented method 'payment'");
-	}
-
-	public void revertPayment() {
-		throw new UnsupportedOperationException("Unimplemented method 'revertPayment'");
 	}
 
 }

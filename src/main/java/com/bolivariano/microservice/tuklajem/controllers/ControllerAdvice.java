@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.bolivariano.microservice.tuklajem.dtos.ErrorResponseDTO;
+import com.bolivariano.microservice.tuklajem.exception.ResponseExecption;
 
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -23,14 +24,14 @@ public class ControllerAdvice {
     }
 
     @ResponseStatus()
-    @ExceptionHandler(value = RuntimeException.class)
-    public ResponseEntity<ErrorResponseDTO> handlerRuntimeException(RuntimeException ex) {
+    @ExceptionHandler(value = ResponseExecption.class)
+    public ResponseEntity<ErrorResponseDTO> handlerResponseExecption(ResponseExecption ex) {
 
         ErrorResponseDTO errorResponseDto = new ErrorResponseDTO();
         errorResponseDto.setCause(ex.getClass().getName());
         errorResponseDto.setMessage(ex.getMessage());
-        errorResponseDto.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.name());
-        errorResponseDto.setCode(HttpStatus.INTERNAL_SERVER_ERROR.value());
+        errorResponseDto.setStatus(ex.getStatus());
+        errorResponseDto.setCode(ex.getStatus().value());
 
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseDto);
     }
