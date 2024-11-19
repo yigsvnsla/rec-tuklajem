@@ -46,7 +46,7 @@ public class ProviderService {
             singInDTO.setUserName(this.user);
             singInDTO.setPassword(this.password);
 
-            log.info("🔄 GENERANDO TOKEN EN EL PROVEEDOR");
+            log.info("🔵 GENERANDO TOKEN EN EL PROVEEDOR");
 
             this.token = this.restClient
                     .post()
@@ -57,14 +57,14 @@ public class ProviderService {
                     .getBody();
         }
 
-        log.info("🔄 TOKEN GENERADO");
+        log.info("🔵 TOKEN GENERADO");
 
         return this.token.getAccess_token();
     }
 
     public DebtResponseDTO getDebt(DebtRequestDTO debtRequest) throws ResponseExecption {
 
-        log.info("🌐 REALIZANDO CONSULTA A PROVEEDOR");
+        log.info("🔵 REALIZANDO CONSULTA A PROVEEDOR");
 
         return this.restClient
                 .post()
@@ -76,11 +76,11 @@ public class ProviderService {
                     log.info("🟢 RESPUESTA DE PROVEEDOR");
                 })
                 .onStatus(HttpStatusCode::is4xxClientError, (request, response) -> {
-                    log.error("🛑 ERROR DE PROVEEDOR");
+                    log.error("🔴 ERROR DE PROVEEDOR");
                     throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()), "ERROR DE PROVEEDOR");
                 })
                 .onStatus(HttpStatusCode::is5xxServerError, (request, response) -> {
-                    log.warn("⚠️ ERROR CONSULTA A PROVEEDOR");
+                    log.warn("🟡 ERROR CONSULTA A PROVEEDOR");
                     throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()), "ERROR CONSULTA A PROVEEDOR");
                 })
                 .toEntity(DebtResponseDTO.class)
@@ -89,7 +89,7 @@ public class ProviderService {
 
     public PaymentResponse payment(PaymentRequestDTO paymentRequest) throws ResponseExecption {
 
-        log.info("🌐 REALIZANDO PAGO A PROVEEDOR");
+        log.info("🔵 REALIZANDO CONSULTA A PROVEEDOR");
 
         return this.restClient.post()
                 .uri("/api/bc/InformarPago")
@@ -100,11 +100,11 @@ public class ProviderService {
                     log.info("🟢 RESPUESTA DE PROVEEDOR");
                 })
                 .onStatus(HttpStatusCode::is4xxClientError, (request, response) -> {
-                    log.error("🛑 ERROR DE PROVEEDOR");
+                    log.error("🔴 ERROR DE PROVEEDOR");
                     throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()), "ERROR DE PROVEEDOR");
                 })
                 .onStatus(HttpStatusCode::is5xxServerError, (request, response) -> {
-                    log.warn("⚠️ ERROR CONSULTA A PROVEEDOR");
+                    log.warn("🟡 ERROR CONSULTA A PROVEEDOR");
                     throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()), "ERROR CONSULTA A PROVEEDOR");
                 })
                 .toEntity(PaymentResponse.class)
@@ -113,7 +113,7 @@ public class ProviderService {
 
     public RevertPaymentResponseDTO revertPayment(RevertPaymentRequestDTO revertPayment) throws ResponseExecption {
 
-        log.info("🌐 REALIZANDO REVERSO A PROVEEDOR");
+        log.info("🔵 REALIZANDO CONSULTA A PROVEEDOR");
 
         return this.restClient.post()
                 .uri("/api/bc/ReversarPago")
@@ -124,11 +124,11 @@ public class ProviderService {
                     log.info("🟢 RESPUESTA DE PROVEEDOR");
                 })
                 .onStatus(HttpStatusCode::is4xxClientError, (request, response) -> {
-                    log.error("🛑 ERROR DE PROVEEDOR");
+                    log.error("🔴 ERROR DE PROVEEDOR");
                     throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()), "ERROR DE PROVEEDOR");
                 })
                 .onStatus(HttpStatusCode::is5xxServerError, (request, response) -> {
-                    log.warn("⚠️ ERROR CONSULTA A PROVEEDOR");
+                    log.warn("🟡 ERROR CONSULTA A PROVEEDOR");
                     throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()), "ERROR CONSULTA A PROVEEDOR");
                 })
                 .toEntity(RevertPaymentResponseDTO.class)

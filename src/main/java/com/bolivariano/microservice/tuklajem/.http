@@ -11,6 +11,8 @@ Content-Type: application/json
     "fecha": "2023-05-23T12:10:24",
     "oficina": "0",
     "secuencial": "134885764",
+    "transaccion": "3925",
+    "usuario": "msilvag",
     "servicio": {
       "codTipoServicio": "AUTOMOTORES_PEATONES",
       "codigoConvenio": "SOL",
@@ -516,9 +518,8 @@ Content-Type: application/json
           }
         ]
       }
-    },
-    "transaccion": "3925",
-    "usuario": "msilvag"
+    }
+  
   }
 }
 

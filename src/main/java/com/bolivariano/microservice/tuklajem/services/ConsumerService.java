@@ -14,6 +14,7 @@ import com.bolivariano.microservice.tuklajem.dtos.MessageInputConsultDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageInputProcessDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageOutputConsultDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageOutputProcessDTO;
+import com.bolivariano.microservice.tuklajem.dtos.MessageProcessAditionalDataDTO;
 import com.bolivariano.microservice.tuklajem.exception.ResponseExecption;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -39,7 +40,8 @@ public class ConsumerService {
 	public void stage(String message, String correlationId) {
 		try {
 
-			MessageInputProcessDTO messageInputProcessDTO = objectMapper.readValue(message, MessageInputProcessDTO.class); // Deserialización
+			MessageInputProcessDTO messageInputProcessDTO = objectMapper.readValue(message,
+					MessageInputProcessDTO.class); // Deserialización
 
 			switch (messageInputProcessDTO.getTipoFlujo()) {
 				case CONSULTA:
@@ -74,12 +76,11 @@ public class ConsumerService {
 				.getServicio()
 				.getIdentificador();
 
-		MessageAditionalDataDTO[] aditionalData = messageInputProcess
+		MessageProcessAditionalDataDTO aditionalsData = messageInputProcess
 				.getServicio()
-				.getDatosAdicionales()
-				.getDatoAdicional();
+				.getDatosAdicionales();
 
-		MessageAditionalDataDTO terminal = Arrays.stream(aditionalData)
+		MessageAditionalDataDTO terminal = Arrays.stream(aditionalsData.getDatoAdicional())
 				.filter(item -> item.getCodigo().equals("e_term"))
 				.findFirst()
 				.orElse(null);
@@ -92,8 +93,6 @@ public class ConsumerService {
 
 		DebtResponseDTO debt = this.providerService.getDebt(debtRequest);
 
-
-		
 		// Mesaje Salida Consulta
 		messageOutputConsultDTO.setMontoMinimo(this.MOUNT_MIN);
 		messageOutputConsultDTO.setLimiteMontoMinimo(this.MOUNT_MIN);
@@ -103,7 +102,7 @@ public class ConsumerService {
 		messageOutputConsultDTO.setNombreCliente(debt.getNom_cliente());
 		messageOutputConsultDTO.setMensajeUsuario(debt.getMsg_respuesta());
 		messageOutputConsultDTO.setIdentificadorDeuda(debt.getIdentificador_deuda());
-
+		messageOutputConsultDTO.setDatosAdicionales(aditionalsData);
 		// Mensaje de salida proceso;
 		messageOutputProcessDTO.setEstado("OK");
 		messageOutputProcessDTO.setCodigo(debt.getCod_respuesta());
