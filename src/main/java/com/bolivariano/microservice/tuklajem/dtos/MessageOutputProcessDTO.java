@@ -5,16 +5,16 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
+import com.bolivariano.microservice.tuklajem.enums.MessageStatus;
+
 @Data
 @NoArgsConstructor
 public class MessageOutputProcessDTO implements Serializable {
 
-	private String codigo;
+    private String codigo;
     private String mensajeUsuario;
-    private String estado;
+    private MessageStatus estado;
     // private transient MensajeSalidaEjecutarPago mensajeSalidaEjecutarPago;
     private MessageOutputConsultDTO mensajeSalidaConsultarDeuda;
 
-
-    
 }
