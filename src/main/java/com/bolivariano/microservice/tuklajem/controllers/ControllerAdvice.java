@@ -13,15 +13,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.bolivariano.microservice.tuklajem.dtos.ErrorResponseDTO;
 import com.bolivariano.microservice.tuklajem.exception.ResponseExecption;
 
-import jakarta.servlet.http.HttpServletResponse;
 
 @RestControllerAdvice
 public class ControllerAdvice {
 
-    @ModelAttribute
-    public void setResponseContentType(HttpServletResponse response) {
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-    }
+
 
     @ResponseStatus()
     @ExceptionHandler(value = ResponseExecption.class)
@@ -36,3 +32,4 @@ public class ControllerAdvice {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseDto);
     }
 }
+

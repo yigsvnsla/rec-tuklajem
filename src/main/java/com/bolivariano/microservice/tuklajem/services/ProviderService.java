@@ -53,6 +53,18 @@ public class ProviderService {
                     .uri("/api/bc/token")
                     .body(singInDTO)
                     .retrieve()
+                    .onStatus(HttpStatusCode::is2xxSuccessful, (request, response) -> {
+                        log.info("🟢 RESPUESTA DE PROVEEDOR");
+                    })
+                    .onStatus(HttpStatusCode::is4xxClientError, (request, response) -> {
+                        log.error("🔴 ERROR DE PROVEEDOR");
+                        throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()), "ERROR DE PROVEEDOR");
+                    })
+                    .onStatus(HttpStatusCode::is5xxServerError, (request, response) -> {
+                        log.warn("🟡 ERROR CONSULTA A PROVEEDOR");
+                        throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()),
+                                "ERROR CONSULTA A PROVEEDOR");
+                    })
                     .toEntity(TokenDTO.class)
                     .getBody();
         }
