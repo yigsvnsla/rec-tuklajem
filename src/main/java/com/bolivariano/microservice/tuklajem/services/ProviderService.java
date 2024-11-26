@@ -7,9 +7,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpServerErrorException;
+import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestClientResponseException;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.exceptions.JWTDecodeException;
@@ -37,8 +36,7 @@ public class ProviderService {
     private String user = "DevCalt2024";
     private String password = "Calt2024";
 
-    private String getToken() throws JWTDecodeException, RestClientResponseException, HttpServerErrorException {
-
+    private String getToken() throws JWTDecodeException, ResourceAccessException {
         if (this.token == null || JWT.decode(token.getAccess_token()).getExpiresAt().before(new Date())) {
 
             SingInDTO singInDTO = new SingInDTO();
@@ -58,7 +56,8 @@ public class ProviderService {
                     })
                     .onStatus(HttpStatusCode::is4xxClientError, (request, response) -> {
                         log.error("🔴 ERROR DE PROVEEDOR");
-                        throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()), "ERROR DE PROVEEDOR");
+                        throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()),
+                                "ERROR DE PROVEEDOR");
                     })
                     .onStatus(HttpStatusCode::is5xxServerError, (request, response) -> {
                         log.warn("🟡 ERROR CONSULTA A PROVEEDOR");
@@ -66,16 +65,14 @@ public class ProviderService {
                                 "ERROR CONSULTA A PROVEEDOR");
                     })
                     .toEntity(TokenDTO.class)
+
                     .getBody();
         }
-
         log.info("🔵 TOKEN GENERADO");
-
         return this.token.getAccess_token();
     }
 
-    public DebtResponseDTO getDebt(DebtRequestDTO debtRequest) throws ResponseExecption {
-
+    public DebtResponseDTO getDebt(DebtRequestDTO debtRequest) throws ResponseExecption, ResourceAccessException {
         log.info("🔵 REALIZANDO CONSULTA A PROVEEDOR");
 
         return this.restClient
@@ -93,7 +90,8 @@ public class ProviderService {
                 })
                 .onStatus(HttpStatusCode::is5xxServerError, (request, response) -> {
                     log.warn("🟡 ERROR CONSULTA A PROVEEDOR");
-                    throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()), "ERROR CONSULTA A PROVEEDOR");
+                    throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()),
+                            "ERROR CONSULTA A PROVEEDOR");
                 })
                 .toEntity(DebtResponseDTO.class)
                 .getBody();
@@ -117,7 +115,8 @@ public class ProviderService {
                 })
                 .onStatus(HttpStatusCode::is5xxServerError, (request, response) -> {
                     log.warn("🟡 ERROR CONSULTA A PROVEEDOR");
-                    throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()), "ERROR CONSULTA A PROVEEDOR");
+                    throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()),
+                            "ERROR CONSULTA A PROVEEDOR");
                 })
                 .toEntity(PaymentResponse.class)
                 .getBody();
@@ -141,7 +140,8 @@ public class ProviderService {
                 })
                 .onStatus(HttpStatusCode::is5xxServerError, (request, response) -> {
                     log.warn("🟡 ERROR CONSULTA A PROVEEDOR");
-                    throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()), "ERROR CONSULTA A PROVEEDOR");
+                    throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()),
+                            "ERROR CONSULTA A PROVEEDOR");
                 })
                 .toEntity(RevertPaymentResponseDTO.class)
                 .getBody();
