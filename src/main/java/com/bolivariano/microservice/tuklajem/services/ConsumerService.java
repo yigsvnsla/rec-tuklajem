@@ -117,11 +117,16 @@ public class ConsumerService {
 		} catch (ResourceAccessException e) {
 			log.error("❌ ERROR AL GENERAR CONSULTA: {}", e.getMessage(), e);
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
+			MessageOutputConsultDTO messageOutputConsultDTO = new MessageOutputConsultDTO();
+
+			messageOutputConsultDTO.setMensajeSistema("CONSULTA NO EJECUTADA");
+			messageOutputConsultDTO.setCodigoError("300");
 
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
 			messageOutputProcessDTO.setCodigo("300");
 			messageOutputProcessDTO.setMensajeUsuario(e.getMessage());
-			// messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
+
+			messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
 			jmsService.sendResponseMessage(
 					MqConfig.CHANNEL_RESPONSE,
 					messageOutputProcessDTO, correlationId);
