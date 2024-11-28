@@ -39,7 +39,7 @@ public class JmsController {
   }
 
 
-  @JmsListener(destination = "${mq.config.response_queue}")
+  //@JmsListener(destination = "${mq.config.response_queue}")
   public void responseMessage(Message message) throws JMSException {
 
     String correlationId = message.getJMSCorrelationID(); // Obtener el Correlation ID
@@ -49,6 +49,23 @@ public class JmsController {
     log.info("                RESPONSE                ");
     log.info("========================================");
     log.info("Correlation ID: " + correlationId);
+    log.info("========================================");
+    log.info("Received message is: " + msgText);
+    log.info("========================================");
+
+  }
+
+
+  // @JmsListener(destination = "MS_REC_CONSULTA_RESP")
+  public void responseMessageREC_CONSULTA(Message message) throws JMSException {
+
+    // String correlationId = message.getJMSCorrelationID(); // Obtener el Correlation ID
+    String msgText = ((TextMessage) message).getText(); // Obtener el Contenido del mensaje
+    System.out.print(message);
+    log.info("========================================");
+    log.info("           MS_REC_CONSULTA_RESP         ");
+    log.info("========================================");
+    log.info("Correlation ID: " + "132123123");
     log.info("========================================");
     log.info("Received message is: " + msgText);
     log.info("========================================");

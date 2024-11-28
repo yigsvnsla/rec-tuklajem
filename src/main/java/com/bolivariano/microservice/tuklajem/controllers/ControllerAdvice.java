@@ -1,6 +1,5 @@
 package com.bolivariano.microservice.tuklajem.controllers;
 
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -13,12 +12,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import com.bolivariano.microservice.tuklajem.dtos.ErrorResponseDTO;
 import com.bolivariano.microservice.tuklajem.exception.ResponseExecption;
 
-
 @RestControllerAdvice
 public class ControllerAdvice {
-
-
-
     @ResponseStatus()
     @ExceptionHandler(value = ResponseExecption.class)
     public ResponseEntity<ErrorResponseDTO> handlerResponseExecption(ResponseExecption ex) {
@@ -32,4 +27,3 @@ public class ControllerAdvice {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponseDto);
     }
 }
-

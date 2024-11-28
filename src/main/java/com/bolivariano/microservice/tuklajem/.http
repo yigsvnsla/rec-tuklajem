@@ -2,24 +2,23 @@
 
 POST http://localhost:8080/message/consult 
 Content-Type: application/json
- 
 {
   "tipoFlujo": "CONSULTA",
   "mensajeEntradaConsultarDeuda": {
-    "canal": "VEN",
-    "depuracion": "",
-    "fecha": "2023-05-23T12:10:24",
     "oficina": "0",
-    "secuencial": "134885764",
-    "transaccion": "3925",
-    "usuario": "msilvag",
+    "canal": "IBK",
+    "depuracion": null,
+    "fecha": "2024-11-26T00:00:00",
+    "transaccion": "2057",
+    "usuario": "TcUPI1396206",
+    "secuencial": "54064493",
     "servicio": {
       "codTipoServicio": "AUTOMOTORES_PEATONES",
-      "codigoConvenio": "SOL",
-      "codigoEmpresa": "18786",
+      "codigoConvenio": "24473",
+      "codigoEmpresa": "24473",
       "codigoTipoBanca": "BP",
-      "codigoTipoIdentificador": "SOL",
-      "identificador": "12004422",
+      "codigoTipoIdentificador": "ORDEN",
+      "identificador": "1203440357",
       "datosAdicionales": {
         "datoAdicional": [
           {
@@ -32,7 +31,7 @@ Content-Type: application/json
             "mascara": null,
             "regexp": null,
             "tipo": null,
-            "valor": "SRVDESA2",
+            "valor": "BOLIVSRV",
             "visible": null
           },
           {
@@ -45,7 +44,7 @@ Content-Type: application/json
             "mascara": null,
             "regexp": null,
             "tipo": null,
-            "valor": "PRBIDS002",
+            "valor": "term24",
             "visible": null
           },
           {
@@ -58,46 +57,7 @@ Content-Type: application/json
             "mascara": null,
             "regexp": null,
             "tipo": null,
-            "valor": "252",
-            "visible": null
-          },
-          {
-            "codigo": "e_corr",
-            "etiqueta": null,
-            "editable": null,
-            "formato": null,
-            "listasSeleccion": null,
-            "longitud": null,
-            "mascara": null,
-            "regexp": null,
-            "tipo": null,
-            "valor": "N",
-            "visible": null
-          },
-          {
-            "codigo": "e_ssn_corr",
-            "etiqueta": null,
-            "editable": null,
-            "formato": null,
-            "listasSeleccion": null,
-            "longitud": null,
-            "mascara": null,
-            "regexp": null,
-            "tipo": null,
-            "valor": "0",
-            "visible": null
-          },
-          {
-            "codigo": "e_mon",
-            "etiqueta": null,
-            "editable": null,
-            "formato": null,
-            "listasSeleccion": null,
-            "longitud": null,
-            "mascara": null,
-            "regexp": null,
-            "tipo": null,
-            "valor": "1",
+            "valor": "5",
             "visible": null
           },
           {
@@ -110,7 +70,7 @@ Content-Type: application/json
             "mascara": null,
             "regexp": null,
             "tipo": null,
-            "valor": "2",
+            "valor": "24473",
             "visible": null
           },
           {
@@ -123,150 +83,7 @@ Content-Type: application/json
             "mascara": null,
             "regexp": null,
             "tipo": null,
-            "valor": "SOL",
-            "visible": null
-          },
-          {
-            "codigo": "e_efectivo",
-            "etiqueta": null,
-            "editable": null,
-            "formato": null,
-            "listasSeleccion": null,
-            "longitud": null,
-            "mascara": null,
-            "regexp": null,
-            "tipo": null,
-            "valor": "0",
-            "visible": null
-          },
-          {
-            "codigo": "e_cheque",
-            "etiqueta": null,
-            "editable": null,
-            "formato": null,
-            "listasSeleccion": null,
-            "longitud": null,
-            "mascara": null,
-            "regexp": null,
-            "tipo": null,
-            "valor": "0",
-            "visible": null
-          },
-          {
-            "codigo": "e_debito",
-            "etiqueta": null,
-            "editable": null,
-            "formato": null,
-            "listasSeleccion": null,
-            "longitud": null,
-            "mascara": null,
-            "regexp": null,
-            "tipo": null,
-            "valor": "0",
-            "visible": null
-          },
-          {
-            "codigo": "e_tarjeta",
-            "etiqueta": null,
-            "editable": null,
-            "formato": null,
-            "listasSeleccion": null,
-            "longitud": null,
-            "mascara": null,
-            "regexp": null,
-            "tipo": null,
-            "valor": "0",
-            "visible": null
-          },
-          {
-            "codigo": "e_comision_efe",
-            "etiqueta": null,
-            "editable": null,
-            "formato": null,
-            "listasSeleccion": null,
-            "longitud": null,
-            "mascara": null,
-            "regexp": null,
-            "tipo": null,
-            "valor": "0",
-            "visible": null
-          },
-          {
-            "codigo": "e_comision_chq",
-            "etiqueta": null,
-            "editable": null,
-            "formato": null,
-            "listasSeleccion": null,
-            "longitud": null,
-            "mascara": null,
-            "regexp": null,
-            "tipo": null,
-            "valor": "0",
-            "visible": null
-          },
-          {
-            "codigo": "e_comision_db",
-            "etiqueta": null,
-            "editable": null,
-            "formato": null,
-            "listasSeleccion": null,
-            "longitud": null,
-            "mascara": null,
-            "regexp": null,
-            "tipo": null,
-            "valor": "0",
-            "visible": null
-          },
-          {
-            "codigo": "e_total",
-            "etiqueta": null,
-            "editable": null,
-            "formato": null,
-            "listasSeleccion": null,
-            "longitud": null,
-            "mascara": null,
-            "regexp": null,
-            "tipo": null,
-            "valor": "0",
-            "visible": null
-          },
-          {
-            "codigo": "e_tipo_cta",
-            "etiqueta": null,
-            "editable": null,
-            "formato": null,
-            "listasSeleccion": null,
-            "longitud": null,
-            "mascara": null,
-            "regexp": null,
-            "tipo": null,
-            "valor": "0",
-            "visible": null
-          },
-          {
-            "codigo": "e_cuenta",
-            "etiqueta": null,
-            "editable": null,
-            "formato": null,
-            "listasSeleccion": null,
-            "longitud": null,
-            "mascara": null,
-            "regexp": null,
-            "tipo": null,
-            "valor": "",
-            "visible": null
-          },
-          {
-            "codigo": "e_autoriza",
-            "etiqueta": null,
-            "editable": null,
-            "formato": null,
-            "listasSeleccion": null,
-            "longitud": null,
-            "mascara": null,
-            "regexp": null,
-            "tipo": null,
-            "valor": "N",
+            "valor": "ORDEN",
             "visible": null
           },
           {
@@ -296,32 +113,6 @@ Content-Type: application/json
             "visible": null
           },
           {
-            "codigo": "e_reverso",
-            "etiqueta": null,
-            "editable": null,
-            "formato": null,
-            "listasSeleccion": null,
-            "longitud": null,
-            "mascara": null,
-            "regexp": null,
-            "tipo": null,
-            "valor": "",
-            "visible": null
-          },
-          {
-            "codigo": "e_emp_nombre",
-            "etiqueta": null,
-            "editable": null,
-            "formato": null,
-            "listasSeleccion": null,
-            "longitud": null,
-            "mascara": null,
-            "regexp": null,
-            "tipo": null,
-            "valor": "",
-            "visible": null
-          },
-          {
             "codigo": "e_prov_req",
             "etiqueta": null,
             "editable": null,
@@ -331,7 +122,7 @@ Content-Type: application/json
             "mascara": null,
             "regexp": null,
             "tipo": null,
-            "valor": "MS_REC_ANT_REQ",
+            "valor": "MS_REC_TUKLAJEM_REQ",
             "visible": null
           },
           {
@@ -344,7 +135,7 @@ Content-Type: application/json
             "mascara": null,
             "regexp": null,
             "tipo": null,
-            "valor": "MS_REC_ANT_RESP",
+            "valor": "MS_REC_TUKLAJEM_RESP",
             "visible": null
           },
           {
@@ -370,7 +161,7 @@ Content-Type: application/json
             "mascara": null,
             "regexp": null,
             "tipo": null,
-            "valor": "134885764",
+            "valor": "54064493",
             "visible": null
           },
           {
@@ -409,7 +200,7 @@ Content-Type: application/json
             "mascara": null,
             "regexp": null,
             "tipo": null,
-            "valor": "0.47",
+            "valor": null,
             "visible": null
           },
           {
@@ -422,7 +213,7 @@ Content-Type: application/json
             "mascara": null,
             "regexp": null,
             "tipo": null,
-            "valor": "0.0",
+            "valor": null,
             "visible": null
           },
           {
@@ -435,7 +226,7 @@ Content-Type: application/json
             "mascara": null,
             "regexp": null,
             "tipo": null,
-            "valor": "AGENCIA NACIONAL DE TRANSITO",
+            "valor": "TUKLAJEM S.A.",
             "visible": null
           },
           {
@@ -500,7 +291,7 @@ Content-Type: application/json
             "mascara": null,
             "regexp": null,
             "tipo": null,
-            "valor": "MS_REC_ANT_REQ",
+            "valor": "MS_REC_TUKLAJEM_REQ",
             "visible": null
           },
           {
@@ -513,13 +304,13 @@ Content-Type: application/json
             "mascara": null,
             "regexp": null,
             "tipo": null,
-            "valor": "MS_REC_ANT_RESP",
+            "valor": "MS_REC_TUKLAJEM_RESP",
             "visible": null
           }
         ]
       }
     }
-  
+
   }
 }
 

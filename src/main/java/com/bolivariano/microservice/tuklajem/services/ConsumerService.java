@@ -107,7 +107,7 @@ public class ConsumerService {
 			messageOutputConsultDTO.setIdentificadorDeuda(debt.getIdentificador_deuda());
 			messageOutputConsultDTO.setDatosAdicionales(aditionalsData);
 			// Mensaje de salida proceso;
-			messageOutputProcessDTO.setEstado(MessageStatus.OK);
+			messageOutputProcessDTO.setEstado("OK");
 			messageOutputProcessDTO.setCodigo(debt.getCod_respuesta());
 			messageOutputProcessDTO.setMensajeUsuario(debt.getMsg_respuesta());
 			messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
@@ -119,17 +119,17 @@ public class ConsumerService {
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 			MessageOutputConsultDTO messageOutputConsultDTO = new MessageOutputConsultDTO();
 
-			messageOutputConsultDTO.setMensajeSistema("CONSULTA NO EJECUTADA");
 			messageOutputConsultDTO.setCodigoError("300");
+			messageOutputConsultDTO.setMensajeUsuario("CONSULTA NO EJECUTADA JESUS :)");
 
-			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
-			messageOutputProcessDTO.setCodigo("300");
-			messageOutputProcessDTO.setMensajeUsuario(e.getMessage());
+			messageOutputProcessDTO.setEstado("ERROR");
+			messageOutputProcessDTO.setCodigo("0");
+			messageOutputProcessDTO.setMensajeUsuario("CONSULTA EJECUTADA");
 
 			messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
-			jmsService.sendResponseMessage(
-					MqConfig.CHANNEL_RESPONSE,
-					messageOutputProcessDTO, correlationId);
+			//jmsService.testMessage(MqConfig.CHANNEL_RESPONSE, correlationId);
+
+			jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE,messageOutputProcessDTO, correlationId);
 		}
 	}
 
