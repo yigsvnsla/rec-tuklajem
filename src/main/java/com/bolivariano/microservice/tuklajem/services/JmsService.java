@@ -12,14 +12,26 @@ import jakarta.jms.TextMessage;
 
 @Service
 public class JmsService {
-    
+
     @Autowired
     private JmsTemplate jmsTemplate;
 
     @Autowired
     private ObjectMapper objectMapper;
 
-    public void sendResponseMessage(String destination, MessageOutputProcessDTO messageContent, String correlationId) throws JsonProcessingException {
+    public void testMessage(String destination, String correlationId) {
+
+        String body = "\"codigo\":\"0\",\"mensajeUsuario\":\"Consultaejecutada\",\"estado\":\"OK\",\"mensajeSalidaEjecutarPago\":null,\"mensajeSalidaConsultarDeuda\":{\"codigoError\":\"03\",\"datosAdicionales\":{\"datoAdicional\":[]},\"fechaVencimiento\":null,\"formaPago\":null,\"formaPagoRecibos\":null,\"identificadorDeuda\":null,\"limiteMontoMaximo\":null,\"limiteMontoMinimo\":null,\"mensajeUsuario\":\"Elcontratoseencuentraaldia\",\"mensajeSistema\":null,\"montoMinimo\":null,\"montoTotal\":null,\"nombreCliente\":null,\"recibos\":null,\"textoAyuda\":null}}";
+
+        jmsTemplate.send(destination, session -> {
+            TextMessage message = session.createTextMessage(body); // Crear un mensaje de texto
+            message.setJMSCorrelationID(correlationId); // Establecer el Correlation ID
+            return message;
+        });
+    }
+
+    public void sendResponseMessage(String destination, MessageOutputProcessDTO messageContent, String correlationId)
+            throws JsonProcessingException {
 
         String messageSerialized = this.objectMapper.writeValueAsString(messageContent); // Serialización
 
@@ -30,7 +42,7 @@ public class JmsService {
         });
     }
 
-    public void sendRequestMessage(String destination, String messageContent, String correlationId){
+    public void sendRequestMessage(String destination, String messageContent, String correlationId) {
 
         jmsTemplate.send(destination, session -> {
             TextMessage message = session.createTextMessage(messageContent); // Crear un mensaje de texto

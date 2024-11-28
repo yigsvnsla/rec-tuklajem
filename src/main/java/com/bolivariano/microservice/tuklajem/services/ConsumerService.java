@@ -5,7 +5,6 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 
 import com.bolivariano.microservice.tuklajem.config.MqConfig;
 import com.bolivariano.microservice.tuklajem.dtos.DebtRequestDTO;
@@ -112,9 +111,13 @@ public class ConsumerService {
 			messageOutputProcessDTO.setMensajeUsuario(debt.getMsg_respuesta());
 			messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
 
-			// jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE,
-			// messageOutputProcessDTO, correlationId);
-		} catch (ResourceAccessException e) {
+			jmsService.sendResponseMessage(
+					MqConfig.CHANNEL_RESPONSE,
+					messageOutputProcessDTO,
+					correlationId);
+
+		} catch (Exception e) {
+
 			log.error("❌ ERROR AL GENERAR CONSULTA: {}", e.getMessage(), e);
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 			MessageOutputConsultDTO messageOutputConsultDTO = new MessageOutputConsultDTO();
@@ -124,13 +127,19 @@ public class ConsumerService {
 
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
 			messageOutputProcessDTO.setCodigo("300");
-			messageOutputProcessDTO.setMensajeUsuario(e.getMessage());
+			messageOutputProcessDTO.setMensajeUsuario("CONSULTA NO EJECUTADA");
 
 			messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
-			jmsService.sendResponseMessage(
-					MqConfig.CHANNEL_RESPONSE,
-					messageOutputProcessDTO, correlationId);
+
+			jmsService.sendResponseMessage(correlationId, messageOutputProcessDTO, correlationId);
+
+
+			// jmsService.sendResponseMessage(
+			// 		MqConfig.CHANNEL_RESPONSE,
+			// 		messageOutputProcessDTO,
+			// 		correlationId);
 		}
+
 	}
 
 }
