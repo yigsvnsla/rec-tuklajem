@@ -12,7 +12,7 @@ import jakarta.jms.TextMessage;
 
 @Service
 public class JmsService {
-    
+
     @Autowired
     private JmsTemplate jmsTemplate;
 
@@ -43,7 +43,7 @@ public class JmsService {
         });
     }
 
-    public void sendRequestMessage(String destination, String messageContent, String correlationId){
+    public void sendRequestMessage(String destination, String messageContent, String correlationId) {
 
         jmsTemplate.send(destination, session -> {
             TextMessage message = session.createTextMessage(messageContent); // Crear un mensaje de texto

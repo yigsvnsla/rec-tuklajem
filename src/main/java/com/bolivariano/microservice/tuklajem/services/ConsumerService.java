@@ -5,7 +5,6 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.ResourceAccessException;
 
 import com.bolivariano.microservice.tuklajem.config.MqConfig;
 import com.bolivariano.microservice.tuklajem.dtos.DebtRequestDTO;
@@ -16,7 +15,6 @@ import com.bolivariano.microservice.tuklajem.dtos.MessageInputProcessDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageOutputConsultDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageOutputProcessDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageProcessAditionalDataDTO;
-import com.bolivariano.microservice.tuklajem.enums.MessageStatus;
 import com.bolivariano.microservice.tuklajem.exception.ResponseExecption;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -112,9 +110,13 @@ public class ConsumerService {
 			messageOutputProcessDTO.setMensajeUsuario(debt.getMsg_respuesta());
 			messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
 
-			// jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE,
-			// messageOutputProcessDTO, correlationId);
-		} catch (ResourceAccessException e) {
+			jmsService.sendResponseMessage(
+					MqConfig.CHANNEL_RESPONSE,
+					messageOutputProcessDTO,
+					correlationId);
+
+		} catch (Exception e) {
+
 			log.error("❌ ERROR AL GENERAR CONSULTA: {}", e.getMessage(), e);
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 			MessageOutputConsultDTO messageOutputConsultDTO = new MessageOutputConsultDTO();
@@ -131,6 +133,7 @@ public class ConsumerService {
 
 			jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE,messageOutputProcessDTO, correlationId);
 		}
+
 	}
 
 }
