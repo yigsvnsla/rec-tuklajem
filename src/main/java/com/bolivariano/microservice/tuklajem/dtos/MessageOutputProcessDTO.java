@@ -14,6 +14,6 @@ public class MessageOutputProcessDTO implements Serializable {
     private String codigo;
     private String mensajeUsuario;
     private MessageStatus estado;
-    // private transient MensajeSalidaEjecutarPago mensajeSalidaEjecutarPago;
+    private MessageOutputPaymentDTO mensajeSalidaEjecutarPago;
     private MessageOutputConsultDTO mensajeSalidaConsultarDeuda;
 }

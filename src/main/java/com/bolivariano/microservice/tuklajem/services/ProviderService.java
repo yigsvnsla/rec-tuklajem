@@ -15,7 +15,7 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.bolivariano.microservice.tuklajem.dtos.DebtRequestDTO;
 import com.bolivariano.microservice.tuklajem.dtos.DebtResponseDTO;
 import com.bolivariano.microservice.tuklajem.dtos.PaymentRequestDTO;
-import com.bolivariano.microservice.tuklajem.dtos.PaymentResponse;
+import com.bolivariano.microservice.tuklajem.dtos.PaymentResponseDTO;
 import com.bolivariano.microservice.tuklajem.dtos.RevertPaymentRequestDTO;
 import com.bolivariano.microservice.tuklajem.dtos.RevertPaymentResponseDTO;
 import com.bolivariano.microservice.tuklajem.dtos.SingInDTO;
@@ -97,7 +97,7 @@ public class ProviderService {
                 .getBody();
     }
 
-    public PaymentResponse payment(PaymentRequestDTO paymentRequest) throws ResponseExecption {
+    public PaymentResponseDTO payment(PaymentRequestDTO paymentRequest) throws ResponseExecption {
 
         log.info("🔵 REALIZANDO CONSULTA A PROVEEDOR");
 
@@ -118,7 +118,7 @@ public class ProviderService {
                     throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()),
                             "ERROR CONSULTA A PROVEEDOR");
                 })
-                .toEntity(PaymentResponse.class)
+                .toEntity(PaymentResponseDTO.class)
                 .getBody();
     }
 

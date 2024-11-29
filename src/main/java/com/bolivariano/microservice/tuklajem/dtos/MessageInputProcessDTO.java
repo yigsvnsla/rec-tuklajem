@@ -16,8 +16,8 @@ public class MessageInputProcessDTO implements Serializable {
 
     private FlowType tipoFlujo;
 
+    // private MessageInputPaymentDTO mensajeEntradaEjecutarReverso;
     private MessageInputConsultDTO mensajeEntradaConsultarDeuda;
-    // private MensajeEntradaEjecutarReverso mensajeEntradaEjecutarReverso;
     private MessageInputPaymentDTO mensajeEntradaEjecutarPago;
 
 }

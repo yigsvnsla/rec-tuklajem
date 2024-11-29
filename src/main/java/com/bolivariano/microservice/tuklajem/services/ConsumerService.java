@@ -11,10 +11,14 @@ import com.bolivariano.microservice.tuklajem.dtos.DebtRequestDTO;
 import com.bolivariano.microservice.tuklajem.dtos.DebtResponseDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageAditionalDataDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageInputConsultDTO;
+import com.bolivariano.microservice.tuklajem.dtos.MessageInputPaymentDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageInputProcessDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageOutputConsultDTO;
+import com.bolivariano.microservice.tuklajem.dtos.MessageOutputPaymentDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageOutputProcessDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageProcessAditionalDataDTO;
+import com.bolivariano.microservice.tuklajem.dtos.PaymentRequestDTO;
+import com.bolivariano.microservice.tuklajem.dtos.PaymentResponseDTO;
 import com.bolivariano.microservice.tuklajem.enums.MessageStatus;
 import com.bolivariano.microservice.tuklajem.exception.ResponseExecption;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -49,7 +53,7 @@ public class ConsumerService {
 					this.consulting(messageInputProcessDTO.getMensajeEntradaConsultarDeuda(), correlationId);
 					break;
 				case PAGO:
-					// this.payment();
+					this.payment(messageInputProcessDTO.getMensajeEntradaEjecutarPago(), correlationId);
 					break;
 				case REVERSO:
 					// this.revertPayment();
@@ -147,6 +151,19 @@ public class ConsumerService {
 			jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE, messageOutputProcessDTO, correlationId);
 		}
 
+	}
+
+	private void payment(MessageInputPaymentDTO messageInputProcess, String correlationId) {
+		log.info("📤 INICIANDO PROCESO DE PAGO");
+
+		MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
+		MessageOutputPaymentDTO messageOutputConsultDTO = new MessageOutputPaymentDTO();
+
+		PaymentRequestDTO paymentRequest = new PaymentRequestDTO();
+
+		paymentRequest.setCod_cliente(correlationId);
+
+		PaymentResponseDTO payment = this.providerService.payment(paymentRequest);
 	}
 
 }

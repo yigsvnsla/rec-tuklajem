@@ -10,6 +10,9 @@
 
 # 22004477  Gonzalo Fienco
 
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzI4OTg0NjAsImV4cCI6MTczMjkwMDI2MCwiaWF0IjoxNzMyODk4NDYwLCJpc3MiOiIqIiwiYXVkIjoiKiJ9.bWxxxwl1VJ5o-EXWhtWADqOFT-QGk6AQsE1h8LV869U
+
+### ENPOINT
 https://servicioscalt.andinave.com
 
 ### GET TOKEN
@@ -24,7 +27,7 @@ Content-Type: application/json
 ### GET CONSULT
 POST https://servicioscalt.andinave.com:9068/api/bc/ConsultaDeuda HTTP/1.1
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzE2ODY3NzMsImV4cCI6MTczMTY4ODU3MywiaWF0IjoxNzMxNjg2NzczLCJpc3MiOiIqIiwiYXVkIjoiKiJ9.IHbRSMc1K9PcWgVbDPrMV7PzsZ_m5fQ3TCSSxMY-Sr8
+Authorization: Bearer {{TOKEN}}
 
 {
   "Identificador": "22004477",
@@ -32,4 +35,19 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6I
   "fecha": "20190106",
   "hora": "101940"
 }
+
+### SET PAYMENT
+
+POST https://servicioscalt.andinave.com:9068/api/bc/ConsultaDeuda HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+  "Identificador": "22004477",
+  "terminal": "D00561",
+  "fecha": "20190106",
+  "hora": "101940"
+}
+
+{
 

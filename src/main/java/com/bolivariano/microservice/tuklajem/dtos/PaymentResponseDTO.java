@@ -5,7 +5,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class PaymentResponse {
+public class PaymentResponseDTO {
 
     private String terminal;
     private String fecha;
