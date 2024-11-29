@@ -1,7 +1,8 @@
 ###
 
-POST http://localhost:8080/message/consult 
+POST http://localhost:9999/message/consult 
 Content-Type: application/json
+
 {
   "tipoFlujo": "CONSULTA",
   "mensajeEntradaConsultarDeuda": {

@@ -15,6 +15,7 @@ import com.bolivariano.microservice.tuklajem.dtos.MessageInputProcessDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageOutputConsultDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageOutputProcessDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageProcessAditionalDataDTO;
+import com.bolivariano.microservice.tuklajem.enums.MessageStatus;
 import com.bolivariano.microservice.tuklajem.exception.ResponseExecption;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,11 +38,11 @@ public class ConsumerService {
 	private final Double MOUNT_MIN = 20.00;
 	private final Double MOUNT_MAX = 1000.00;
 
-	public void stage(String message, String correlationId) {
+	public void stage(String message, String correlationId) throws JsonProcessingException {
 		try {
 
-			MessageInputProcessDTO messageInputProcessDTO = objectMapper.readValue(message,
-					MessageInputProcessDTO.class); // Deserialización
+			MessageInputProcessDTO messageInputProcessDTO = objectMapper
+					.readValue(message, MessageInputProcessDTO.class); // Deserialización
 
 			switch (messageInputProcessDTO.getTipoFlujo()) {
 				case CONSULTA:
@@ -57,7 +58,20 @@ public class ConsumerService {
 					throw new ResponseExecption(HttpStatus.NOT_ACCEPTABLE, "type operation null");
 			}
 		} catch (JsonProcessingException e) {
+			log.error("❌ ERROR DE STAGE: {}", e.getMessage(), e);
+			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
+			MessageOutputConsultDTO messageOutputConsultDTO = new MessageOutputConsultDTO();
 
+			messageOutputConsultDTO.setCodigoError("300");
+			messageOutputConsultDTO.setMensajeUsuario(e.getMessage());
+
+			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
+			messageOutputProcessDTO.setCodigo("0");
+			messageOutputProcessDTO.setMensajeUsuario("CONSULTA EJECUTADA");
+
+			messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
+
+			jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE, messageOutputProcessDTO, correlationId);
 		}
 
 	}
@@ -105,7 +119,7 @@ public class ConsumerService {
 			messageOutputConsultDTO.setIdentificadorDeuda(debt.getIdentificador_deuda());
 			messageOutputConsultDTO.setDatosAdicionales(aditionalsData);
 			// Mensaje de salida proceso;
-			messageOutputProcessDTO.setEstado("OK");
+			messageOutputProcessDTO.setEstado(MessageStatus.OK);
 			messageOutputProcessDTO.setCodigo(debt.getCod_respuesta());
 			messageOutputProcessDTO.setMensajeUsuario(debt.getMsg_respuesta());
 			messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
@@ -122,16 +136,15 @@ public class ConsumerService {
 			MessageOutputConsultDTO messageOutputConsultDTO = new MessageOutputConsultDTO();
 
 			messageOutputConsultDTO.setCodigoError("300");
-			messageOutputConsultDTO.setMensajeUsuario("CONSULTA NO EJECUTADA JESUS :)");
+			messageOutputConsultDTO.setMensajeUsuario(e.getMessage());
 
-			messageOutputProcessDTO.setEstado("ERROR");
+			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
 			messageOutputProcessDTO.setCodigo("0");
 			messageOutputProcessDTO.setMensajeUsuario("CONSULTA EJECUTADA");
 
 			messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
-			//jmsService.testMessage(MqConfig.CHANNEL_RESPONSE, correlationId);
 
-			jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE,messageOutputProcessDTO, correlationId);
+			jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE, messageOutputProcessDTO, correlationId);
 		}
 
 	}
