@@ -122,6 +122,7 @@ public class ConsumerService {
 			messageOutputConsultDTO.setMensajeUsuario(debt.getMsg_respuesta());
 			messageOutputConsultDTO.setIdentificadorDeuda(debt.getIdentificador_deuda());
 			messageOutputConsultDTO.setDatosAdicionales(aditionalsData);
+
 			// Mensaje de salida proceso;
 			messageOutputProcessDTO.setEstado(MessageStatus.OK);
 			messageOutputProcessDTO.setCodigo(debt.getCod_respuesta());
@@ -153,17 +154,75 @@ public class ConsumerService {
 
 	}
 
-	private void payment(MessageInputPaymentDTO messageInputProcess, String correlationId) {
-		log.info("📤 INICIANDO PROCESO DE PAGO");
+	private void payment(MessageInputPaymentDTO messageInputProcess, String correlationId)
+			throws JsonProcessingException {
+		try {
+			log.info("📤 INICIANDO PROCESO DE PAGO");
 
-		MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
-		MessageOutputPaymentDTO messageOutputConsultDTO = new MessageOutputPaymentDTO();
+			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
+			MessageOutputPaymentDTO messageOutputPaymentDTO = new MessageOutputPaymentDTO();
 
-		PaymentRequestDTO paymentRequest = new PaymentRequestDTO();
+			String identifier = messageInputProcess
+					.getServicio()
+					.getIdentificador();
 
-		paymentRequest.setCod_cliente(correlationId);
+			MessageProcessAditionalDataDTO aditionalsData = messageInputProcess
+					.getServicio()
+					.getDatosAdicionales();
 
-		PaymentResponseDTO payment = this.providerService.payment(paymentRequest);
+			MessageAditionalDataDTO terminal = Arrays.stream(aditionalsData.getDatoAdicional())
+					.filter(item -> item.getCodigo().equals("e_term"))
+					.findFirst()
+					.orElse(null);
+
+			PaymentRequestDTO paymentRequest = new PaymentRequestDTO();
+
+			paymentRequest.setCod_cliente(identifier);
+			paymentRequest.setFecha(messageInputProcess.getFecha());
+			paymentRequest.setHora(messageInputProcess.getFecha());
+			paymentRequest.setTerminal(terminal.getValor());
+
+			PaymentResponseDTO payment = this.providerService.payment(paymentRequest);
+
+			// Mesaje Salida Consulta
+			messageOutputPaymentDTO.setMensajeSistema("CONSULTA EJECUTADA");
+			messageOutputPaymentDTO.setBanderaOffline(false);
+			messageOutputPaymentDTO.setMensajeUsuario(payment.getMsg_respuesta());
+			messageOutputPaymentDTO.setCodigoError(payment.getCod_respuesta());
+			messageOutputPaymentDTO.setMontoTotal(MOUNT_MIN);
+			messageOutputPaymentDTO.setFechaDebito(messageInputProcess.getFecha());
+			messageOutputPaymentDTO.setFechaPago(messageInputProcess.getFecha());
+			messageOutputPaymentDTO.setReferencia(identifier);
+			messageOutputPaymentDTO.setDatosAdicionales(aditionalsData);
+
+			// Mensaje de salida proceso;
+			messageOutputProcessDTO.setEstado(MessageStatus.OK);
+			messageOutputProcessDTO.setCodigo(payment.getCod_respuesta());
+			messageOutputProcessDTO.setMensajeUsuario(payment.getMsg_respuesta());
+			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputPaymentDTO);
+
+			jmsService.sendResponseMessage(
+					MqConfig.CHANNEL_RESPONSE,
+					messageOutputProcessDTO,
+					correlationId);
+
+		} catch (Exception e) {
+			log.error("❌ ERROR AL GENERAR CONSULTA: {}", e.getMessage(), e);
+			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
+			MessageOutputPaymentDTO messageOutputConsultDTO = new MessageOutputPaymentDTO();
+
+			messageOutputConsultDTO.setCodigoError("300");
+			messageOutputConsultDTO.setMensajeUsuario(e.getMessage());
+
+			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
+			messageOutputProcessDTO.setCodigo("0");
+			messageOutputProcessDTO.setMensajeUsuario("CONSULTA EJECUTADA");
+
+			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputConsultDTO);
+
+			jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE, messageOutputProcessDTO, correlationId);
+		}
+
 	}
 
 }

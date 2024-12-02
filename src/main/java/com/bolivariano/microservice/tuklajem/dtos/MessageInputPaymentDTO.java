@@ -1,7 +1,5 @@
 package com.bolivariano.microservice.tuklajem.dtos;
 
-import javax.xml.datatype.XMLGregorianCalendar;
-
 import com.bolivariano.microservice.tuklajem.enums.Channel;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
@@ -13,9 +11,9 @@ import lombok.NoArgsConstructor;
 public class MessageInputPaymentDTO {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss",timezone = "America/Guayaquil")
-    private XMLGregorianCalendar fecha;
+    private String fecha;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "America/Guayaquil")
-    private XMLGregorianCalendar fechaPago;
+    private String fechaPago;
 
 
     private Channel canal;

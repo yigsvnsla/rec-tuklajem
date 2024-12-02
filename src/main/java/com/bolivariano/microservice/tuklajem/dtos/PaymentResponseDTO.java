@@ -11,7 +11,7 @@ public class PaymentResponseDTO {
     private String fecha;
     private String hora;
     private String cod_trx;
-    private Integer cod_respuesta;
     private String msg_respuesta;
+    private String cod_respuesta;
 
 }
