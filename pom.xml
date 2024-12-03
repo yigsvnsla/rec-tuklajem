@@ -10,9 +10,9 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.bolivariano.microservice</groupId>
-	<artifactId>rec-mso-tuklajem</artifactId>
+	<artifactId>rec-mso-pagos-tuklajem</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>rec-mso-tuklajem</name>
+	<name>rec-mso-pagos-tuklajem</name>
 	<description>Demo project rec-mso-tuklajem for Spring Boot</description>
 	<url />
 	<licenses>
