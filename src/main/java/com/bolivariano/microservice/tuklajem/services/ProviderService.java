@@ -146,4 +146,22 @@ public class ProviderService {
                 .toEntity(RevertPaymentResponseDTO.class)
                 .getBody();
     }
+
+    // DATA BURN
+    public DebtResponseDTO getDebtMock(DebtRequestDTO debtRequest) {
+
+        DebtResponseDTO debResponse = new DebtResponseDTO();
+
+        debResponse.setNom_cliente("Gonzalo Fienco");
+        debResponse.setCod_cliente("22004477");
+        debResponse.setCod_respuesta("0");
+        debResponse.setMsg_respuesta("Transacción aceptada");
+        debResponse.setFecha("20241203");
+        debResponse.setHora("152553");
+        debResponse.setIdentificador_deuda("4");
+        debResponse.setImporte(376150);
+        debResponse.setMonto_abierto(false);
+
+        return debResponse;
+    }
 }
