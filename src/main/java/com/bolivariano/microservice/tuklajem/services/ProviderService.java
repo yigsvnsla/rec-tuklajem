@@ -97,7 +97,7 @@ public class ProviderService {
                 .getBody();
     }
 
-    public PaymentResponseDTO payment(PaymentRequestDTO paymentRequest) throws ResponseExecption {
+    public PaymentResponseDTO setPayment(PaymentRequestDTO paymentRequest) throws ResponseExecption {
 
         log.info("🔵 REALIZANDO CONSULTA A PROVEEDOR");
 
@@ -163,5 +163,19 @@ public class ProviderService {
         debResponse.setMonto_abierto(false);
 
         return debResponse;
+    }
+
+    public PaymentResponseDTO setPaymentMock(PaymentRequestDTO paymentRequest) {
+
+        PaymentResponseDTO paymentResponse = new PaymentResponseDTO();
+
+        paymentResponse.setTerminal("D00561");
+        paymentResponse.setFecha("20241203");
+        paymentResponse.setHora("163919");
+        paymentResponse.setCod_trx("000000001");
+        paymentResponse.setCod_respuesta("0");
+        paymentResponse.setMsg_respuesta("Transaccion aceptada");
+
+        return paymentResponse;
     }
 }

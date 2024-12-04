@@ -184,7 +184,7 @@ public class ConsumerService {
 			paymentRequest.setHora(messageInputProcess.getFecha());
 			paymentRequest.setTerminal(terminal.getValor());
 
-			PaymentResponseDTO payment = this.providerService.payment(paymentRequest);
+			PaymentResponseDTO payment = this.providerService.setPaymentMock(paymentRequest);
 
 			// Mesaje Salida Consulta
 			messageOutputPaymentDTO.setMensajeSistema("CONSULTA EJECUTADA");
