@@ -21,7 +21,6 @@ public class MqConfig {
     public static String CHANNEL_REQUEST;
     public static String CHANNEL_RESPONSE;
 
-
     private String host;
     private String channel;
     private String queue_manager;
@@ -30,10 +29,7 @@ public class MqConfig {
     private String user;
     private String password;
     private Number port;
-    private Number pool_jms;
-    private Number delay_reconnect;
-    private Number living_time;
-    private Number char_set;
+
 
     @Bean
     MQConnectionFactory mqConnectionFactory() throws JMSException {
@@ -46,7 +42,6 @@ public class MqConfig {
         factory.setIntProperty(CommonConstants.WMQ_CLIENT_RECONNECT_OPTIONS, CommonConstants.WMQ_CLIENT_RECONNECT);
         factory.setStringProperty(WMQConstants.USERID, this.user);
         factory.setStringProperty(WMQConstants.PASSWORD, this.password);
-        // factory.setConnectionNameList(connectionName);
         return factory;
     }
 
