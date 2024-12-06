@@ -36,3 +36,4 @@ build/
 
 FFDC/
 
+src/main/resources/application.properties

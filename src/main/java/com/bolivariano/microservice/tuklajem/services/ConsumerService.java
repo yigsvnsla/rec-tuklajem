@@ -122,6 +122,8 @@ public class ConsumerService {
 			messageOutputConsultDTO.setMensajeUsuario(debt.getMsg_respuesta());
 			messageOutputConsultDTO.setIdentificadorDeuda(debt.getIdentificador_deuda());
 			messageOutputConsultDTO.setDatosAdicionales(aditionalsData);
+			messageOutputConsultDTO.setMontoTotal(10.00);
+
 
 			// Mensaje de salida proceso;
 			messageOutputProcessDTO.setEstado(MessageStatus.OK);
