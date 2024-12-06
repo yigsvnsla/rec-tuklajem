@@ -21,6 +21,7 @@ public class MqConfig {
     public static String CHANNEL_REQUEST;
     public static String CHANNEL_RESPONSE;
 
+
     private String host;
     private String channel;
     private String queue_manager;
@@ -28,15 +29,18 @@ public class MqConfig {
     private String response_queue;
     private String user;
     private String password;
-    private Number port;
-
+    private Integer port;
+    private Integer pool_jms;
+    private Integer delay_reconnect;
+    private Integer living_time;
+    private Integer char_set;
 
     @Bean
     MQConnectionFactory mqConnectionFactory() throws JMSException {
         MQQueueConnectionFactory factory = new MQQueueConnectionFactory();
         factory.setChannel(this.channel);
         factory.setHostName(this.host);
-        factory.setPort(this.port.intValue());
+        factory.setPort(this.port);
         factory.setQueueManager(this.queue_manager);
         factory.setTransportType(CommonConstants.WMQ_CM_CLIENT); // Tipo de transporte TCP/IP
         factory.setIntProperty(CommonConstants.WMQ_CLIENT_RECONNECT_OPTIONS, CommonConstants.WMQ_CLIENT_RECONNECT);
