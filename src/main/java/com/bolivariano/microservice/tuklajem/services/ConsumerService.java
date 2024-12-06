@@ -110,7 +110,7 @@ public class ConsumerService {
 			debtRequest.setFecha(messageInputProcess.getFecha());
 			debtRequest.setHora(messageInputProcess.getFecha());
 
-			DebtResponseDTO debt = this.providerService.getDebtMock(debtRequest);
+			DebtResponseDTO debt = this.providerService.getDebt(debtRequest);
 
 			// Mesaje Salida Consulta
 			messageOutputConsultDTO.setMontoMinimo(this.MOUNT_MIN);

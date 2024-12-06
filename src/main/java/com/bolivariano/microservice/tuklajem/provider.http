@@ -10,11 +10,6 @@
 
 # 22004477  Gonzalo Fienco
 
-@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzMyNjE5NDAsImV4cCI6MTczMzI2Mzc0MCwiaWF0IjoxNzMzMjYxOTQwLCJpc3MiOiIqIiwiYXVkIjoiKiJ9.aTBCwZlBPGSfnrU0CSj4tTXVZfwP2fHoasG_eaeXI4Y
-
-### ENPOINT
-@URL = https://servicioscalt.andinave.com:9068
-
 ### GET TOKEN
 POST {{URL}}/api/bc/token HTTP/1.1
 Content-Type: application/json
@@ -24,30 +19,70 @@ Content-Type: application/json
     "password":"Calt2024"
 }
 
+### ENVS
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzM0OTYxNTksImV4cCI6MTczMzQ5Nzk1OSwiaWF0IjoxNzMzNDk2MTU5LCJpc3MiOiIqIiwiYXVkIjoiKiJ9.f9kBhEhY8OMJL4Jc387Qca3qEkNqyK_jjOZHpB9BAYE
+@URL = https://servicioscalt.andinave.com:9068
+@TERMINAL = D00561
+@IDENTIFICADOR = 22004455
+
 ### GET CONSULT
+
 POST {{URL}}/api/bc/ConsultaDeuda HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{TOKEN}}
 
 {
-  "Identificador": "22004477",
-  "terminal": "D00561",
+  "Identificador": "{{IDENTIFICADOR}}",
+  "terminal": "{{TERMINAL}}",
   "fecha": "20190106",
   "hora": "101940"
 }
 
 ### SET PAYMENT
 
+# Este campo lo referenciamos para tener una referencia al momento de reversar el pago
+#IMPORTE 100,000,000.00
+@IMPORTE = 1000000000
+# !IMPORTANTE
+# ?Es de suma importancia rescatar el cod_trx de la respuesta ya que sera necesaria para reversar la transaccion
 POST {{URL}}/api/bc/InformarPago HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{TOKEN}}
 
 {
-  "cod_cliente": "22004477",
-  "terminal": "D00561",
+  "cod_cliente": "{{IDENTIFICADOR}}",
+  "terminal": "{{TERMINAL}}",
   "fecha": "20190106",
   "hora": "101940",
-  "importe": 376900
+  "importe": {{IMPORTE}}
 }
+
+### SET REVERT PAYMENT
+
+# ?Este Campo es referenciado desde el pago junto a todas las variables mencionadas en la peticion
+@COD_TRX = 36988406-DDC0-40BE-9D6F-712D975F6E8F
+
+POST {{URL}}/api/bc/ReversarPago HTTP/1.1
+Content-Type: application/json
+Authorization: Bearer {{TOKEN}}
+
+{
+  "cod_trx":"{{COD_TRX}}", 
+  "cod_cliente": "{{IDENTIFICADOR}}",
+  "terminal": "{{TERMINAL}}",
+  "fecha": "20190106",
+  "hora": "101940",
+  "importe": {{IMPORTE}}
+}
+
+###
+# NOTAS 
+
+# fecha y hora, seran las fechas contables 
+# el proveedor estara enviando valor minimo y maximo
+# validar los campos ingresados de la capa del dominio del proveedor
+# El cambio de mensajes durante la consulta debido a la confucion
+# Revision a la interna de la documentacion proporcionada a la empresa recaudadora
+# Cambio en la estructura de la consulta ( ya no debe devolver el importe y monto abierto)
 
 
