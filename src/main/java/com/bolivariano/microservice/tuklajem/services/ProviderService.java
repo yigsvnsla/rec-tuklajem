@@ -98,9 +98,7 @@ public class ProviderService {
     }
 
     public PaymentResponseDTO setPayment(PaymentRequestDTO paymentRequest) throws ResponseExecption {
-
         log.info("🔵 REALIZANDO CONSULTA A PROVEEDOR");
-
         return this.restClient.post()
                 .uri("/api/bc/InformarPago")
                 .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", this.getToken()))

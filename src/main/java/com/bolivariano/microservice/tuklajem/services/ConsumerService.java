@@ -1,5 +1,7 @@
 package com.bolivariano.microservice.tuklajem.services;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,7 +124,7 @@ public class ConsumerService {
 			messageOutputConsultDTO.setMensajeUsuario(debt.getMsg_respuesta());
 			messageOutputConsultDTO.setIdentificadorDeuda(debt.getIdentificador_deuda());
 			messageOutputConsultDTO.setDatosAdicionales(aditionalsData);
-			messageOutputConsultDTO.setMontoTotal(10.00);
+			// messageOutputConsultDTO.setMontoTotal(10.00);
 
 
 			// Mensaje de salida proceso;
@@ -179,19 +181,25 @@ public class ConsumerService {
 
 			PaymentRequestDTO paymentRequest = new PaymentRequestDTO();
 
+			Integer importe = BigDecimal.valueOf(messageInputProcess.getValorPago())
+                     .setScale(2, RoundingMode.HALF_UP)
+                     .movePointRight(2)
+                     .intValue();
+
 			paymentRequest.setCod_cliente(identifier);
 			paymentRequest.setFecha(messageInputProcess.getFecha());
 			paymentRequest.setHora(messageInputProcess.getFecha());
 			paymentRequest.setTerminal(terminal.getValor());
+			paymentRequest.setImporte(importe);
 
-			PaymentResponseDTO payment = this.providerService.setPaymentMock(paymentRequest);
+			PaymentResponseDTO payment = this.providerService.setPayment(paymentRequest);
 
-			// Mesaje Salida Consulta
+			// Mesaje Salida Pago
 			messageOutputPaymentDTO.setMensajeSistema("CONSULTA EJECUTADA");
 			messageOutputPaymentDTO.setBanderaOffline(false);
 			messageOutputPaymentDTO.setMensajeUsuario(payment.getMsg_respuesta());
 			messageOutputPaymentDTO.setCodigoError(payment.getCod_respuesta());
-			messageOutputPaymentDTO.setMontoTotal(MOUNT_MIN);
+			messageOutputPaymentDTO.setMontoTotal(messageInputProcess.getValorPago());
 			messageOutputPaymentDTO.setFechaDebito(messageInputProcess.getFecha());
 			messageOutputPaymentDTO.setFechaPago(messageInputProcess.getFecha());
 			messageOutputPaymentDTO.setReferencia(identifier);

@@ -1,7 +1,7 @@
 # DATOS PARA LAS PRUEBAS:
 
 # Número    Contrato Nombre
-############################
+# ##########################
 # 22004422  Byron Suarez
 
 # 22004455  Sebastian Rosado
@@ -20,7 +20,7 @@ Content-Type: application/json
 }
 
 ### ENVS
-@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzM0OTYxNTksImV4cCI6MTczMzQ5Nzk1OSwiaWF0IjoxNzMzNDk2MTU5LCJpc3MiOiIqIiwiYXVkIjoiKiJ9.f9kBhEhY8OMJL4Jc387Qca3qEkNqyK_jjOZHpB9BAYE
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzM3NTY5NTUsImV4cCI6MTczMzc1ODc1NSwiaWF0IjoxNzMzNzU2OTU1LCJpc3MiOiIqIiwiYXVkIjoiKiJ9.k6KkRAL20YvPpR4iTu2KoEpPyd1qKgVFMQkFyRp_3lI
 @URL = https://servicioscalt.andinave.com:9068
 @TERMINAL = D00561
 @IDENTIFICADOR = 22004455
@@ -85,4 +85,5 @@ Authorization: Bearer {{TOKEN}}
 # Revision a la interna de la documentacion proporcionada a la empresa recaudadora
 # Cambio en la estructura de la consulta ( ya no debe devolver el importe y monto abierto)
 
-
+# Revisar tiempos de respuesta en la generacion de tokens porque es muy lenta y el procesamiento del tiempo del canal es porpio de ellos y no de nosotros
+# Analizisis para plantear el mecanismo de proceso de conciliacion

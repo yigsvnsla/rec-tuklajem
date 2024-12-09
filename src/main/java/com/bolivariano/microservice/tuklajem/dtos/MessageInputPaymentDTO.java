@@ -32,5 +32,7 @@ public class MessageInputPaymentDTO {
     
     private MessageProcessReceiptDTO recibos;
     private MessageProcessServiceDTO servicio;
+
+    // este campo lo mandan, no se pa que
     private MessageProcessAditionalDataDTO datosAdicionales;
 }

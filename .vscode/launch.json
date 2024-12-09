@@ -2,20 +2,6 @@
     "configurations": [
         {
             "type": "java",
-            "name": "TuklajemApplication",
-            "request": "launch",
-            "mainClass": "com.bolivariano.microservice.tuklajem.TuklajemApplication",
-            "projectName": "rec-mso-pagos-tuklajem"
-        },
-        {
-            "type": "java",
-            "name": "TuklajemApplication",
-            "request": "launch",
-            "mainClass": "com.bolivariano.microservice.tuklajem.TuklajemApplication",
-            "projectName": "agrocalidad"
-        },
-        {
-            "type": "java",
             "name": "Spring Boot Application<tuklajem>",
             "request": "launch",
             "cwd": "${workspaceFolder}",

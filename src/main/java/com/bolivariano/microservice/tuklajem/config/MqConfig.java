@@ -30,10 +30,6 @@ public class MqConfig {
     private String user;
     private String password;
     private Integer port;
-    private Integer pool_jms;
-    private Integer delay_reconnect;
-    private Integer living_time;
-    private Integer char_set;
 
     @Bean
     MQConnectionFactory mqConnectionFactory() throws JMSException {
