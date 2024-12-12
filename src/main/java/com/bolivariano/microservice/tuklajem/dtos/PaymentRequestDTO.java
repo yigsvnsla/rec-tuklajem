@@ -22,7 +22,7 @@ public class PaymentRequestDTO {
 
     private Integer importe;
 
-        public void setFecha(String date){
+    public void setFecha(String date){
         LocalDateTime parsedDate = LocalDateTime.parse(date);
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String formattedDate = parsedDate.format(formatter);

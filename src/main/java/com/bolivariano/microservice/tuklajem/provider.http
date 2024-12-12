@@ -20,7 +20,7 @@ Content-Type: application/json
 }
 
 ### ENVS
-@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzM3NTY5NTUsImV4cCI6MTczMzc1ODc1NSwiaWF0IjoxNzMzNzU2OTU1LCJpc3MiOiIqIiwiYXVkIjoiKiJ9.k6KkRAL20YvPpR4iTu2KoEpPyd1qKgVFMQkFyRp_3lI
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzQwMzcxMTQsImV4cCI6MTczNDAzODkxNCwiaWF0IjoxNzM0MDM3MTE0LCJpc3MiOiIqIiwiYXVkIjoiKiJ9.eGcyacYrgYqft_xxNEIImSSXrl3AeBJDZlrEksDE1eo
 @URL = https://servicioscalt.andinave.com:9068
 @TERMINAL = D00561
 @IDENTIFICADOR = 22004455
@@ -42,7 +42,7 @@ Authorization: Bearer {{TOKEN}}
 
 # Este campo lo referenciamos para tener una referencia al momento de reversar el pago
 #IMPORTE 100,000,000.00
-@IMPORTE = 1000000000
+@IMPORTE = 2000
 # !IMPORTANTE
 # ?Es de suma importancia rescatar el cod_trx de la respuesta ya que sera necesaria para reversar la transaccion
 POST {{URL}}/api/bc/InformarPago HTTP/1.1
@@ -60,7 +60,7 @@ Authorization: Bearer {{TOKEN}}
 ### SET REVERT PAYMENT
 
 # ?Este Campo es referenciado desde el pago junto a todas las variables mencionadas en la peticion
-@COD_TRX = 36988406-DDC0-40BE-9D6F-712D975F6E8F
+@COD_TRX = 1196DB5B-0ADC-43FE-B4E1-D214C0BC0E21
 
 POST {{URL}}/api/bc/ReversarPago HTTP/1.1
 Content-Type: application/json

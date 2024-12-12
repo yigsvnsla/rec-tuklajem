@@ -1,5 +1,5 @@
 ### CONSULTA
-POST https://localhost:9999/message/consult 
+POST http://localhost:9898/message/consult 
 Content-Type: application/json
 
 {
@@ -10,11 +10,14 @@ Content-Type: application/json
     "fecha":"2024-12-03T00:00:00",
     "oficina":"0",
     "secuencial":"54326176",
+    "transaccion":"2057",
+    "usuario":"TcUPI1396206",
     "servicio":{
       "codTipoServicio":"AUTOMOTORES_PEATONES",
       "codigoConvenio":"24473",
       "codigoEmpresa":"24473",
       "codigoTipoBanca":"BP",
+      "identificador":"22004477",
       "codigoTipoIdentificador":"ORDEN",
       "datosAdicionales":{
         "datoAdicional":[
@@ -305,15 +308,13 @@ Content-Type: application/json
             "visible":null
           }
         ]
-      },
-      "identificador":"22004477"
-    },
-    "transaccion":"2057",
-    "usuario":"TcUPI1396206"
+      }
+    }
+
   }
 }
 
-### PAGO INPUT
+### PAGO
 POST http://localhost:9898/message/consult 
 Content-Type: application/json
 
@@ -1002,6 +1003,691 @@ Content-Type: application/json
   }
 }
 
-# PAGO OUTPUT 
 
-# {"codigo":"0","mensajeUsuario":"Transaccion aceptada","estado":"OK","mensajeSalidaEjecutarPago":{"fechaDebito":"2024-12-09T00:00:00","fechaPago":"2024-12-09T00:00:00","codigoError":"0","mensajeUsuario":"Transaccion aceptada","mensajeSistema":"CONSULTA EJECUTADA","montoTotal":20.0,"referencia":"22004466","banderaOffline":false,"datosAdicionales":{"datoAdicional":[{"codigo":"e_prov_req","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"MS_REC_TUKLAJEM_REQ","visible":null,"listasSeleccion":null},{"codigo":"e_prov_resp","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"MS_REC_TUKLAJEM_RESP","visible":null,"listasSeleccion":null},{"codigo":"e_tipo_proceso","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"M","visible":null,"listasSeleccion":null},{"codigo":"e_tipo_ejecucion","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"PB","visible":null,"listasSeleccion":null},{"codigo":"p_terminal","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"term24","visible":null,"listasSeleccion":null},{"codigo":"codAgencia","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"codLocalidad","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"fullName","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"Ramon CedeÃ±o","visible":null,"listasSeleccion":null},{"codigo":"e_srv","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"BOLIVSRV","visible":null,"listasSeleccion":null},{"codigo":"e_term","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"term24","visible":null,"listasSeleccion":null},{"codigo":"e_rol","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"5","visible":null,"listasSeleccion":null},{"codigo":"e_corr","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"N","visible":null,"listasSeleccion":null},{"codigo":"e_ssn_corr","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"0","visible":null,"listasSeleccion":null},{"codigo":"e_mon","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"1","visible":null,"listasSeleccion":null},{"codigo":"e_servicio","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"1","visible":null,"listasSeleccion":null},{"codigo":"e_identificacion","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_debito","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"20.0","visible":null,"listasSeleccion":null},{"codigo":"e_comision_db","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"0.31","visible":null,"listasSeleccion":null},{"codigo":"e_efectivo","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_comision_efe","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_cheque","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_comision_chq","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_autoriza","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"N","visible":null,"listasSeleccion":null},{"codigo":"e_ubi","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_opcion","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"P","visible":null,"listasSeleccion":null},{"codigo":"e_reverso","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_cant_cheques","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_nombre_cta","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_cod_referencia","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_base_imponible","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_factura","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_cod_respuesta","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_cod_grupo","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_cod_grupo","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_nomb_tramite","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_pcodigo_operacion","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_pcodigo_secuencia","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_phoralocal","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"e_cod_consultora","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"","visible":null,"listasSeleccion":null},{"codigo":"vp_s_fecha_contable","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"12/09/2024","visible":null,"listasSeleccion":null},{"codigo":"vp_s_ssn","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":"42275263","visible":null,"listasSeleccion":null},{"codigo":"vp_s_comision","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":null,"visible":null,"listasSeleccion":null},{"codigo":"vp_s_tasa","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":null,"visible":null,"listasSeleccion":null},{"codigo":"vp_s_base_imp","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":null,"visible":null,"listasSeleccion":null},{"codigo":"vp_s_impuesto","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":null,"visible":null,"listasSeleccion":null},{"codigo":"vp_s_empresa","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":null,"visible":null,"listasSeleccion":null},{"codigo":"vp_s_recaudacion","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":null,"visible":null,"listasSeleccion":null},{"codigo":"vp_s_referencia1","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":null,"visible":null,"listasSeleccion":null},{"codigo":"vp_s_referencia2","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":null,"visible":null,"listasSeleccion":null},{"codigo":"vp_s_referencia3","etiqueta":null,"editable":null,"formato":null,"longitud":null,"mascara":null,"regexp":null,"tipo":null,"valor":null,"visible":null,"listasSeleccion":null}]}},"mensajeSalidaConsultarDeuda":null}
+### REVERSO
+POST http://localhost:9898/message/consult 
+Content-Type: application/json
+
+{
+  "tipoFlujo": "REVERSO",
+  "mensajeEntradaEjecutarReverso": {
+    "canal": "IBK",
+    "cuenta": "0005021907",
+    "datosAdicionales": null,
+    "depuracion": null,
+    "esquemaFirma": null,
+    "fechaPago": "2024-12-09",
+    "moneda": "1",
+    "nombreCliente": null,
+    "oficina": "0",
+    "recibos": null,
+    "secuencial": "42275263",
+    "tipoCuenta": "CTE",
+    "transaccion": "2056",
+    "usuario": "ope998",
+    "valorComision": 0.31,
+    "valorPago": 20.5,
+    "servicio": {
+      "codTipoServicio": "AUTOMOTORES_PEATONES",
+      "codigoConvenio": "24473",
+      "codigoEmpresa": "24473",
+      "codigoTipoBanca": "BP",
+      "codigoTipoIdentificador": "ORDEN",
+      "identificador": "22004466",
+      "datosAdicionales": {
+        "datoAdicional": [
+          {
+            "codigo": "e_prov_req",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "MS_REC_TUKLAJEM_REQ",
+            "visible": null
+          },
+          {
+            "codigo": "e_prov_resp",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "MS_REC_TUKLAJEM_RESP",
+            "visible": null
+          },
+          {
+            "codigo": "e_tipo_proceso",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "M",
+            "visible": null
+          },
+          {
+            "codigo": "e_tipo_ejecucion",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "PB",
+            "visible": null
+          },
+          {
+            "codigo": "p_terminal",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "term24",
+            "visible": null
+          },
+          {
+            "codigo": "codAgencia",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "codLocalidad",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "fullName",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "Ramon CedeÃ±o",
+            "visible": null
+          },
+          {
+            "codigo": "e_srv",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "BOLIVSRV",
+            "visible": null
+          },
+          {
+            "codigo": "e_term",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "term24",
+            "visible": null
+          },
+          {
+            "codigo": "e_rol",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "5",
+            "visible": null
+          },
+          {
+            "codigo": "e_corr",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "N",
+            "visible": null
+          },
+          {
+            "codigo": "e_ssn_corr",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "0",
+            "visible": null
+          },
+          {
+            "codigo": "e_mon",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "1",
+            "visible": null
+          },
+          {
+            "codigo": "e_servicio",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "1",
+            "visible": null
+          },
+          {
+            "codigo": "e_identificacion",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_debito",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "20.0",
+            "visible": null
+          },
+          {
+            "codigo": "e_comision_db",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "0.31",
+            "visible": null
+          },
+          {
+            "codigo": "e_efectivo",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_comision_efe",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_cheque",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_comision_chq",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_autoriza",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "N",
+            "visible": null
+          },
+          {
+            "codigo": "e_ubi",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_opcion",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "P",
+            "visible": null
+          },
+          {
+            "codigo": "e_reverso",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_cant_cheques",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_nombre_cta",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_cod_referencia",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_base_imponible",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_factura",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_cod_respuesta",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_cod_grupo",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_cod_grupo",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_nomb_tramite",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_pcodigo_operacion",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_pcodigo_secuencia",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_phoralocal",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "e_cod_consultora",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "",
+            "visible": null
+          },
+          {
+            "codigo": "vp_s_fecha_contable",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "12/09/2024",
+            "visible": null
+          },
+          {
+            "codigo": "vp_s_ssn",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": "42275263",
+            "visible": null
+          },
+          {
+            "codigo": "vp_s_comision",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": null,
+            "visible": null
+          },
+          {
+            "codigo": "vp_s_tasa",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": null,
+            "visible": null
+          },
+          {
+            "codigo": "vp_s_base_imp",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": null,
+            "visible": null
+          },
+          {
+            "codigo": "vp_s_impuesto",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": null,
+            "visible": null
+          },
+          {
+            "codigo": "vp_s_empresa",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": null,
+            "visible": null
+          },
+          {
+            "codigo": "vp_s_recaudacion",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": null,
+            "visible": null
+          },
+          {
+            "codigo": "vp_s_referencia1",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": null,
+            "visible": null
+          },
+          {
+            "codigo": "vp_s_referencia2",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": null,
+            "visible": null
+          },
+          {
+            "codigo": "vp_s_referencia3",
+            "etiqueta": null,
+            "editable": null,
+            "formato": null,
+            "listasSeleccion": null,
+            "longitud": null,
+            "mascara": null,
+            "regexp": null,
+            "tipo": null,
+            "valor": null,
+            "visible": null
+          }
+        ]
+      }
+    }
+  }
+}

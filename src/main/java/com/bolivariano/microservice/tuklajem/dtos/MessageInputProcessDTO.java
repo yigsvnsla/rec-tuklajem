@@ -12,12 +12,10 @@ import java.io.Serializable;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class MessageInputProcessDTO implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-
     private FlowType tipoFlujo;
 
-    // private MessageInputPaymentDTO mensajeEntradaEjecutarReverso;
     private MessageInputConsultDTO mensajeEntradaConsultarDeuda;
     private MessageInputPaymentDTO mensajeEntradaEjecutarPago;
+    private MessageInputRevertPaymentDTO mensajeEntradaEjecutarReverso;
 
 }

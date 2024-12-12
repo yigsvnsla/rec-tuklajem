@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
@@ -16,8 +17,8 @@ import com.bolivariano.microservice.tuklajem.dtos.DebtRequestDTO;
 import com.bolivariano.microservice.tuklajem.dtos.DebtResponseDTO;
 import com.bolivariano.microservice.tuklajem.dtos.PaymentRequestDTO;
 import com.bolivariano.microservice.tuklajem.dtos.PaymentResponseDTO;
-import com.bolivariano.microservice.tuklajem.dtos.RevertPaymentRequestDTO;
-import com.bolivariano.microservice.tuklajem.dtos.RevertPaymentResponseDTO;
+import com.bolivariano.microservice.tuklajem.dtos.RevertResponseDTO;
+import com.bolivariano.microservice.tuklajem.dtos.RevertRequestDTO;
 import com.bolivariano.microservice.tuklajem.dtos.SingInDTO;
 import com.bolivariano.microservice.tuklajem.dtos.TokenDTO;
 import com.bolivariano.microservice.tuklajem.exception.ResponseExecption;
@@ -99,7 +100,8 @@ public class ProviderService {
 
     public PaymentResponseDTO setPayment(PaymentRequestDTO paymentRequest) throws ResponseExecption {
         log.info("🔵 REALIZANDO CONSULTA A PROVEEDOR");
-        return this.restClient.post()
+        return this.restClient
+                .post()
                 .uri("/api/bc/InformarPago")
                 .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", this.getToken()))
                 .body(paymentRequest)
@@ -120,15 +122,16 @@ public class ProviderService {
                 .getBody();
     }
 
-    public RevertPaymentResponseDTO revertPayment(RevertPaymentRequestDTO revertPayment) throws ResponseExecption {
+    public RevertResponseDTO setRevert(RevertRequestDTO revertPayment) throws ResponseExecption {
 
-        log.info("🔵 REALIZANDO CONSULTA A PROVEEDOR");
-
-        return this.restClient.post()
+        log.info("🔵 REALIZANDO REVERSO A PROVEEDOR");
+        ResponseEntity<RevertResponseDTO> _response = this.restClient
+                .post()
                 .uri("/api/bc/ReversarPago")
                 .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", this.getToken()))
                 .body(revertPayment)
                 .retrieve()
+                
                 .onStatus(HttpStatusCode::is2xxSuccessful, (request, response) -> {
                     log.info("🟢 RESPUESTA DE PROVEEDOR");
                 })
@@ -141,8 +144,15 @@ public class ProviderService {
                     throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()),
                             "ERROR CONSULTA A PROVEEDOR");
                 })
-                .toEntity(RevertPaymentResponseDTO.class)
-                .getBody();
+                .onStatus(HttpStatusCode::isError,(request, response) -> {
+                    log.error("🔴 ERROR DE PROVEEDOR");
+                    throw new ResponseExecption(HttpStatus.valueOf(response.getStatusText()), "ERROR DE PROVEEDOR");
+                })
+                .toEntity(RevertResponseDTO.class);
+
+                
+
+                return _response.getBody();
     }
 
     // DATA BURN

@@ -15,12 +15,16 @@ import com.bolivariano.microservice.tuklajem.dtos.MessageAditionalDataDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageInputConsultDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageInputPaymentDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageInputProcessDTO;
+import com.bolivariano.microservice.tuklajem.dtos.MessageInputRevertPaymentDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageOutputConsultDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageOutputPaymentDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageOutputProcessDTO;
+import com.bolivariano.microservice.tuklajem.dtos.MessageOutputRevertPaymentDTO;
 import com.bolivariano.microservice.tuklajem.dtos.MessageProcessAditionalDataDTO;
 import com.bolivariano.microservice.tuklajem.dtos.PaymentRequestDTO;
 import com.bolivariano.microservice.tuklajem.dtos.PaymentResponseDTO;
+import com.bolivariano.microservice.tuklajem.dtos.RevertResponseDTO;
+import com.bolivariano.microservice.tuklajem.dtos.RevertRequestDTO;
 import com.bolivariano.microservice.tuklajem.enums.MessageStatus;
 import com.bolivariano.microservice.tuklajem.exception.ResponseExecption;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -58,7 +62,7 @@ public class ConsumerService {
 					this.payment(messageInputProcessDTO.getMensajeEntradaEjecutarPago(), correlationId);
 					break;
 				case REVERSO:
-					// this.revertPayment();
+					this.revert(messageInputProcessDTO.getMensajeEntradaEjecutarReverso(), correlationId);
 					break;
 				default:
 					throw new ResponseExecption(HttpStatus.NOT_ACCEPTABLE, "type operation null");
@@ -91,21 +95,21 @@ public class ConsumerService {
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 			MessageOutputConsultDTO messageOutputConsultDTO = new MessageOutputConsultDTO();
 
-			DebtRequestDTO debtRequest = new DebtRequestDTO();
-
+			
 			String identifier = messageInputProcess
-					.getServicio()
-					.getIdentificador();
-
+			.getServicio()
+			.getIdentificador();
+			
 			MessageProcessAditionalDataDTO aditionalsData = messageInputProcess
-					.getServicio()
-					.getDatosAdicionales();
-
+			.getServicio()
+			.getDatosAdicionales();
+			
 			MessageAditionalDataDTO terminal = Arrays.stream(aditionalsData.getDatoAdicional())
-					.filter(item -> item.getCodigo().equals("e_term"))
-					.findFirst()
-					.orElse(null);
-
+			.filter(item -> item.getCodigo().equals("e_term"))
+			.findFirst()
+			.orElse(null);
+			
+			DebtRequestDTO debtRequest = new DebtRequestDTO();
 			// Data Binding
 			debtRequest.setIdentificador(identifier);
 			debtRequest.setTerminal(terminal.getValor());
@@ -179,12 +183,13 @@ public class ConsumerService {
 					.findFirst()
 					.orElse(null);
 
-			PaymentRequestDTO paymentRequest = new PaymentRequestDTO();
-
+					
 			Integer importe = BigDecimal.valueOf(messageInputProcess.getValorPago())
-                     .setScale(2, RoundingMode.HALF_UP)
-                     .movePointRight(2)
-                     .intValue();
+					.setScale(2, RoundingMode.HALF_UP)
+					.movePointRight(2)
+					.intValue();
+					
+			PaymentRequestDTO paymentRequest = new PaymentRequestDTO();
 
 			paymentRequest.setCod_cliente(identifier);
 			paymentRequest.setFecha(messageInputProcess.getFecha());
@@ -232,7 +237,82 @@ public class ConsumerService {
 
 			jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE, messageOutputProcessDTO, correlationId);
 		}
+	}
 
+	private void revert(MessageInputRevertPaymentDTO messageInputProcess, String correlationId) throws JsonProcessingException {
+		try {
+			log.info("📤 INICIANDO PROCESO DE REVERSO");
+
+			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
+			MessageOutputRevertPaymentDTO messageOutputRevertPaymentDTO = new MessageOutputRevertPaymentDTO();
+
+			String identifier = messageInputProcess
+				.getServicio()
+				.getIdentificador();
+
+			MessageProcessAditionalDataDTO aditionalsData = messageInputProcess
+					.getServicio()
+					.getDatosAdicionales();
+
+			// MessageAditionalDataDTO terminal = Arrays.stream(aditionalsData.getDatoAdicional())
+			// 		.filter(item -> item.getCodigo().equals("e_term"))
+			// 		.findFirst()
+			// 		.orElse(null);
+
+			// Integer importe = BigDecimal.valueOf(messageInputProcess.getValorPago())
+			// 		.setScale(2, RoundingMode.HALF_UP)
+			// 		.movePointRight(2)
+			// 		.intValue();
+
+			RevertRequestDTO revertRequest = new RevertRequestDTO();
+
+			revertRequest.setImporte(3000);
+			revertRequest.setCod_cliente("22004455");
+			revertRequest.setTerminal("D00561");
+			revertRequest.setCod_trx("36988406-DDC0-40BE-9D6F-712D975F6E8F");
+			revertRequest.setHora("20190106");
+			revertRequest.setFecha("101940");
+		
+			RevertResponseDTO revertPayment = this.providerService.setRevert(revertRequest);
+
+			// Mesaje Salida Reversos
+			messageOutputRevertPaymentDTO.setMensajeSistema("CONSULTA EJECUTADA");
+			messageOutputRevertPaymentDTO.setBanderaOffline(false);
+			messageOutputRevertPaymentDTO.setMensajeUsuario(revertPayment.getMsg_respuesta());
+			messageOutputRevertPaymentDTO.setCodigoError("0"); //revertPayment.getCod_respuesta()
+			messageOutputRevertPaymentDTO.setMontoTotal(messageInputProcess.getValorPago());
+			messageOutputRevertPaymentDTO.setFechaDebito(messageInputProcess.getFechaPago());
+			messageOutputRevertPaymentDTO.setFechaPago(messageInputProcess.getFechaPago());
+			messageOutputRevertPaymentDTO.setReferencia(identifier);
+			messageOutputRevertPaymentDTO.setDatosAdicionales(aditionalsData);
+
+			// Mensaje de salida proceso;
+			messageOutputProcessDTO.setEstado(MessageStatus.OK);
+			messageOutputProcessDTO.setCodigo("0"); //revertPayment.getCod_respuesta()
+			messageOutputProcessDTO.setMensajeUsuario(revertPayment.getMsg_respuesta());
+			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputRevertPaymentDTO);
+
+			jmsService.sendResponseMessage(
+					MqConfig.CHANNEL_RESPONSE,
+					messageOutputProcessDTO,
+					correlationId);
+
+		} catch (Exception e) {
+			log.error("❌ ERROR AL GENERAR REVERSO: {}", e.getMessage(), e);
+			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
+			MessageOutputPaymentDTO messageOutputConsultDTO = new MessageOutputPaymentDTO();
+
+			messageOutputConsultDTO.setCodigoError("300");
+			messageOutputConsultDTO.setMensajeUsuario(e.getMessage());
+
+			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
+			messageOutputProcessDTO.setCodigo("0");
+			messageOutputProcessDTO.setMensajeUsuario("CONSULTA EJECUTADA");
+
+			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputConsultDTO);
+
+			jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE, messageOutputProcessDTO, correlationId);
+		}
 	}
 
 }
