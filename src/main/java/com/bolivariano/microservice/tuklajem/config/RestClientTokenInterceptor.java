@@ -1,28 +1,28 @@
-package com.bolivariano.microservice.tuklajem.config;
+// package com.bolivariano.microservice.tuklajem.config;
 
-import java.io.IOException;
+// import java.io.IOException;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.client.ClientHttpRequestExecution;
-import org.springframework.http.client.ClientHttpRequestInterceptor;
-import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.stereotype.Component;
+// import org.springframework.http.HttpHeaders;
+// import org.springframework.http.HttpRequest;
+// import org.springframework.http.client.ClientHttpRequestExecution;
+// import org.springframework.http.client.ClientHttpRequestInterceptor;
+// import org.springframework.http.client.ClientHttpResponse;
+// import org.springframework.stereotype.Component;
 
-@Component
-public class RestClientTokenInterceptor implements ClientHttpRequestInterceptor {
+// @Component
+// public class RestClientTokenInterceptor implements ClientHttpRequestInterceptor {
 
-    @Override
-    @SuppressWarnings("null")
-    public ClientHttpResponse intercept(HttpRequest request,  byte[] body, ClientHttpRequestExecution execution) throws IOException {
+//     @Override
+//     @SuppressWarnings("null")
+//     public ClientHttpResponse intercept(HttpRequest request,  byte[] body, ClientHttpRequestExecution execution) throws IOException {
         
       
-        HttpHeaders headers = request.getHeaders();
-        headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + "");
-        return execution.execute(request, body);
+//         HttpHeaders headers = request.getHeaders();
+//         headers.add(HttpHeaders.AUTHORIZATION, "Bearer " + "");
+//         return execution.execute(request, body);
         
         
         
-    }
+//     }
     
-}
+// }

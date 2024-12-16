@@ -254,24 +254,25 @@ public class ConsumerService {
 					.getServicio()
 					.getDatosAdicionales();
 
-			// MessageAditionalDataDTO terminal = Arrays.stream(aditionalsData.getDatoAdicional())
-			// 		.filter(item -> item.getCodigo().equals("e_term"))
-			// 		.findFirst()
-			// 		.orElse(null);
+			String terminal = Arrays.stream(aditionalsData.getDatoAdicional())
+					.filter(item -> item.getCodigo().equals("e_term"))
+					.findFirst()
+					.orElse(null)
+					.getValor();
 
-			// Integer importe = BigDecimal.valueOf(messageInputProcess.getValorPago())
-			// 		.setScale(2, RoundingMode.HALF_UP)
-			// 		.movePointRight(2)
-			// 		.intValue();
+			Integer importe = BigDecimal.valueOf(messageInputProcess.getValorPago())
+					.setScale(2, RoundingMode.HALF_UP)
+					.movePointRight(2)
+					.intValue();
 
 			RevertRequestDTO revertRequest = new RevertRequestDTO();
 
-			revertRequest.setImporte(3000);
-			revertRequest.setCod_cliente("22004455");
-			revertRequest.setTerminal("D00561");
+			revertRequest.setImporte(importe);
+			revertRequest.setCod_cliente(identifier);
+			revertRequest.setTerminal(terminal);
 			revertRequest.setCod_trx("36988406-DDC0-40BE-9D6F-712D975F6E8F");
-			revertRequest.setHora("20190106");
-			revertRequest.setFecha("101940");
+			revertRequest.setFecha(messageInputProcess.getFechaPago());
+			revertRequest.setHora(messageInputProcess.getFechaPago());
 		
 			RevertResponseDTO revertPayment = this.providerService.setRevert(revertRequest);
 
