@@ -20,7 +20,7 @@ Content-Type: application/json
 }
 
 ### ENVS
-@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzQ0Njg0OTUsImV4cCI6MTczNDQ3MDI5NSwiaWF0IjoxNzM0NDY4NDk1LCJpc3MiOiIqIiwiYXVkIjoiKiJ9.2rpbJzUjEmO7tr9x94XX9Ym66YEGxcUrCiXU9AUbyYs
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzQ0NzM0NzMsImV4cCI6MTczNDQ3NTI3MywiaWF0IjoxNzM0NDczNDczLCJpc3MiOiIqIiwiYXVkIjoiKiJ9.5iz91Cl_wi44uxxmzL_A8plOUCs1BUFUNueVuhNeHCA
 @URL = https://servicioscalt.andinave.com:9068
 @TERMINAL = D00561
 @IDENTIFICADOR = 22004455
@@ -53,7 +53,7 @@ Authorization: Bearer {{TOKEN}}
   "cod_cliente": "{{IDENTIFICADOR}}",
   "terminal": "{{TERMINAL}}",
   "fecha": "20241217",
-  "hora": "235959",
+  "hora": "181000",
   "importe": {{IMPORTE}}
 }
  

@@ -2,6 +2,7 @@ package com.bolivariano.microservice.tuklajem.services;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,6 +45,8 @@ public class ConsumerService {
 
 	@Autowired
 	private ProviderService providerService;
+
+	private static LocalDateTime TEST_HORA = LocalDateTime.now().plusMinutes(5);
 
 	public void stage(String message, String correlationId) throws JsonProcessingException {
 		try {
@@ -110,8 +113,10 @@ public class ConsumerService {
 			// Data Binding
 			debtRequest.setIdentificador(identifier);
 			debtRequest.setTerminal(terminal.getValor());
-			debtRequest.setFecha(messageInputProcess.getFecha());
-			debtRequest.setHora(messageInputProcess.getFecha());
+			// debtRequest.setFecha(messageInputProcess.getFecha());
+			// debtRequest.setHora(messageInputProcess.getFecha());
+			debtRequest.setFecha(TEST_HORA.toString());
+			debtRequest.setHora(TEST_HORA.toString());
 
 			DebtResponseDTO debt = this.providerService.getDebt(debtRequest);
 
@@ -186,9 +191,9 @@ public class ConsumerService {
 
 			PaymentRequestDTO paymentRequest = new PaymentRequestDTO();
 
+			paymentRequest.setTerminal(terminal.getValor());
 			paymentRequest.setFecha(messageInputProcess.getFecha());
 			paymentRequest.setHora(messageInputProcess.getFecha());
-			paymentRequest.setTerminal(terminal.getValor());
 			paymentRequest.setCod_cliente(identifier);
 			paymentRequest.setImporte(importe);
 
