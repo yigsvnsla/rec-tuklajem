@@ -15,4 +15,6 @@ public class DebtResponseDTO {
     private String identificador_deuda;
     private Integer importe;
     private Boolean monto_abierto;
+    private Integer valor_minimo;
+    private Integer valor_maximo;
 }

@@ -4,12 +4,7 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
 import org.springframework.web.client.RestClientResponseException;
@@ -117,7 +112,8 @@ public class ProviderService {
         debResponse.setIdentificador_deuda("4");
         debResponse.setImporte(376150);
         debResponse.setMonto_abierto(false);
-
+        debResponse.setValor_minimo(20);
+        debResponse.setValor_maximo(1000);
         return debResponse;
     }
 
@@ -131,7 +127,7 @@ public class ProviderService {
         paymentResponse.setCod_trx("000000001");
         paymentResponse.setCod_respuesta("0");
         paymentResponse.setMsg_respuesta("Transaccion aceptada");
-
+        
         return paymentResponse;
     }
 }

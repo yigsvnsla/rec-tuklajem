@@ -326,7 +326,7 @@ Content-Type: application/json
     "datosAdicionales": null,
     "depuracion": null,
     "esquemaFirma": null,
-    "fechaPago": "2024-12-09",
+    "fechaPago": "2024-12-17",
     "moneda": "1",
     "nombreCliente": null,
     "oficina": "0",
@@ -337,7 +337,7 @@ Content-Type: application/json
     "usuario": "ope998",
     "valorComision": 0.31,
     "valorPago": 20.5,
-    "fecha": "2024-12-09T00:00:00",
+    "fecha": "2024-12-17T23:59:00",
     "servicio": {
       "codTipoServicio": "AUTOMOTORES_PEATONES",
       "codigoConvenio": "24473",
