@@ -8,6 +8,7 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestClientException;
 
 import com.bolivariano.microservice.tuklajem.config.MqConfig;
 import com.bolivariano.microservice.tuklajem.dtos.DebtRequestDTO;
@@ -205,7 +206,7 @@ public class ConsumerService {
 			paymentRequest.setCod_cliente(identifier);
 			paymentRequest.setImporte(importe);
 
-			PaymentResponseDTO payment = this.providerService.setPaymentMock(paymentRequest);
+			PaymentResponseDTO payment = this.providerService.setPayment(paymentRequest);
 
 			// ? Buscamos y Actualizamos el e_cod_respuesta que hara referencia a el
 			// CAMP_ALT1
@@ -259,6 +260,10 @@ public class ConsumerService {
 			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputConsultDTO);
 
 			jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE, messageOutputProcessDTO, correlationId);
+
+			if (e instanceof RestClientException) {
+				
+			}
 		}
 	}
 
@@ -290,7 +295,7 @@ public class ConsumerService {
 					.intValue();
 
 			String trxCode = Arrays.stream(aditionalsData.getDatoAdicional())
-					.filter(item -> item.getCodigo().equals("e_term"))
+					.filter(item -> item.getCodigo().equals("e_cod_respuesta"))
 					.findFirst()
 					.orElse(null)
 					.getValor();
@@ -351,4 +356,16 @@ public class ConsumerService {
 		}
 	}
 
+
 }
+
+
+
+// PagoReversoDto pagoReversoDto = new PagoReversoDto();
+// if ( (e instanceof SocketTimeoutException ||e instanceof ConnectTimeoutException) || ( e.getMessage() != null && (e.getMessage().contains(COULD_NOT_RECEIVE_MSG) || e.getMessage().contains(JAVA_SOCKET_TIMEOUT_EXP) || e.getMessage().contains(READ_TIME_OUT) || e.getMessage().contains(IO_NETTY_READ_TIMEOUT_EXP)))) {
+// 	pagoReversoDto.setCodigoMensaje(REV_001);
+// 	pagoReversoDto.setMensaje(EMPRESA_DESTINO_NO_DISPONIBLE);
+// } else if (e instanceof ConnectException) {
+// 	pagoReversoDto.setCodigoMensaje(CODERROR_PROVEEDOR);
+// 	pagoReversoDto.setMensaje(ERROR_PROVEEDOR);
+// }
