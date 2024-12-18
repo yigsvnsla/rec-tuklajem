@@ -121,14 +121,15 @@ public class ConsumerService {
 			DebtResponseDTO debt = this.providerService.getDebt(debtRequest);
 
 			// Mesaje Salida Consulta
-			messageOutputConsultDTO.setMontoMinimo(debt.getValor_minimo().doubleValue());
-			messageOutputConsultDTO.setLimiteMontoMinimo(debt.getValor_minimo().doubleValue());
-			messageOutputConsultDTO.setLimiteMontoMaximo(debt.getValor_maximo().doubleValue());
+			// ? Los valores monto minimo y maximo estan al revez porque el provvedor los manda asi, porque?... nose...
+			messageOutputConsultDTO.setLimiteMontoMinimo(debt.getValor_maximo().doubleValue());
+			messageOutputConsultDTO.setLimiteMontoMaximo(debt.getValor_minimo().doubleValue());
 			messageOutputConsultDTO.setMensajeSistema("CONSULTA EJECUTADA");
+			messageOutputConsultDTO.setMontoMinimo(debt.getValor_maximo().doubleValue()); 
+			messageOutputConsultDTO.setIdentificadorDeuda(debt.getIdentificador_deuda());
+			messageOutputConsultDTO.setMensajeUsuario(debt.getMsg_respuesta());
 			messageOutputConsultDTO.setCodigoError(debt.getCod_respuesta());
 			messageOutputConsultDTO.setNombreCliente(debt.getNom_cliente());
-			messageOutputConsultDTO.setMensajeUsuario(debt.getMsg_respuesta());
-			messageOutputConsultDTO.setIdentificadorDeuda(debt.getIdentificador_deuda());
 			messageOutputConsultDTO.setDatosAdicionales(aditionalsData);
 			// messageOutputConsultDTO.setMontoTotal(10.00);
 
