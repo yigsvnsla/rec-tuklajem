@@ -27,6 +27,7 @@ import com.bolivariano.microservice.tuklajem.dtos.PaymentResponseDTO;
 import com.bolivariano.microservice.tuklajem.dtos.RevertResponseDTO;
 import com.bolivariano.microservice.tuklajem.dtos.RevertRequestDTO;
 import com.bolivariano.microservice.tuklajem.enums.MessageStatus;
+import com.bolivariano.microservice.tuklajem.enums.ProviderErrorCode;
 import com.bolivariano.microservice.tuklajem.exception.ResponseExecption;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -45,8 +46,6 @@ public class ConsumerService {
 
 	@Autowired
 	private ProviderService providerService;
-
-	private static LocalDateTime TEST_HORA = LocalDateTime.now().plusMinutes(5);
 
 	public void stage(String message, String correlationId) throws JsonProcessingException {
 		try {
@@ -113,25 +112,29 @@ public class ConsumerService {
 			// Data Binding
 			debtRequest.setIdentificador(identifier);
 			debtRequest.setTerminal(terminal.getValor());
-			// debtRequest.setFecha(messageInputProcess.getFecha());
-			// debtRequest.setHora(messageInputProcess.getFecha());
-			debtRequest.setFecha(TEST_HORA.toString());
-			debtRequest.setHora(TEST_HORA.toString());
+			debtRequest.setFecha(messageInputProcess.getFecha());
+			debtRequest.setHora(messageInputProcess.getFecha());
+			// debtRequest.setFecha(TEST_HORA.toString());
+			// debtRequest.setHora(TEST_HORA.toString());
 
 			DebtResponseDTO debt = this.providerService.getDebt(debtRequest);
 
-			// Mesaje Salida Consulta
-			// ? Los valores monto minimo y maximo estan al revez porque el provvedor los manda asi, porque?... nose...
-			messageOutputConsultDTO.setLimiteMontoMinimo(debt.getValor_maximo().doubleValue());
-			messageOutputConsultDTO.setLimiteMontoMaximo(debt.getValor_minimo().doubleValue());
-			messageOutputConsultDTO.setMensajeSistema("CONSULTA EJECUTADA");
-			messageOutputConsultDTO.setMontoMinimo(debt.getValor_maximo().doubleValue()); 
-			messageOutputConsultDTO.setIdentificadorDeuda(debt.getIdentificador_deuda());
-			messageOutputConsultDTO.setMensajeUsuario(debt.getMsg_respuesta());
-			messageOutputConsultDTO.setCodigoError(debt.getCod_respuesta());
-			messageOutputConsultDTO.setNombreCliente(debt.getNom_cliente());
-			messageOutputConsultDTO.setDatosAdicionales(aditionalsData);
-			// messageOutputConsultDTO.setMontoTotal(10.00);
+
+			if (debt.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
+				// Mesaje Salida Consulta
+				// ? Los valores monto minimo y maximo estan al revez porque el provvedor los manda asi, porque?... nose...	
+				messageOutputConsultDTO.setMontoMinimo(debt.getValor_minimo().doubleValue());
+				messageOutputConsultDTO.setLimiteMontoMinimo(debt.getValor_minimo().doubleValue());
+				messageOutputConsultDTO.setLimiteMontoMaximo(debt.getValor_maximo().doubleValue());
+				messageOutputConsultDTO.setMensajeSistema("CONSULTA EJECUTADA");
+				messageOutputConsultDTO.setCodigoError(debt.getCod_respuesta());
+				messageOutputConsultDTO.setNombreCliente(debt.getNom_cliente());
+				messageOutputConsultDTO.setMensajeUsuario(debt.getMsg_respuesta());
+				messageOutputConsultDTO.setIdentificadorDeuda(debt.getIdentificador_deuda());
+				messageOutputConsultDTO.setDatosAdicionales(aditionalsData);
+				// messageOutputConsultDTO.setMontoTotal(10.00);
+
+			}
 
 			// Mensaje de salida proceso;
 			messageOutputProcessDTO.setEstado(MessageStatus.OK);
@@ -155,7 +158,7 @@ public class ConsumerService {
 
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
 			messageOutputProcessDTO.setCodigo("0");
-			messageOutputProcessDTO.setMensajeUsuario("CONSULTA EJECUTADA");
+			messageOutputProcessDTO.setMensajeUsuario("CONSULTA NO EJECUTADA");
 
 			messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
 
@@ -192,15 +195,18 @@ public class ConsumerService {
 
 			PaymentRequestDTO paymentRequest = new PaymentRequestDTO();
 
+			LocalDateTime TEST_HORA = LocalDateTime.now().plusMinutes(5);
+
 			paymentRequest.setTerminal(terminal.getValor());
-			paymentRequest.setFecha(messageInputProcess.getFecha());
-			paymentRequest.setHora(messageInputProcess.getFecha());
+			paymentRequest.setFecha(TEST_HORA.toString()); // ! hay que quitar esta vaina, es un parche
+			paymentRequest.setHora(TEST_HORA.toString()); // ! hay que quitar esta vaina, es un parche
 			paymentRequest.setCod_cliente(identifier);
 			paymentRequest.setImporte(importe);
 
 			PaymentResponseDTO payment = this.providerService.setPayment(paymentRequest);
 
-			// ? Buscamos y Actualizamos el e_cod_respuesta que hara referencia a el CAMP_ALT1
+			// ? Buscamos y Actualizamos el e_cod_respuesta que hara referencia a el
+			// CAMP_ALT1
 
 			MessageAditionalDataDTO[] trx = Arrays.stream(aditionalsData.getDatoAdicional())
 					.map(item -> {
@@ -211,20 +217,19 @@ public class ConsumerService {
 					})
 					.toArray(MessageAditionalDataDTO[]::new);
 
-					
-			aditionalsData.setDatoAdicional(trx);
-			System.out.println(aditionalsData.getDatoAdicional());
-
-			// Mesaje Salida Pago
-			messageOutputPaymentDTO.setMensajeSistema("CONSULTA EJECUTADA");
-			messageOutputPaymentDTO.setMontoTotal(messageInputProcess.getValorPago());
-			messageOutputPaymentDTO.setMensajeUsuario(payment.getMsg_respuesta());
-			messageOutputPaymentDTO.setFechaDebito(messageInputProcess.getFecha());
-			messageOutputPaymentDTO.setFechaPago(messageInputProcess.getFecha());
-			messageOutputPaymentDTO.setCodigoError(payment.getCod_respuesta());
-			messageOutputPaymentDTO.setBanderaOffline(false);
-			messageOutputPaymentDTO.setDatosAdicionales(aditionalsData);
-			messageOutputPaymentDTO.setReferencia(identifier);
+			if (payment.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
+				aditionalsData.setDatoAdicional(trx);
+				// Mesaje Salida Pago
+				messageOutputPaymentDTO.setMensajeSistema("PAGO EJECUTADA");
+				messageOutputPaymentDTO.setMontoTotal(messageInputProcess.getValorPago());
+				messageOutputPaymentDTO.setMensajeUsuario(payment.getMsg_respuesta());
+				messageOutputPaymentDTO.setFechaDebito(messageInputProcess.getFecha());
+				messageOutputPaymentDTO.setFechaPago(messageInputProcess.getFecha());
+				messageOutputPaymentDTO.setCodigoError(payment.getCod_respuesta());
+				messageOutputPaymentDTO.setBanderaOffline(false);
+				messageOutputPaymentDTO.setDatosAdicionales(aditionalsData);
+				messageOutputPaymentDTO.setReferencia(identifier);
+			}
 
 			// Mensaje de salida proceso;
 			messageOutputProcessDTO.setEstado(MessageStatus.OK);
@@ -247,7 +252,7 @@ public class ConsumerService {
 
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
 			messageOutputProcessDTO.setCodigo("0");
-			messageOutputProcessDTO.setMensajeUsuario("CONSULTA EJECUTADA");
+			messageOutputProcessDTO.setMensajeUsuario("PAGO NO EJECUTADA");
 
 			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputConsultDTO);
 
@@ -293,16 +298,19 @@ public class ConsumerService {
 
 			RevertResponseDTO revertPayment = this.providerService.setRevert(revertRequest);
 
-			// Mesaje Salida Reversos
-			messageOutputRevertPaymentDTO.setMensajeSistema("CONSULTA EJECUTADA");
-			messageOutputRevertPaymentDTO.setBanderaOffline(false);
-			messageOutputRevertPaymentDTO.setMensajeUsuario(revertPayment.getMsg_respuesta());
-			messageOutputRevertPaymentDTO.setCodigoError("0"); // revertPayment.getCod_respuesta()
-			messageOutputRevertPaymentDTO.setMontoTotal(messageInputProcess.getValorPago());
-			messageOutputRevertPaymentDTO.setFechaDebito(messageInputProcess.getFechaPago());
-			messageOutputRevertPaymentDTO.setFechaPago(messageInputProcess.getFechaPago());
-			messageOutputRevertPaymentDTO.setReferencia(identifier);
-			messageOutputRevertPaymentDTO.setDatosAdicionales(aditionalsData);
+			 // ! REPORTAR A EL PROVEEDOR DE QUE EN CONSULTA Y PAGO ESTO ES UN STRING XD
+			if (revertPayment.getCod_respuesta().equals(Integer.parseInt(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode()))) {
+				// Mesaje Salida Reversos
+				messageOutputRevertPaymentDTO.setMensajeSistema("REVERSO EJECUTADA");
+				messageOutputRevertPaymentDTO.setMensajeUsuario(revertPayment.getMsg_respuesta());
+				messageOutputRevertPaymentDTO.setFechaDebito(messageInputProcess.getFechaPago());
+				messageOutputRevertPaymentDTO.setMontoTotal(messageInputProcess.getValorPago());
+				messageOutputRevertPaymentDTO.setFechaPago(messageInputProcess.getFechaPago());
+				messageOutputRevertPaymentDTO.setBanderaOffline(false);
+				messageOutputRevertPaymentDTO.setDatosAdicionales(aditionalsData);
+				messageOutputRevertPaymentDTO.setCodigoError("0"); // revertPayment.getCod_respuesta()
+				messageOutputRevertPaymentDTO.setReferencia(identifier);
+			}
 
 			// Mensaje de salida proceso;
 			messageOutputProcessDTO.setEstado(MessageStatus.OK);
@@ -325,7 +333,7 @@ public class ConsumerService {
 
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
 			messageOutputProcessDTO.setCodigo("0");
-			messageOutputProcessDTO.setMensajeUsuario("CONSULTA EJECUTADA");
+			messageOutputProcessDTO.setMensajeUsuario("REVERSO NO EJECUTADA");
 
 			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputConsultDTO);
 
