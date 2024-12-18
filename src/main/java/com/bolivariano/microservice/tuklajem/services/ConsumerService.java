@@ -119,13 +119,15 @@ public class ConsumerService {
 
 			DebtResponseDTO debt = this.providerService.getDebt(debtRequest);
 
-
 			if (debt.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
 				// Mesaje Salida Consulta
-				// ? Los valores monto minimo y maximo estan al revez porque el provvedor los manda asi, porque?... nose...	
-				messageOutputConsultDTO.setMontoMinimo(debt.getValor_minimo().doubleValue());
-				messageOutputConsultDTO.setLimiteMontoMinimo(debt.getValor_minimo().doubleValue());
-				messageOutputConsultDTO.setLimiteMontoMaximo(debt.getValor_maximo().doubleValue());
+				// ? Los valores monto minimo y maximo estan al revez porque el provvedor los
+				// ? manda asi, porque?... nose...
+				messageOutputConsultDTO.setMontoMinimo(debt.getValor_maximo().doubleValue());
+				messageOutputConsultDTO.setLimiteMontoMinimo(debt.getValor_maximo().doubleValue());
+				messageOutputConsultDTO.setLimiteMontoMaximo(debt.getValor_minimo().doubleValue());
+
+				//* ------------------- */
 				messageOutputConsultDTO.setMensajeSistema("CONSULTA EJECUTADA");
 				messageOutputConsultDTO.setCodigoError(debt.getCod_respuesta());
 				messageOutputConsultDTO.setNombreCliente(debt.getNom_cliente());
@@ -223,8 +225,8 @@ public class ConsumerService {
 				messageOutputPaymentDTO.setMensajeSistema("PAGO EJECUTADA");
 				messageOutputPaymentDTO.setMontoTotal(messageInputProcess.getValorPago());
 				messageOutputPaymentDTO.setMensajeUsuario(payment.getMsg_respuesta());
-				messageOutputPaymentDTO.setFechaDebito(messageInputProcess.getFecha());
-				messageOutputPaymentDTO.setFechaPago(messageInputProcess.getFecha());
+				messageOutputPaymentDTO.setFechaDebito(TEST_HORA.toString());
+				messageOutputPaymentDTO.setFechaPago(TEST_HORA.toString());
 				messageOutputPaymentDTO.setCodigoError(payment.getCod_respuesta());
 				messageOutputPaymentDTO.setBanderaOffline(false);
 				messageOutputPaymentDTO.setDatosAdicionales(aditionalsData);
@@ -243,7 +245,7 @@ public class ConsumerService {
 					correlationId);
 
 		} catch (Exception e) {
-			log.error("❌ ERROR AL GENERAR CONSULTA: {}", e.getMessage(), e);
+			log.error("❌ ERROR AL GENERAR PAGO: {}", e.getMessage(), e);
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 			MessageOutputPaymentDTO messageOutputConsultDTO = new MessageOutputPaymentDTO();
 
@@ -298,8 +300,9 @@ public class ConsumerService {
 
 			RevertResponseDTO revertPayment = this.providerService.setRevert(revertRequest);
 
-			 // ! REPORTAR A EL PROVEEDOR DE QUE EN CONSULTA Y PAGO ESTO ES UN STRING XD
-			if (revertPayment.getCod_respuesta().equals(Integer.parseInt(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode()))) {
+			// ! REPORTAR A EL PROVEEDOR DE QUE EN CONSULTA Y PAGO ESTO ES UN STRING XD
+			if (revertPayment.getCod_respuesta()
+					.equals(Integer.parseInt(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode()))) {
 				// Mesaje Salida Reversos
 				messageOutputRevertPaymentDTO.setMensajeSistema("REVERSO EJECUTADA");
 				messageOutputRevertPaymentDTO.setMensajeUsuario(revertPayment.getMsg_respuesta());
