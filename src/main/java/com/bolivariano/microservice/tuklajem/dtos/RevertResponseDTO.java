@@ -13,5 +13,5 @@ public class RevertResponseDTO {
     private String cod_trx;
     private String msg_respuesta;
 
-    private Integer cod_respuesta;
+    private Integer cod_respuesta; // ! REPORTAR A EL PROVEEDOR DE QUE EN CONSULTA Y PAGO ESTO ES UN STRING XD
 }
