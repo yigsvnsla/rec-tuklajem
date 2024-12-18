@@ -127,7 +127,7 @@ public class ConsumerService {
 				messageOutputConsultDTO.setLimiteMontoMinimo(debt.getValor_maximo().doubleValue());
 				messageOutputConsultDTO.setLimiteMontoMaximo(debt.getValor_minimo().doubleValue());
 
-				//* ------------------- */
+				// * ------------------- */
 				messageOutputConsultDTO.setMensajeSistema("CONSULTA EJECUTADA");
 				messageOutputConsultDTO.setCodigoError(debt.getCod_respuesta());
 				messageOutputConsultDTO.setNombreCliente(debt.getNom_cliente());
@@ -289,12 +289,18 @@ public class ConsumerService {
 					.movePointRight(2)
 					.intValue();
 
+			String trxCode = Arrays.stream(aditionalsData.getDatoAdicional())
+					.filter(item -> item.getCodigo().equals("e_term"))
+					.findFirst()
+					.orElse(null)
+					.getValor();
+					
 			RevertRequestDTO revertRequest = new RevertRequestDTO();
 
 			revertRequest.setImporte(importe);
 			revertRequest.setCod_cliente(identifier);
 			revertRequest.setTerminal(terminal);
-			revertRequest.setCod_trx("36988406-DDC0-40BE-9D6F-712D975F6E8F");
+			revertRequest.setCod_trx(trxCode);
 			revertRequest.setFecha(messageInputProcess.getFechaPago());
 			revertRequest.setHora(messageInputProcess.getFechaPago());
 
@@ -311,7 +317,8 @@ public class ConsumerService {
 				messageOutputRevertPaymentDTO.setFechaPago(messageInputProcess.getFechaPago());
 				messageOutputRevertPaymentDTO.setBanderaOffline(false);
 				messageOutputRevertPaymentDTO.setDatosAdicionales(aditionalsData);
-				messageOutputRevertPaymentDTO.setCodigoError("0"); // revertPayment.getCod_respuesta()
+				// ! REPORTAR A EL PROVEEDOR DE QUE EN CONSULTA Y PAGO ESTO ES UN STRING XD
+				messageOutputRevertPaymentDTO.setCodigoError(revertPayment.getCod_respuesta().toString());
 				messageOutputRevertPaymentDTO.setReferencia(identifier);
 			}
 
