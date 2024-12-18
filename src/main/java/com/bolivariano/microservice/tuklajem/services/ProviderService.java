@@ -124,7 +124,7 @@ public class ProviderService {
         paymentResponse.setTerminal("D00561");
         paymentResponse.setFecha("20241203");
         paymentResponse.setHora("163919");
-        paymentResponse.setCod_trx("000000001");
+        paymentResponse.setCod_trx("B9DF593B-A7EB-4139-9A49-D9550090FA9A");
         paymentResponse.setCod_respuesta("0");
         paymentResponse.setMsg_respuesta("Transaccion aceptada");
         

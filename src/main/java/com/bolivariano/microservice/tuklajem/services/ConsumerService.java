@@ -205,12 +205,12 @@ public class ConsumerService {
 			paymentRequest.setCod_cliente(identifier);
 			paymentRequest.setImporte(importe);
 
-			PaymentResponseDTO payment = this.providerService.setPayment(paymentRequest);
+			PaymentResponseDTO payment = this.providerService.setPaymentMock(paymentRequest);
 
 			// ? Buscamos y Actualizamos el e_cod_respuesta que hara referencia a el
 			// CAMP_ALT1
 
-			MessageAditionalDataDTO[] trx = Arrays.stream(aditionalsData.getDatoAdicional())
+			MessageAditionalDataDTO[] aditionalsDataWithTRX = Arrays.stream(aditionalsData.getDatoAdicional())
 					.map(item -> {
 						if (item.getCodigo().equals("e_cod_respuesta")) {
 							item.setValor(payment.getCod_trx());
@@ -220,7 +220,7 @@ public class ConsumerService {
 					.toArray(MessageAditionalDataDTO[]::new);
 
 			if (payment.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
-				aditionalsData.setDatoAdicional(trx);
+				aditionalsData.setDatoAdicional(aditionalsDataWithTRX);
 				// Mesaje Salida Pago
 				messageOutputPaymentDTO.setMensajeSistema("PAGO EJECUTADA");
 				messageOutputPaymentDTO.setMontoTotal(messageInputProcess.getValorPago());
