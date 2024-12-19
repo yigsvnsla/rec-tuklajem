@@ -115,15 +115,14 @@ public class ConsumerService {
 			debtRequest.setTerminal(terminal.getValor());
 			debtRequest.setFecha(messageInputProcess.getFecha());
 			debtRequest.setHora(messageInputProcess.getFecha());
-			// debtRequest.setFecha(TEST_HORA.toString());
-			// debtRequest.setHora(TEST_HORA.toString());
 
 			DebtResponseDTO debt = this.providerService.getDebt(debtRequest);
 
 			if (debt.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
+				// * ------------------- */
 				// Mesaje Salida Consulta
-				// ? Los valores monto minimo y maximo estan al revez porque el provvedor los
-				// ? manda asi, porque?... nose...
+				// ? Los valores monto minimo y maximo estan al revez
+				// ? porque el provvedor los manda asi, porque?... nose...
 				messageOutputConsultDTO.setMontoMinimo(debt.getValor_maximo().doubleValue());
 				messageOutputConsultDTO.setLimiteMontoMinimo(debt.getValor_maximo().doubleValue());
 				messageOutputConsultDTO.setLimiteMontoMaximo(debt.getValor_minimo().doubleValue());
@@ -144,6 +143,8 @@ public class ConsumerService {
 			messageOutputProcessDTO.setCodigo(debt.getCod_respuesta());
 			messageOutputProcessDTO.setMensajeUsuario(debt.getMsg_respuesta());
 			messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
+
+			log.info("📥 FINALIZANDO PROCESO DE CONSULTA");
 
 			jmsService.sendResponseMessage(
 					MqConfig.CHANNEL_RESPONSE,
@@ -198,6 +199,9 @@ public class ConsumerService {
 
 			PaymentRequestDTO paymentRequest = new PaymentRequestDTO();
 
+			// tengo que parchear una fecha actual de la maquina +5m en el futuro porque no
+			// puedo pagar en tiempo pasado, entenderia que pudiera pagar dentro de un rango
+			// de tiempo
 			LocalDateTime TEST_HORA = LocalDateTime.now().plusMinutes(5);
 
 			paymentRequest.setTerminal(terminal.getValor());
@@ -208,9 +212,7 @@ public class ConsumerService {
 
 			PaymentResponseDTO payment = this.providerService.setPayment(paymentRequest);
 
-			// ? Buscamos y Actualizamos el e_cod_respuesta que hara referencia a el
-			// CAMP_ALT1
-
+			// Buscamos y Actualizamos el e_cod_respuesta que hara referencia a el CAMP_ALT1
 			MessageAditionalDataDTO[] aditionalsDataWithTRX = Arrays.stream(aditionalsData.getDatoAdicional())
 					.map(item -> {
 						if (item.getCodigo().equals("e_cod_respuesta")) {
@@ -221,13 +223,14 @@ public class ConsumerService {
 					.toArray(MessageAditionalDataDTO[]::new);
 
 			if (payment.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
+				// Re asignamos los datos adicionales con el nuevo ar
 				aditionalsData.setDatoAdicional(aditionalsDataWithTRX);
 				// Mesaje Salida Pago
 				messageOutputPaymentDTO.setMensajeSistema("PAGO EJECUTADA");
 				messageOutputPaymentDTO.setMontoTotal(messageInputProcess.getValorPago());
 				messageOutputPaymentDTO.setMensajeUsuario(payment.getMsg_respuesta());
-				messageOutputPaymentDTO.setFechaDebito(TEST_HORA.toString());
-				messageOutputPaymentDTO.setFechaPago(TEST_HORA.toString());
+				messageOutputPaymentDTO.setFechaDebito(TEST_HORA.toString());	// ! hay que quitar esta vaina, es un parche
+				messageOutputPaymentDTO.setFechaPago(TEST_HORA.toString());		// ! hay que quitar esta vaina, es un parche
 				messageOutputPaymentDTO.setCodigoError(payment.getCod_respuesta());
 				messageOutputPaymentDTO.setBanderaOffline(false);
 				messageOutputPaymentDTO.setDatosAdicionales(aditionalsData);
@@ -239,6 +242,7 @@ public class ConsumerService {
 			messageOutputProcessDTO.setCodigo(payment.getCod_respuesta());
 			messageOutputProcessDTO.setMensajeUsuario(payment.getMsg_respuesta());
 			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputPaymentDTO);
+			log.info("📥 FINALIZANDO PROCESO DE PAGO");
 
 			jmsService.sendResponseMessage(
 					MqConfig.CHANNEL_RESPONSE,
@@ -250,20 +254,16 @@ public class ConsumerService {
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 			MessageOutputPaymentDTO messageOutputConsultDTO = new MessageOutputPaymentDTO();
 
-			messageOutputConsultDTO.setCodigoError("300");
-			messageOutputConsultDTO.setMensajeUsuario(e.getMessage());
-
-			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
-			messageOutputProcessDTO.setCodigo("0");
+			
 			messageOutputProcessDTO.setMensajeUsuario("PAGO NO EJECUTADA");
+			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
+			messageOutputConsultDTO.setMensajeUsuario(e.getMessage());
+			messageOutputConsultDTO.setCodigoError("300");
+			messageOutputProcessDTO.setCodigo("300");
 
 			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputConsultDTO);
 
 			jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE, messageOutputProcessDTO, correlationId);
-
-			if (e instanceof RestClientException) {
-				
-			}
 		}
 	}
 
@@ -299,7 +299,7 @@ public class ConsumerService {
 					.findFirst()
 					.orElse(null)
 					.getValor();
-					
+
 			RevertRequestDTO revertRequest = new RevertRequestDTO();
 
 			revertRequest.setImporte(importe);
@@ -329,9 +329,12 @@ public class ConsumerService {
 
 			// Mensaje de salida proceso;
 			messageOutputProcessDTO.setEstado(MessageStatus.OK);
-			messageOutputProcessDTO.setCodigo("0"); // revertPayment.getCod_respuesta()
+			// ! REPORTAR A EL PROVEEDOR DE QUE EN CONSULTA Y PAGO ESTO ES UN STRING XD
+			messageOutputProcessDTO.setCodigo(revertPayment.getCod_respuesta().toString());
 			messageOutputProcessDTO.setMensajeUsuario(revertPayment.getMsg_respuesta());
 			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputRevertPaymentDTO);
+
+			log.info("📥 FINALIZANDO PROCESO DE REVERSO");
 
 			jmsService.sendResponseMessage(
 					MqConfig.CHANNEL_RESPONSE,
@@ -355,17 +358,4 @@ public class ConsumerService {
 			jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE, messageOutputProcessDTO, correlationId);
 		}
 	}
-
-
 }
-
-
-
-// PagoReversoDto pagoReversoDto = new PagoReversoDto();
-// if ( (e instanceof SocketTimeoutException ||e instanceof ConnectTimeoutException) || ( e.getMessage() != null && (e.getMessage().contains(COULD_NOT_RECEIVE_MSG) || e.getMessage().contains(JAVA_SOCKET_TIMEOUT_EXP) || e.getMessage().contains(READ_TIME_OUT) || e.getMessage().contains(IO_NETTY_READ_TIMEOUT_EXP)))) {
-// 	pagoReversoDto.setCodigoMensaje(REV_001);
-// 	pagoReversoDto.setMensaje(EMPRESA_DESTINO_NO_DISPONIBLE);
-// } else if (e instanceof ConnectException) {
-// 	pagoReversoDto.setCodigoMensaje(CODERROR_PROVEEDOR);
-// 	pagoReversoDto.setMensaje(ERROR_PROVEEDOR);
-// }
