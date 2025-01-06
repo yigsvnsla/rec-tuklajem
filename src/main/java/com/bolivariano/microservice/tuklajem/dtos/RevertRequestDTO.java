@@ -21,6 +21,9 @@ public class RevertRequestDTO {
     private String cod_trx;
     private String cod_cliente;
     private String terminal;
+    private String secuencial;
+
+    
     private Integer importe;
 
 

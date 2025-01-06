@@ -2,13 +2,11 @@ package com.bolivariano.microservice.tuklajem.services;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
 
 import com.bolivariano.microservice.tuklajem.config.MqConfig;
 import com.bolivariano.microservice.tuklajem.dtos.DebtRequestDTO;
@@ -119,28 +117,21 @@ public class ConsumerService {
 			DebtResponseDTO debt = this.providerService.getDebt(debtRequest);
 
 			if (debt.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
-				// * ------------------- */
-				// Mesaje Salida Consulta
-				// ? Los valores monto minimo y maximo estan al revez
-				// ? porque el provvedor los manda asi, porque?... nose...
-				messageOutputConsultDTO.setMontoMinimo(debt.getValor_maximo().doubleValue());
-				messageOutputConsultDTO.setLimiteMontoMinimo(debt.getValor_maximo().doubleValue());
-				messageOutputConsultDTO.setLimiteMontoMaximo(debt.getValor_minimo().doubleValue());
 
-				// * ------------------- */
+				messageOutputConsultDTO.setMontoMinimo(debt.getValor_minimo().doubleValue());
+				messageOutputConsultDTO.setLimiteMontoMinimo(debt.getValor_minimo().doubleValue());
+				messageOutputConsultDTO.setLimiteMontoMaximo(debt.getValor_maximo().doubleValue());
 				messageOutputConsultDTO.setMensajeSistema("CONSULTA EJECUTADA");
-				messageOutputConsultDTO.setCodigoError(debt.getCod_respuesta());
+				messageOutputConsultDTO.setCodigoError(debt.getCod_respuesta().toString());
 				messageOutputConsultDTO.setNombreCliente(debt.getNom_cliente());
 				messageOutputConsultDTO.setMensajeUsuario(debt.getMsg_respuesta());
 				messageOutputConsultDTO.setIdentificadorDeuda(debt.getIdentificador_deuda());
 				messageOutputConsultDTO.setDatosAdicionales(aditionalsData);
-				// messageOutputConsultDTO.setMontoTotal(10.00);
-
 			}
 
 			// Mensaje de salida proceso;
 			messageOutputProcessDTO.setEstado(MessageStatus.OK);
-			messageOutputProcessDTO.setCodigo(debt.getCod_respuesta());
+			messageOutputProcessDTO.setCodigo(debt.getCod_respuesta().toString());
 			messageOutputProcessDTO.setMensajeUsuario(debt.getMsg_respuesta());
 			messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
 
@@ -174,6 +165,7 @@ public class ConsumerService {
 	private void payment(MessageInputPaymentDTO messageInputProcess, String correlationId)
 			throws JsonProcessingException {
 		try {
+
 			log.info("📤 INICIANDO PROCESO DE PAGO");
 
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
@@ -197,16 +189,14 @@ public class ConsumerService {
 					.movePointRight(2)
 					.intValue();
 
+			String secuencial = messageInputProcess.getSecuencial();
+
 			PaymentRequestDTO paymentRequest = new PaymentRequestDTO();
 
-			// tengo que parchear una fecha actual de la maquina +5m en el futuro porque no
-			// puedo pagar en tiempo pasado, entenderia que pudiera pagar dentro de un rango
-			// de tiempo
-			LocalDateTime TEST_HORA = LocalDateTime.now().plusMinutes(5);
-
+			paymentRequest.setSecuencial(secuencial);
 			paymentRequest.setTerminal(terminal.getValor());
-			paymentRequest.setFecha(TEST_HORA.toString()); // ! hay que quitar esta vaina, es un parche
-			paymentRequest.setHora(TEST_HORA.toString()); // ! hay que quitar esta vaina, es un parche
+			paymentRequest.setFecha(messageInputProcess.getFecha());
+			paymentRequest.setHora(messageInputProcess.getFecha());
 			paymentRequest.setCod_cliente(identifier);
 			paymentRequest.setImporte(importe);
 
@@ -223,15 +213,16 @@ public class ConsumerService {
 					.toArray(MessageAditionalDataDTO[]::new);
 
 			if (payment.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
-				// Re asignamos los datos adicionales con el nuevo ar
+				// Re asignamos los datos adicionales con el nuevo arreglo
 				aditionalsData.setDatoAdicional(aditionalsDataWithTRX);
+
 				// Mesaje Salida Pago
 				messageOutputPaymentDTO.setMensajeSistema("PAGO EJECUTADA");
 				messageOutputPaymentDTO.setMontoTotal(messageInputProcess.getValorPago());
 				messageOutputPaymentDTO.setMensajeUsuario(payment.getMsg_respuesta());
-				messageOutputPaymentDTO.setFechaDebito(TEST_HORA.toString());	// ! hay que quitar esta vaina, es un parche
-				messageOutputPaymentDTO.setFechaPago(TEST_HORA.toString());		// ! hay que quitar esta vaina, es un parche
-				messageOutputPaymentDTO.setCodigoError(payment.getCod_respuesta());
+				messageOutputPaymentDTO.setFechaDebito(messageInputProcess.getFecha());
+				messageOutputPaymentDTO.setFechaPago(messageInputProcess.getFecha());
+				messageOutputPaymentDTO.setCodigoError(payment.getCod_respuesta().toString());
 				messageOutputPaymentDTO.setBanderaOffline(false);
 				messageOutputPaymentDTO.setDatosAdicionales(aditionalsData);
 				messageOutputPaymentDTO.setReferencia(identifier);
@@ -239,7 +230,7 @@ public class ConsumerService {
 
 			// Mensaje de salida proceso;
 			messageOutputProcessDTO.setEstado(MessageStatus.OK);
-			messageOutputProcessDTO.setCodigo(payment.getCod_respuesta());
+			messageOutputProcessDTO.setCodigo(payment.getCod_respuesta().toString());
 			messageOutputProcessDTO.setMensajeUsuario(payment.getMsg_respuesta());
 			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputPaymentDTO);
 			log.info("📥 FINALIZANDO PROCESO DE PAGO");
@@ -254,7 +245,6 @@ public class ConsumerService {
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 			MessageOutputPaymentDTO messageOutputConsultDTO = new MessageOutputPaymentDTO();
 
-			
 			messageOutputProcessDTO.setMensajeUsuario("PAGO NO EJECUTADA");
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
 			messageOutputConsultDTO.setMensajeUsuario(e.getMessage());
@@ -300,8 +290,11 @@ public class ConsumerService {
 					.orElse(null)
 					.getValor();
 
+			String secuencial = messageInputProcess.getSecuencial();
+
 			RevertRequestDTO revertRequest = new RevertRequestDTO();
 
+			revertRequest.setSecuencial(secuencial);
 			revertRequest.setImporte(importe);
 			revertRequest.setCod_cliente(identifier);
 			revertRequest.setTerminal(terminal);
@@ -311,9 +304,7 @@ public class ConsumerService {
 
 			RevertResponseDTO revertPayment = this.providerService.setRevert(revertRequest);
 
-			// ! REPORTAR A EL PROVEEDOR DE QUE EN CONSULTA Y PAGO ESTO ES UN STRING XD
-			if (revertPayment.getCod_respuesta()
-					.equals(Integer.parseInt(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode()))) {
+			if (revertPayment.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
 				// Mesaje Salida Reversos
 				messageOutputRevertPaymentDTO.setMensajeSistema("REVERSO EJECUTADA");
 				messageOutputRevertPaymentDTO.setMensajeUsuario(revertPayment.getMsg_respuesta());
@@ -322,14 +313,12 @@ public class ConsumerService {
 				messageOutputRevertPaymentDTO.setFechaPago(messageInputProcess.getFechaPago());
 				messageOutputRevertPaymentDTO.setBanderaOffline(false);
 				messageOutputRevertPaymentDTO.setDatosAdicionales(aditionalsData);
-				// ! REPORTAR A EL PROVEEDOR DE QUE EN CONSULTA Y PAGO ESTO ES UN STRING XD
 				messageOutputRevertPaymentDTO.setCodigoError(revertPayment.getCod_respuesta().toString());
 				messageOutputRevertPaymentDTO.setReferencia(identifier);
 			}
 
 			// Mensaje de salida proceso;
 			messageOutputProcessDTO.setEstado(MessageStatus.OK);
-			// ! REPORTAR A EL PROVEEDOR DE QUE EN CONSULTA Y PAGO ESTO ES UN STRING XD
 			messageOutputProcessDTO.setCodigo(revertPayment.getCod_respuesta().toString());
 			messageOutputProcessDTO.setMensajeUsuario(revertPayment.getMsg_respuesta());
 			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputRevertPaymentDTO);

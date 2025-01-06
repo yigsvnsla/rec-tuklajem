@@ -10,10 +10,10 @@ public class DebtResponseDTO {
     private String nom_cliente;
     private String Fecha;
     private String hora;
-    private String cod_respuesta;
     private String msg_respuesta;
     private String identificador_deuda;
     private Integer importe;
+    private Integer cod_respuesta;
     private Boolean monto_abierto;
     private Integer valor_minimo;
     private Integer valor_maximo;

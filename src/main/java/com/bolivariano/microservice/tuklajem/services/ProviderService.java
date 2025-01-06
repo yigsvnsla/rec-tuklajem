@@ -105,7 +105,7 @@ public class ProviderService {
 
         debResponse.setNom_cliente("Gonzalo Fienco");
         debResponse.setCod_cliente("22004477");
-        debResponse.setCod_respuesta("0");
+        debResponse.setCod_respuesta(0);
         debResponse.setMsg_respuesta("Transacción aceptada");
         debResponse.setFecha("20241203");
         debResponse.setHora("152553");
@@ -125,9 +125,9 @@ public class ProviderService {
         paymentResponse.setFecha("20241203");
         paymentResponse.setHora("163919");
         paymentResponse.setCod_trx("B9DF593B-A7EB-4139-9A49-D9550090FA9A");
-        paymentResponse.setCod_respuesta("0");
+        paymentResponse.setCod_respuesta(0);
         paymentResponse.setMsg_respuesta("Transaccion aceptada");
-        
+
         return paymentResponse;
     }
 }

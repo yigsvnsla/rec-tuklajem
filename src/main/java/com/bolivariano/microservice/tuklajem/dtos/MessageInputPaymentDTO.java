@@ -15,7 +15,6 @@ public class MessageInputPaymentDTO {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd",timezone = "America/Guayaquil")
     private String fechaPago;
 
-
     private Channel canal;
     private String cuenta;
     private String depuracion;

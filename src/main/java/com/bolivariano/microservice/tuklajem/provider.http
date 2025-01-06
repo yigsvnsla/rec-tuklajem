@@ -20,11 +20,12 @@ Content-Type: application/json
 }
 
 ### ENVS
-@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzQ0OTg3NTAsImV4cCI6MTczNDUwMDU1MCwiaWF0IjoxNzM0NDk4NzUwLCJpc3MiOiIqIiwiYXVkIjoiKiJ9.TGdExoZKtFlw3K7c8yFTTn7ps4uxeOOHShD-srLObIM
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzYxNzQ0MDQsImV4cCI6MTczNjE3NjIwNCwiaWF0IjoxNzM2MTc0NDA0LCJpc3MiOiIqIiwiYXVkIjoiKiJ9.T4OFbUVFJlygs5JqWygND276t2U_kueK86kN8OPGflc
 @URL = https://servicioscalt.andinave.com:9068
 @TERMINAL = D00561
 @IDENTIFICADOR = 22004455
 
+@SECUENCIAL = 4714FB1E
 ### GET CONSULT
 
 POST {{URL}}/api/bc/ConsultaDeuda HTTP/1.1
@@ -50,23 +51,25 @@ Content-Type: application/json
 Authorization: Bearer {{TOKEN}}
 
 {
+  "secuencial":"{{SECUENCIAL}}",
   "cod_cliente": "{{IDENTIFICADOR}}",
   "terminal": "{{TERMINAL}}",
-  "fecha": "20241217",
-  "hora": "181000",
-  "importe": {{IMPORTE}}
+  "fecha": "20250106",
+  "hora": "160000",
+  "importe": {{IMPORTE}},
 }
  
 ### SET REVERT PAYMENT
 
 # ?Este Campo es referenciado desde el pago junto a todas las variables mencionadas en la peticion
-@COD_TRX = B9DF593B-A7EB-4139-9A49-D9550090FA9A
+@COD_TRX = 68CA8D14-61D0-4F9C-B7B4-9F13ABF3C80C
 
 POST {{URL}}/api/bc/ReversarPago HTTP/1.1
 Content-Type: application/json
 Authorization: Bearer {{TOKEN}}
 
 {
+  "secuencial":"{{SECUENCIAL}}",
   "cod_trx":"{{COD_TRX}}", 
   "cod_cliente": "{{IDENTIFICADOR}}",
   "terminal": "{{TERMINAL}}",
@@ -75,15 +78,3 @@ Authorization: Bearer {{TOKEN}}
   "importe": {{IMPORTE}}
 }
 
-###
-# NOTAS 
-
-# fecha y hora, seran las fechas contables 
-# el proveedor estara enviando valor minimo y maximo
-# validar los campos ingresados de la capa del dominio del proveedor
-# El cambio de mensajes durante la consulta debido a la confucion
-# Revision a la interna de la documentacion proporcionada a la empresa recaudadora
-# Cambio en la estructura de la consulta ( ya no debe devolver el importe y monto abierto)
-
-# Revisar tiempos de respuesta en la generacion de tokens porque es muy lenta y el procesamiento del tiempo del canal es porpio de ellos y no de nosotros
-# Analizisis para plantear el mecanismo de proceso de conciliacion
