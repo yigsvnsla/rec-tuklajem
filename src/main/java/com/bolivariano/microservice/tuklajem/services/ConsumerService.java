@@ -2,6 +2,7 @@ package com.bolivariano.microservice.tuklajem.services;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -193,10 +194,15 @@ public class ConsumerService {
 
 			PaymentRequestDTO paymentRequest = new PaymentRequestDTO();
 
+			// tengo que parchear una fecha actual de la maquina +5m en el futuro porque no
+			// puedo pagar en tiempo pasado, entenderia que pudiera pagar dentro de un rango
+			// de tiempo
+			LocalDateTime TEST_HORA = LocalDateTime.now().plusMinutes(5);
+
 			paymentRequest.setSecuencial(secuencial);
 			paymentRequest.setTerminal(terminal.getValor());
 			paymentRequest.setFecha(messageInputProcess.getFecha());
-			paymentRequest.setHora(messageInputProcess.getFecha());
+			paymentRequest.setHora(TEST_HORA.toString()); // ! hay que quitar esta vaina, es un parche
 			paymentRequest.setCod_cliente(identifier);
 			paymentRequest.setImporte(importe);
 
