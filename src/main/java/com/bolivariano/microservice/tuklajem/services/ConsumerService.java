@@ -71,9 +71,10 @@ public class ConsumerService {
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 			MessageOutputConsultDTO messageOutputConsultDTO = new MessageOutputConsultDTO();
 
+			log.error(e.getMessage());
+			
 			messageOutputConsultDTO.setCodigoError("300");
-			messageOutputConsultDTO.setMensajeUsuario(e.getMessage());
-
+			messageOutputConsultDTO.setMensajeUsuario("Empresa destino no disponible");
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
 			messageOutputProcessDTO.setCodigo("0");
 			messageOutputProcessDTO.setMensajeUsuario("CONSULTA EJECUTADA");
@@ -251,9 +252,11 @@ public class ConsumerService {
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 			MessageOutputPaymentDTO messageOutputConsultDTO = new MessageOutputPaymentDTO();
 
+			log.error(e.getMessage());
+
 			messageOutputProcessDTO.setMensajeUsuario("PAGO NO EJECUTADA");
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
-			messageOutputConsultDTO.setMensajeUsuario(e.getMessage());
+			messageOutputConsultDTO.setMensajeUsuario("Empresa destino no disponible");
 			messageOutputConsultDTO.setCodigoError("300");
 			messageOutputProcessDTO.setCodigo("300");
 
@@ -310,6 +313,8 @@ public class ConsumerService {
 
 			RevertResponseDTO revertPayment = this.providerService.setRevert(revertRequest);
 
+			
+
 			if (revertPayment.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
 				// Mesaje Salida Reversos
 				messageOutputRevertPaymentDTO.setMensajeSistema("REVERSO EJECUTADA");
@@ -341,11 +346,12 @@ public class ConsumerService {
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 			MessageOutputPaymentDTO messageOutputConsultDTO = new MessageOutputPaymentDTO();
 
-			messageOutputConsultDTO.setCodigoError("300");
-			messageOutputConsultDTO.setMensajeUsuario(e.getMessage());
+			log.error(e.getMessage());
 
+			messageOutputConsultDTO.setCodigoError("300");
+			messageOutputConsultDTO.setMensajeUsuario("Empresa destino no disponible");
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
-			messageOutputProcessDTO.setCodigo("0");
+			messageOutputProcessDTO.setCodigo("300");
 			messageOutputProcessDTO.setMensajeUsuario("REVERSO NO EJECUTADA");
 
 			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputConsultDTO);
