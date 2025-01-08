@@ -207,7 +207,7 @@ public class ConsumerService {
 			paymentRequest.setCod_cliente(identifier);
 			paymentRequest.setImporte(importe);
 
-			PaymentResponseDTO payment = this.providerService.setPayment(paymentRequest);
+			PaymentResponseDTO payment = this.providerService.setPaymentTrowableMock(paymentRequest);
 
 			// Buscamos y Actualizamos el e_cod_respuesta que hara referencia a el CAMP_ALT1
 			MessageAditionalDataDTO[] aditionalsDataWithTRX = Arrays.stream(aditionalsData.getDatoAdicional())

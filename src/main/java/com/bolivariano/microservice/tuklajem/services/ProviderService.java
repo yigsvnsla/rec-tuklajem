@@ -72,16 +72,18 @@ public class ProviderService {
     }
 
     public PaymentResponseDTO setPayment(PaymentRequestDTO paymentRequest)
-            throws ResponseExecption, ResourceAccessException, RestClientResponseException {
+            throws Exception {
         log.info("🔵 REALIZANDO CONSULTA A PROVEEDOR");
-        return this.restClient
-                .post()
-                .uri("/api/bc/InformarPago")
-                .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", this.getToken()))
-                .body(paymentRequest)
-                .retrieve()
-                .toEntity(PaymentResponseDTO.class)
-                .getBody();
+        Thread.sleep(5000);
+        throw new Exception("TEST SLEEP");
+        // return this.restClient
+        //         .post()
+        //         .uri("/api/bc/InformarPago")
+        //         .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", this.getToken()))
+        //         .body(paymentRequest)
+        //         .retrieve()
+        //         .toEntity(PaymentResponseDTO.class)
+        //         .getBody();
     }
 
     public RevertResponseDTO setRevert(RevertRequestDTO revertPayment)
@@ -129,5 +131,10 @@ public class ProviderService {
         paymentResponse.setMsg_respuesta("Transaccion aceptada");
 
         return paymentResponse;
+    }
+
+    public PaymentResponseDTO setPaymentTrowableMock ( PaymentRequestDTO paymentRequestDTO) throws Exception{
+        Thread.sleep(5000);
+        throw new Exception("TEST SLEEP");
     }
 }
