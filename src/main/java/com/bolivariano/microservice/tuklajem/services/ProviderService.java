@@ -72,18 +72,16 @@ public class ProviderService {
     }
 
     public PaymentResponseDTO setPayment(PaymentRequestDTO paymentRequest)
-            throws Exception {
+    throws ResponseExecption, ResourceAccessException, RestClientResponseException {
         log.info("🔵 REALIZANDO CONSULTA A PROVEEDOR");
-        Thread.sleep(5000);
-        throw new Exception("TEST SLEEP");
-        // return this.restClient
-        //         .post()
-        //         .uri("/api/bc/InformarPago")
-        //         .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", this.getToken()))
-        //         .body(paymentRequest)
-        //         .retrieve()
-        //         .toEntity(PaymentResponseDTO.class)
-        //         .getBody();
+        return this.restClient
+                .post()
+                .uri("/api/bc/InformarPago")
+                .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", this.getToken()))
+                .body(paymentRequest)
+                .retrieve()
+                .toEntity(PaymentResponseDTO.class)
+                .getBody();
     }
 
     public RevertResponseDTO setRevert(RevertRequestDTO revertPayment)

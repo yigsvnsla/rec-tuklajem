@@ -150,9 +150,10 @@ public class ConsumerService {
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 			MessageOutputConsultDTO messageOutputConsultDTO = new MessageOutputConsultDTO();
 
-			messageOutputConsultDTO.setCodigoError("300");
-			messageOutputConsultDTO.setMensajeUsuario(e.getMessage());
+			log.error(e.getMessage());
 
+			messageOutputConsultDTO.setCodigoError("300");
+			messageOutputConsultDTO.setMensajeUsuario("Empresa destino no disponible");
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
 			messageOutputProcessDTO.setCodigo("0");
 			messageOutputProcessDTO.setMensajeUsuario("CONSULTA NO EJECUTADA");
