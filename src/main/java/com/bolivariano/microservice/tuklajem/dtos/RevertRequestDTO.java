@@ -36,13 +36,10 @@ public class RevertRequestDTO {
     }
 
     public void setHora(String date){
-        DateTimeFormatter formatOriginal = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        DateTimeFormatter formatNew = DateTimeFormatter.ofPattern("HHmmss");
-        LocalDate localDate = LocalDate.parse(date, formatOriginal);
-        // ! HAY QUE CAMBIAR ESTO TENEMOS QUE JALAR ESTE CAMBIO DESDE LOS ARCHIVOS DE TRANSFORMACION ( XSLT )
-        LocalDateTime correct = localDate.atStartOfDay();
-        String formatDate = correct.format(formatNew);
-        this.hora = formatDate;
+        LocalDateTime parsedDate = LocalDateTime.parse(date);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HHmmss");
+        String formattedDate = parsedDate.format(formatter);
+        this.hora = formattedDate;
     }
 
 }

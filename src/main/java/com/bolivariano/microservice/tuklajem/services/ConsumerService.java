@@ -72,9 +72,9 @@ public class ConsumerService {
 			MessageOutputConsultDTO messageOutputConsultDTO = new MessageOutputConsultDTO();
 
 			log.error(e.getMessage());
-			
+
 			messageOutputConsultDTO.setCodigoError("300");
-			messageOutputConsultDTO.setMensajeUsuario("Empresa destino no disponible");
+			messageOutputConsultDTO.setMensajeUsuario("EMPRESA DESTINO NO DISPONIBLE");
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
 			messageOutputProcessDTO.setCodigo("0");
 			messageOutputProcessDTO.setMensajeUsuario("CONSULTA EJECUTADA");
@@ -153,7 +153,7 @@ public class ConsumerService {
 			log.error(e.getMessage());
 
 			messageOutputConsultDTO.setCodigoError("300");
-			messageOutputConsultDTO.setMensajeUsuario("Empresa destino no disponible");
+			messageOutputConsultDTO.setMensajeUsuario("EMPRESA DESTINO NO DISPONIBLE");
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
 			messageOutputProcessDTO.setCodigo("0");
 			messageOutputProcessDTO.setMensajeUsuario("CONSULTA NO EJECUTADA");
@@ -208,7 +208,7 @@ public class ConsumerService {
 			paymentRequest.setCod_cliente(identifier);
 			paymentRequest.setImporte(importe);
 
-			PaymentResponseDTO payment = this.providerService.setPaymentTrowableMock(paymentRequest);
+			PaymentResponseDTO payment = this.providerService.setPayment(paymentRequest);
 
 			// Buscamos y Actualizamos el e_cod_respuesta que hara referencia a el CAMP_ALT1
 			MessageAditionalDataDTO[] aditionalsDataWithTRX = Arrays.stream(aditionalsData.getDatoAdicional())
@@ -257,7 +257,7 @@ public class ConsumerService {
 
 			messageOutputProcessDTO.setMensajeUsuario("PAGO NO EJECUTADA");
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
-			messageOutputConsultDTO.setMensajeUsuario("Empresa destino no disponible");
+			messageOutputConsultDTO.setMensajeUsuario("EMPRESA DESTINO NO DISPONIBLE");
 			messageOutputConsultDTO.setCodigoError("300");
 			messageOutputProcessDTO.setCodigo("300");
 
@@ -303,6 +303,10 @@ public class ConsumerService {
 			String secuencial = messageInputProcess.getSecuencial();
 
 			RevertRequestDTO revertRequest = new RevertRequestDTO();
+			// tengo que parchear una fecha actual de la maquina +5m en el futuro porque no
+			// puedo pagar en tiempo pasado, entenderia que pudiera pagar dentro de un rango
+			// de tiempo
+			LocalDateTime TEST_HORA = LocalDateTime.now().plusMinutes(5);
 
 			revertRequest.setSecuencial(secuencial);
 			revertRequest.setImporte(importe);
@@ -310,11 +314,9 @@ public class ConsumerService {
 			revertRequest.setTerminal(terminal);
 			revertRequest.setCod_trx(trxCode);
 			revertRequest.setFecha(messageInputProcess.getFechaPago());
-			revertRequest.setHora(messageInputProcess.getFechaPago());
+			revertRequest.setHora(TEST_HORA.toString());
 
 			RevertResponseDTO revertPayment = this.providerService.setRevert(revertRequest);
-
-			
 
 			if (revertPayment.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
 				// Mesaje Salida Reversos
@@ -350,7 +352,7 @@ public class ConsumerService {
 			log.error(e.getMessage());
 
 			messageOutputConsultDTO.setCodigoError("300");
-			messageOutputConsultDTO.setMensajeUsuario("Empresa destino no disponible");
+			messageOutputConsultDTO.setMensajeUsuario("EMPRESA DESTINO NO DISPONIBLE");
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
 			messageOutputProcessDTO.setCodigo("300");
 			messageOutputProcessDTO.setMensajeUsuario("REVERSO NO EJECUTADA");
