@@ -1,10 +1,12 @@
 package com.bolivariano.microservice.tuklajem.dtos;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class MessageAditionalDataDTO {
     private String codigo;
     private String etiqueta;

@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 public class MessageProcessAditionalDataDTO {
 
 
-    protected transient MessageAditionalDataDTO[] datoAdicional;
+    protected MessageAditionalDataDTO[] datoAdicional;
     
 }

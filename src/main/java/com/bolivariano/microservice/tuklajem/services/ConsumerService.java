@@ -3,6 +3,7 @@ package com.bolivariano.microservice.tuklajem.services;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -210,19 +211,22 @@ public class ConsumerService {
 
 			PaymentResponseDTO payment = this.providerService.setPayment(paymentRequest);
 
-			// Buscamos y Actualizamos el e_cod_respuesta que hara referencia a el CAMP_ALT1
-			MessageAditionalDataDTO[] aditionalsDataWithTRX = Arrays.stream(aditionalsData.getDatoAdicional())
-					.map(item -> {
-						if (item.getCodigo().equals("e_cod_respuesta")) {
-							item.setValor(payment.getCod_trx());
-						}
-						return item;
-					})
-					.toArray(MessageAditionalDataDTO[]::new);
-
 			if (payment.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
-				// Re asignamos los datos adicionales con el nuevo arreglo
-				aditionalsData.setDatoAdicional(aditionalsDataWithTRX);
+				// Buscamos y Actualizamos el e_cod_respuesta que hara referencia a el CAMP_ALT1
+
+				MessageProcessAditionalDataDTO messageProcessAditionalDataDTO = new MessageProcessAditionalDataDTO();
+				ArrayList<MessageAditionalDataDTO> listAditionalData = new ArrayList<>();
+
+				listAditionalData.add(new MessageAditionalDataDTO() {
+					{
+						setCodigo("e_cod_respuesta");
+						setValor(payment.getCod_trx());
+					}
+				});
+
+				messageProcessAditionalDataDTO
+						.setDatoAdicional(listAditionalData.toArray(new MessageAditionalDataDTO[0]));
+				log.debug(messageProcessAditionalDataDTO.getDatoAdicional());
 
 				// Mesaje Salida Pago
 				messageOutputPaymentDTO.setMensajeSistema("PAGO EJECUTADA");
@@ -232,7 +236,7 @@ public class ConsumerService {
 				messageOutputPaymentDTO.setFechaPago(messageInputProcess.getFecha());
 				messageOutputPaymentDTO.setCodigoError(payment.getCod_respuesta().toString());
 				messageOutputPaymentDTO.setBanderaOffline(false);
-				messageOutputPaymentDTO.setDatosAdicionales(aditionalsData);
+				messageOutputPaymentDTO.setDatosAdicionales(messageProcessAditionalDataDTO);
 				messageOutputPaymentDTO.setReferencia(identifier);
 			}
 
@@ -284,7 +288,7 @@ public class ConsumerService {
 					.getDatosAdicionales();
 
 			String terminal = Arrays.stream(aditionalsData.getDatoAdicional())
-					.filter(item -> item.getCodigo().equals("e_term"))
+					.filter(item -> (item.getCodigo().equals("e_term") && !item.getValor().isEmpty()))
 					.findFirst()
 					.orElse(null)
 					.getValor();
@@ -295,7 +299,7 @@ public class ConsumerService {
 					.intValue();
 
 			String trxCode = Arrays.stream(aditionalsData.getDatoAdicional())
-					.filter(item -> item.getCodigo().equals("e_cod_respuesta"))
+					.filter(item -> (item.getCodigo().equals("e_cod_respuesta") && !item.getValor().isEmpty()))
 					.findFirst()
 					.orElse(null)
 					.getValor();
