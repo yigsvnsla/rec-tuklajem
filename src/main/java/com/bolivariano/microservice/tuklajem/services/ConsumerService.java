@@ -117,10 +117,9 @@ public class ConsumerService {
 			debtRequest.setFecha(messageInputProcess.getFecha());
 			debtRequest.setHora(messageInputProcess.getFecha());
 
-			DebtResponseDTO debt = this.providerService.getDebtMock(debtRequest);
+			DebtResponseDTO debt = this.providerService.getDebt(debtRequest);
 
 			if (debt.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
-
 				messageOutputConsultDTO.setMontoMinimo(debt.getValor_minimo().doubleValue());
 				messageOutputConsultDTO.setLimiteMontoMinimo(debt.getValor_minimo().doubleValue());
 				messageOutputConsultDTO.setLimiteMontoMaximo(debt.getValor_maximo().doubleValue());
@@ -209,7 +208,7 @@ public class ConsumerService {
 			paymentRequest.setCod_cliente(identifier);
 			paymentRequest.setImporte(importe);
 
-			PaymentResponseDTO payment = this.providerService.setPaymentMock(paymentRequest);
+			PaymentResponseDTO payment = this.providerService.setPayment(paymentRequest);
 
 			if (payment.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
 				// Buscamos y Actualizamos el e_cod_respuesta que hara referencia a el CAMP_ALT1
@@ -327,7 +326,7 @@ public class ConsumerService {
 			revertRequest.setFecha(messageInputProcess.getFechaPago());
 			revertRequest.setHora(TEST_HORA.toString());
 
-			RevertResponseDTO revertPayment = this.providerService.setRevertMock(revertRequest);
+			RevertResponseDTO revertPayment = this.providerService.setRevert(revertRequest);
 
 			if (revertPayment.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
 				// Mesaje Salida Reversos
