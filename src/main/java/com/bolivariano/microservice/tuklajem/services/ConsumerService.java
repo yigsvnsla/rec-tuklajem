@@ -117,7 +117,7 @@ public class ConsumerService {
 			debtRequest.setFecha(messageInputProcess.getFecha());
 			debtRequest.setHora(messageInputProcess.getFecha());
 
-			DebtResponseDTO debt = this.providerService.getDebt(debtRequest);
+			DebtResponseDTO debt = this.providerService.getDebtMock(debtRequest);
 
 			if (debt.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
 
@@ -209,7 +209,7 @@ public class ConsumerService {
 			paymentRequest.setCod_cliente(identifier);
 			paymentRequest.setImporte(importe);
 
-			PaymentResponseDTO payment = this.providerService.setPayment(paymentRequest);
+			PaymentResponseDTO payment = this.providerService.setPaymentMock(paymentRequest);
 
 			if (payment.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
 				// Buscamos y Actualizamos el e_cod_respuesta que hara referencia a el CAMP_ALT1
@@ -276,6 +276,13 @@ public class ConsumerService {
 		try {
 			log.info("📤 INICIANDO PROCESO DE REVERSO");
 
+			/*
+			 * para la fecha de hoy 10/ene/2025 los valores dentro de la data adicional estan repetidos
+			 * por ende hay que filtrar los datos que se desean rescatar
+			 * por su nombre y si su valor no esta vacio o null
+			 */
+
+
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 			MessageOutputRevertPaymentDTO messageOutputRevertPaymentDTO = new MessageOutputRevertPaymentDTO();
 
@@ -320,7 +327,7 @@ public class ConsumerService {
 			revertRequest.setFecha(messageInputProcess.getFechaPago());
 			revertRequest.setHora(TEST_HORA.toString());
 
-			RevertResponseDTO revertPayment = this.providerService.setRevert(revertRequest);
+			RevertResponseDTO revertPayment = this.providerService.setRevertMock(revertRequest);
 
 			if (revertPayment.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
 				// Mesaje Salida Reversos

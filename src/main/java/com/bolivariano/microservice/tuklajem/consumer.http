@@ -1,3 +1,6 @@
+@COD_TRX = 68CA8D14-61D0-4F9C-B7B4-9F13ABF3C80C
+
+
 ### CONSULTA
 POST https://localhost:9898/message/consult 
 Content-Type: application/json
@@ -337,14 +340,14 @@ Content-Type: application/json
     "usuario": "ope998",
     "valorComision": 0.31,
     "valorPago": 20.5,
-    "fecha":"2024-12-03T00:00:00",
+    "fecha":"2025-01-10T00:00:00",
     "servicio": {
       "codTipoServicio": "AUTOMOTORES_PEATONES",
       "codigoConvenio": "24473",
       "codigoEmpresa": "24473",
       "codigoTipoBanca": "BP",
       "codigoTipoIdentificador": "ORDEN",
-      "identificador": "220044661",
+      "identificador": "22004466",
       "datosAdicionales": {
         "datoAdicional": [
           {
@@ -1005,7 +1008,7 @@ Content-Type: application/json
 
 
 ### REVERSO
-POST http://localhost:9898/message/consult 
+POST https://localhost:9898/message/consult 
 Content-Type: application/json
 
 {
@@ -1016,7 +1019,7 @@ Content-Type: application/json
     "datosAdicionales": null,
     "depuracion": null,
     "esquemaFirma": null,
-    "fechaPago": "2024-12-09",
+    "fechaPago": "2025-01-10",
     "moneda": "1",
     "nombreCliente": null,
     "oficina": "0",
@@ -1449,7 +1452,7 @@ Content-Type: application/json
             "mascara": null,
             "regexp": null,
             "tipo": null,
-            "valor": "",
+            "valor": "{{COD_TRX}}",
             "visible": null
           },
           {

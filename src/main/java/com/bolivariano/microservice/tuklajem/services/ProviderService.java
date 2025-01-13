@@ -125,10 +125,25 @@ public class ProviderService {
         paymentResponse.setFecha("20241203");
         paymentResponse.setHora("163919");
         paymentResponse.setCod_trx("B9DF593B-A7EB-4139-9A49-D9550090FA9A");
+        paymentResponse.setSecuencial("42275263");
         paymentResponse.setCod_respuesta(0);
         paymentResponse.setMsg_respuesta("Transaccion aceptada");
 
         return paymentResponse;
+    }
+
+    public RevertResponseDTO setRevertMock(RevertRequestDTO revertRequestDTO){
+        RevertResponseDTO revertResponse = new RevertResponseDTO();
+
+        revertResponse.setTerminal("D00561");
+        revertResponse.setFecha("20241203");
+        revertResponse.setHora("163919");
+        revertResponse.setCod_trx("B9DF593B-A7EB-4139-9A49-D9550090FA9A");
+        revertResponse.setSecuencial("42275263");
+        revertResponse.setCod_respuesta(0);
+        revertResponse.setMsg_respuesta("Transaccion aceptada");
+
+        return revertResponse;
     }
 
     public PaymentResponseDTO setPaymentTrowableMock ( PaymentRequestDTO paymentRequestDTO) throws Exception{
