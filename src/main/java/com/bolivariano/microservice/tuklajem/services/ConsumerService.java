@@ -338,7 +338,7 @@ public class ConsumerService {
 			// de tiempo
 			LocalDateTime TEST_HORA = LocalDateTime.now().plusMinutes(5);
 
-			revertRequest.setSecuencial(secuencial);
+			revertRequest.setSecuencial(secuencialPago);
 			revertRequest.setImporte(importe);
 			revertRequest.setCod_cliente(identifier);
 			revertRequest.setTerminal(terminal);
