@@ -194,6 +194,7 @@ public class ConsumerService {
 
 			String secuencial = messageInputProcess.getSecuencial();
 
+
 			PaymentRequestDTO paymentRequest = new PaymentRequestDTO();
 
 			// tengo que parchear una fecha actual de la maquina +5m en el futuro porque no
@@ -311,6 +312,25 @@ public class ConsumerService {
 					.getValor();
 
 			String secuencial = messageInputProcess.getSecuencial();
+
+
+			String secuencialReverso = Arrays.stream(aditionalsData.getDatoAdicional())
+					.filter(item -> (item.getCodigo().equals("vp_s_ssn") && item.getValor().equals(secuencial)))
+					.findFirst()
+					.orElse(null)
+					.getValor();
+
+			String secuencialPago = Arrays.stream(aditionalsData.getDatoAdicional())
+					.filter(item -> (item.getCodigo().equals("vp_s_ssn") && !item.getValor().equals(secuencial)))
+					.findFirst()
+					.orElse(null)
+					.getValor();
+
+
+			System.out.println(secuencialReverso);
+			System.out.println(secuencialPago);
+			System.out.println(secuencial);
+
 
 			RevertRequestDTO revertRequest = new RevertRequestDTO();
 			// tengo que parchear una fecha actual de la maquina +5m en el futuro porque no
