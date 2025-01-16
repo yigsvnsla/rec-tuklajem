@@ -124,7 +124,6 @@ public class ConsumerService {
 				messageOutputConsultDTO.setLimiteMontoMinimo(debt.getValor_minimo().doubleValue());
 				messageOutputConsultDTO.setLimiteMontoMaximo(debt.getValor_maximo().doubleValue());
 				messageOutputConsultDTO.setMensajeSistema("CONSULTA EJECUTADA");
-				messageOutputConsultDTO.setCodigoError(debt.getCod_respuesta().toString());
 				messageOutputConsultDTO.setNombreCliente(debt.getNom_cliente());
 				messageOutputConsultDTO.setMensajeUsuario(debt.getMsg_respuesta());
 				messageOutputConsultDTO.setIdentificadorDeuda(debt.getIdentificador_deuda());
@@ -133,6 +132,7 @@ public class ConsumerService {
 
 			// Mensaje de salida proceso;
 			messageOutputProcessDTO.setEstado(MessageStatus.OK);
+			messageOutputConsultDTO.setCodigoError(debt.getCod_respuesta().toString());
 			messageOutputProcessDTO.setCodigo(debt.getCod_respuesta().toString());
 			messageOutputProcessDTO.setMensajeUsuario(debt.getMsg_respuesta());
 			messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
@@ -234,14 +234,14 @@ public class ConsumerService {
 				messageOutputPaymentDTO.setMensajeUsuario(payment.getMsg_respuesta());
 				messageOutputPaymentDTO.setFechaDebito(messageInputProcess.getFecha());
 				messageOutputPaymentDTO.setFechaPago(messageInputProcess.getFecha());
-				messageOutputPaymentDTO.setCodigoError(payment.getCod_respuesta().toString());
 				messageOutputPaymentDTO.setBanderaOffline(false);
 				messageOutputPaymentDTO.setDatosAdicionales(messageProcessAditionalDataDTO);
 				messageOutputPaymentDTO.setReferencia(identifier);
 			}
-
+			
 			// Mensaje de salida proceso;
 			messageOutputProcessDTO.setEstado(MessageStatus.OK);
+			messageOutputPaymentDTO.setCodigoError(payment.getCod_respuesta().toString());
 			messageOutputProcessDTO.setCodigo(payment.getCod_respuesta().toString());
 			messageOutputProcessDTO.setMensajeUsuario(payment.getMsg_respuesta());
 			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputPaymentDTO);
@@ -357,15 +357,15 @@ public class ConsumerService {
 				messageOutputRevertPaymentDTO.setFechaPago(messageInputProcess.getFechaPago());
 				messageOutputRevertPaymentDTO.setBanderaOffline(false);
 				messageOutputRevertPaymentDTO.setDatosAdicionales(aditionalsData);
-				messageOutputRevertPaymentDTO.setCodigoError(revertPayment.getCod_respuesta().toString());
 				messageOutputRevertPaymentDTO.setReferencia(identifier);
 			}
-
+			
 			// Mensaje de salida proceso;
 			messageOutputProcessDTO.setEstado(MessageStatus.OK);
-			messageOutputProcessDTO.setCodigo(revertPayment.getCod_respuesta().toString());
 			messageOutputProcessDTO.setMensajeUsuario(revertPayment.getMsg_respuesta());
+			messageOutputProcessDTO.setCodigo(revertPayment.getCod_respuesta().toString());
 			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputRevertPaymentDTO);
+			messageOutputRevertPaymentDTO.setCodigoError(revertPayment.getCod_respuesta().toString());
 
 			log.info("📥 FINALIZANDO PROCESO DE REVERSO");
 
@@ -381,10 +381,10 @@ public class ConsumerService {
 
 			log.error(e.getMessage());
 
-			messageOutputConsultDTO.setCodigoError("300");
 			messageOutputConsultDTO.setMensajeUsuario("EMPRESA DESTINO NO DISPONIBLE");
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
 			messageOutputProcessDTO.setCodigo("300");
+			messageOutputConsultDTO.setCodigoError("300");
 			messageOutputProcessDTO.setMensajeUsuario("REVERSO NO EJECUTADA");
 
 			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputConsultDTO);
