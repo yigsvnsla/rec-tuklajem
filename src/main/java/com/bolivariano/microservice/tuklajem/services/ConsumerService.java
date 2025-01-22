@@ -116,8 +116,9 @@ public class ConsumerService {
 			debtRequest.setTerminal(terminal.getValor());
 			debtRequest.setFecha(messageInputProcess.getFecha());
 			debtRequest.setHora(messageInputProcess.getFecha());
-
+			log.debug("🟦 REQUEST CONSULTA PROVEEDOR ", debtRequest);
 			DebtResponseDTO debt = this.providerService.getDebt(debtRequest);
+			log.debug("🟦 RESPONSE CONSULTA PROVEEDOR ", debt);
 
 			if (debt.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
 				messageOutputConsultDTO.setMontoMinimo(debt.getValor_minimo().doubleValue());
@@ -128,7 +129,7 @@ public class ConsumerService {
 				messageOutputConsultDTO.setIdentificadorDeuda(debt.getIdentificador_deuda());
 				messageOutputConsultDTO.setDatosAdicionales(aditionalsData);
 			}
-			
+
 			// Mensaje de salida proceso;
 			messageOutputConsultDTO.setCodigoError(debt.getCod_respuesta().toString());
 			messageOutputProcessDTO.setMensajeUsuario(debt.getMsg_respuesta());
@@ -194,7 +195,6 @@ public class ConsumerService {
 
 			String secuencial = messageInputProcess.getSecuencial();
 
-
 			PaymentRequestDTO paymentRequest = new PaymentRequestDTO();
 
 			// tengo que parchear una fecha actual de la maquina +5m en el futuro porque no
@@ -209,7 +209,9 @@ public class ConsumerService {
 			paymentRequest.setCod_cliente(identifier);
 			paymentRequest.setImporte(importe);
 
+			log.debug("🟦 REQUEST PAGO PROVEEDOR ", paymentRequest);
 			PaymentResponseDTO payment = this.providerService.setPayment(paymentRequest);
+			log.debug("🟦 RESPONSE PAGO PROVEEDOR ", payment);
 
 			if (payment.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
 				// Buscamos y Actualizamos el e_cod_respuesta que hara referencia a el CAMP_ALT1
@@ -237,7 +239,7 @@ public class ConsumerService {
 				messageOutputPaymentDTO.setDatosAdicionales(messageProcessAditionalDataDTO);
 				messageOutputPaymentDTO.setReferencia(identifier);
 			}
-			
+
 			// Mensaje de salida proceso;
 			messageOutputProcessDTO.setEstado(MessageStatus.OK);
 			messageOutputPaymentDTO.setCodigoError(payment.getCod_respuesta().toString());
@@ -277,11 +279,11 @@ public class ConsumerService {
 			log.info("📤 INICIANDO PROCESO DE REVERSO");
 
 			/*
-			 * para la fecha de hoy 10/ene/2025 los valores dentro de la data adicional estan repetidos
+			 * para la fecha de hoy 10/ene/2025 los valores dentro de la data adicional
+			 * estan repetidos
 			 * por ende hay que filtrar los datos que se desean rescatar
 			 * por su nombre y si su valor no esta vacio o null
 			 */
-
 
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 			MessageOutputRevertPaymentDTO messageOutputRevertPaymentDTO = new MessageOutputRevertPaymentDTO();
@@ -313,24 +315,17 @@ public class ConsumerService {
 
 			String secuencial = messageInputProcess.getSecuencial();
 
-
-			String secuencialReverso = Arrays.stream(aditionalsData.getDatoAdicional())
-					.filter(item -> (item.getCodigo().equals("vp_s_ssn") && item.getValor().equals(secuencial)))
-					.findFirst()
-					.orElse(null)
-					.getValor();
+			// String secuencialReverso = Arrays.stream(aditionalsData.getDatoAdicional())
+			// 		.filter(item -> (item.getCodigo().equals("vp_s_ssn") && item.getValor().equals(secuencial)))
+			// 		.findFirst()
+			// 		.orElse(null)
+			// 		.getValor();
 
 			String secuencialPago = Arrays.stream(aditionalsData.getDatoAdicional())
 					.filter(item -> (item.getCodigo().equals("vp_s_ssn") && !item.getValor().equals(secuencial)))
 					.findFirst()
 					.orElse(null)
 					.getValor();
-
-
-			System.out.println(secuencialReverso);
-			System.out.println(secuencialPago);
-			System.out.println(secuencial);
-
 
 			RevertRequestDTO revertRequest = new RevertRequestDTO();
 			// tengo que parchear una fecha actual de la maquina +5m en el futuro porque no
@@ -346,7 +341,11 @@ public class ConsumerService {
 			revertRequest.setFecha(messageInputProcess.getFechaPago());
 			revertRequest.setHora(TEST_HORA.toString());
 
+			log.debug("🟦 REQUEST REVERSO PROVEEDOR ", revertRequest);
+
 			RevertResponseDTO revertPayment = this.providerService.setRevert(revertRequest);
+
+			log.debug("🟦 RESPONSE REVERSO PROVEEDOR ", revertPayment);
 
 			if (revertPayment.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
 				// Mesaje Salida Reversos
@@ -358,7 +357,7 @@ public class ConsumerService {
 				messageOutputRevertPaymentDTO.setDatosAdicionales(aditionalsData);
 				messageOutputRevertPaymentDTO.setReferencia(identifier);
 			}
-			
+
 			// Mensaje de salida proceso;
 			messageOutputProcessDTO.setEstado(MessageStatus.OK);
 			messageOutputProcessDTO.setMensajeUsuario(revertPayment.getMsg_respuesta());
