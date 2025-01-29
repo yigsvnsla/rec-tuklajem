@@ -15,8 +15,8 @@ import lombok.Data;
 @ConfigurationProperties(prefix = "rest.config")
 public class RestClientConfig {
     
-    private Number read_timeout;
-    private Number connect_timeout;
+    private Number readTimeout;
+    private Number connectTimeout;
     private String base_url;
 
 
@@ -24,8 +24,8 @@ public class RestClientConfig {
     RestClient restClient(){
         SimpleClientHttpRequestFactory clientHttpRequestFactory = new SimpleClientHttpRequestFactory();
 
-        clientHttpRequestFactory.setConnectTimeout(this.connect_timeout.intValue());
-        clientHttpRequestFactory.setReadTimeout(this.read_timeout.intValue());
+        clientHttpRequestFactory.setConnectTimeout(this.connectTimeout.intValue());
+        clientHttpRequestFactory.setReadTimeout(this.readTimeout.intValue());
 
         return RestClient
                 .builder()

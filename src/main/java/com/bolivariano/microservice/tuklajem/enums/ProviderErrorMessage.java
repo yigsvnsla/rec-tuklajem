@@ -15,8 +15,8 @@ public enum ProviderErrorMessage {
 
     private String message;
 
-    ProviderErrorMessage(String _message) {
-        this.message = _message;
+    ProviderErrorMessage(String msg) {
+        this.message = msg;
 
     }
 

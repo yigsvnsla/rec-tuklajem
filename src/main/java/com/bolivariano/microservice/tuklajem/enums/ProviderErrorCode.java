@@ -13,14 +13,14 @@ public enum ProviderErrorCode {
     ERROR_INTERNO(10),
     TRANSACCION_FUERA_DE_HORARIO(13);
 
-    private Integer _code;
+    private Integer cod;
 
     ProviderErrorCode(Integer code) {
-        this._code = code;
+        this.cod = code;
 
     }
 
     public Integer getcode() {
-        return this._code;
+        return this.cod;
     }
 }

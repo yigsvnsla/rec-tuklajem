@@ -24,14 +24,15 @@ public class JmsController {
   public void receiveMessage(Message message) throws JMSException, JmsException, JsonProcessingException {
     String correlationId = message.getJMSCorrelationID(); // Obtener el Correlation ID
     String msgText = ((TextMessage) message).getText(); // Obtener el Contenido del mensaje
-
-    log.info("========================================");
-    log.info("                REQUEST                 ");
-    log.info("========================================");
+    String spaccer = "========================================";
+    String spaccerTitle = "                REQUEST                 ";
+    log.info(spaccer);
+    log.info(spaccerTitle);
+    log.info(spaccer);
     log.info("Correlation ID: " + correlationId);
-    log.info("========================================");
+    log.info(spaccer);
     log.info("Received message is: " + msgText);
-    log.info("========================================");
+    log.info(spaccer);
 
     this.consumerService.stage(msgText, correlationId);
   }

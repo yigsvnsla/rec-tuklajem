@@ -1,5 +1,6 @@
-@COD_TRX = 68CA8D14-61D0-4F9C-B7B4-9F13ABF3C80C
 
+@COD_TRX = 9A4E513E-30F0-48B5-8588-D6E8E458E3AD
+@SECUENCIAL_REVERSO = 0002
 
 ### CONSULTA
 POST https://localhost:9898/message/consult 
@@ -20,7 +21,7 @@ Content-Type: application/json
       "codigoConvenio":"24473",
       "codigoEmpresa":"24473",
       "codigoTipoBanca":"BP",
-      "identificador":"22004477",
+      "identificador":"1111111111111",
       "codigoTipoIdentificador":"ORDEN",
       "datosAdicionales":{
         "datoAdicional":[
@@ -164,7 +165,7 @@ Content-Type: application/json
             "mascara":null,
             "regexp":null,
             "tipo":null,
-            "valor":"54326176",
+            "valor":"{{SECUENCIAL_REVERSO}}",
             "visible":null
           },
           {
@@ -329,18 +330,18 @@ Content-Type: application/json
     "datosAdicionales": null,
     "depuracion": null,
     "esquemaFirma": null,
-    "fechaPago": "2024-12-17",
+    "fechaPago": "2025-01-14",
     "moneda": "1",
     "nombreCliente": null,
     "oficina": "0",
     "recibos": null,
-    "secuencial": "42275263",
+    "secuencial": "{{SECUENCIAL_REVERSO}}",
     "tipoCuenta": "CTE",
     "transaccion": "2056",
     "usuario": "ope998",
     "valorComision": 0.31,
     "valorPago": 20.5,
-    "fecha":"2025-01-10T00:00:00",
+    "fecha":"2025-01-14T00:00:00",
     "servicio": {
       "codTipoServicio": "AUTOMOTORES_PEATONES",
       "codigoConvenio": "24473",
@@ -1019,12 +1020,12 @@ Content-Type: application/json
     "datosAdicionales": null,
     "depuracion": null,
     "esquemaFirma": null,
-    "fechaPago": "2025-01-10",
+    "fechaPago": "2025-01-14",
     "moneda": "1",
     "nombreCliente": null,
     "oficina": "0",
     "recibos": null,
-    "secuencial": "42275263",
+    "secuencial": "{{SECUENCIAL_REVERSO}}",
     "tipoCuenta": "CTE",
     "transaccion": "2056",
     "usuario": "ope998",
@@ -1569,7 +1570,7 @@ Content-Type: application/json
             "mascara": null,
             "regexp": null,
             "tipo": null,
-            "valor": "42275263",
+            "valor": "{{SECUENCIAL_REVERSO}}",
             "visible": null
           },
           {

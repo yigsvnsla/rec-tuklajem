@@ -15,10 +15,15 @@ import lombok.extern.log4j.Log4j2;
 
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Random;
+
 @Log4j2
 @RestController
 @RequestMapping("/message")
 public class MessageController {
+
+    @Autowired
+    private MqConfig mqConfig;
 
     @Autowired
     private JmsService jmsService;
@@ -28,10 +33,10 @@ public class MessageController {
 
     @PostMapping("/consult")
     public void consulting(@RequestBody MessageInputProcessDTO messageInputProcess) throws JsonProcessingException {
-        String messageSerialized = this.objectMapper.writeValueAsString(messageInputProcess); // Serialización para
-                                                                                              // probar el micro
-        Integer randomId = (int) (Math.random() * 1000);
-        jmsService.sendRequestMessage(MqConfig.CHANNEL_REQUEST, messageSerialized, String.format("%s", randomId));
+        String messageSerialized = this.objectMapper.writeValueAsString(messageInputProcess); 
+        Random rand = new Random(); 
+        Integer randomId = rand.nextInt(32);
+        jmsService.sendRequestMessage(mqConfig.getRequest_queue(), messageSerialized, String.format("%s", randomId));
     }
 
     public void payment() {

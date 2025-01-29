@@ -27,13 +27,19 @@ public class JmsService {
 
         String messageSerialized = this.objectMapper.writeValueAsString(messageContent); // Serialización
 
-        log.info("========================================");
-        log.info("                RESPONSE                ");
-        log.info("========================================");
+        String spaccer = "========================================";
+        String spaccerTitle = "                RESPONSE                ";
+        
+        log.info(spaccer);
+        log.info(spaccerTitle);
+        log.info(spaccer);
         log.info("Correlation ID: " + correlationId);
-        log.info("========================================");
+        log.info(spaccer);
         log.info("Received message is: " + messageSerialized);
-        log.info("========================================");
+        log.info(spaccer);
+    
+
+        
 
         jmsTemplate.send(destination, session -> {
             TextMessage message = session.createTextMessage(messageSerialized); // Crear un mensaje de texto

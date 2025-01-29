@@ -40,6 +40,9 @@ import lombok.extern.log4j.Log4j2;
 public class ConsumerService {
 
 	@Autowired
+    private MqConfig mqConfig;
+
+	@Autowired
 	private ObjectMapper objectMapper;
 
 	@Autowired
@@ -48,7 +51,17 @@ public class ConsumerService {
 	@Autowired
 	private ProviderService providerService;
 
-	public void stage(String message, String correlationId) throws JsonProcessingException {
+	private String terminal = "e_term";
+	private String errorMessage = "EMPRESA DESTINO NO DISPONIBLE";
+	private String errorCode =  "300";
+	private String errorStatus = "0";
+
+
+
+
+
+
+ 	public void stage(String message, String correlationId) throws JsonProcessingException {
 		try {
 
 			MessageInputProcessDTO messageInputProcessDTO = objectMapper
@@ -74,15 +87,18 @@ public class ConsumerService {
 
 			log.error(e.getMessage());
 
-			messageOutputConsultDTO.setCodigoError("300");
-			messageOutputConsultDTO.setMensajeUsuario("EMPRESA DESTINO NO DISPONIBLE");
+			String revertMessageError = "REVERSO NO EJECUTADA";
+
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
-			messageOutputProcessDTO.setCodigo("0");
-			messageOutputProcessDTO.setMensajeUsuario("CONSULTA EJECUTADA");
+			messageOutputProcessDTO.setCodigo(this.errorStatus);
+			messageOutputConsultDTO.setCodigoError(this.errorCode);
+			messageOutputConsultDTO.setMensajeSistema(revertMessageError);
+			messageOutputConsultDTO.setMensajeUsuario(this.errorMessage);
+			messageOutputProcessDTO.setMensajeUsuario(revertMessageError);
 
 			messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
 
-			jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE, messageOutputProcessDTO, correlationId);
+			jmsService.sendResponseMessage(mqConfig.getResponse_queue(), messageOutputProcessDTO, correlationId);
 		}
 
 	}
@@ -105,13 +121,12 @@ public class ConsumerService {
 					.getDatosAdicionales();
 
 			MessageAditionalDataDTO terminal = Arrays.stream(aditionalsData.getDatoAdicional())
-					.filter(item -> item.getCodigo().equals("e_term"))
+					.filter(item -> item.getCodigo().equals(this.terminal))
 					.findFirst()
 					.orElse(null);
 
 			DebtRequestDTO debtRequest = new DebtRequestDTO();
-
-			// Data Binding
+	
 			debtRequest.setIdentificador(identifier);
 			debtRequest.setTerminal(terminal.getValor());
 			debtRequest.setFecha(messageInputProcess.getFecha());
@@ -129,7 +144,7 @@ public class ConsumerService {
 				messageOutputConsultDTO.setDatosAdicionales(aditionalsData);
 			}
 			
-			// Mensaje de salida proceso;
+			
 			messageOutputConsultDTO.setCodigoError(debt.getCod_respuesta().toString());
 			messageOutputProcessDTO.setMensajeUsuario(debt.getMsg_respuesta());
 			messageOutputConsultDTO.setMensajeUsuario(debt.getMsg_respuesta());
@@ -140,7 +155,7 @@ public class ConsumerService {
 			log.info("📥 FINALIZANDO PROCESO DE CONSULTA");
 
 			jmsService.sendResponseMessage(
-					MqConfig.CHANNEL_RESPONSE,
+				mqConfig.getResponse_queue(),
 					messageOutputProcessDTO,
 					correlationId);
 
@@ -150,17 +165,18 @@ public class ConsumerService {
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 			MessageOutputConsultDTO messageOutputConsultDTO = new MessageOutputConsultDTO();
 
-			log.error(e.getMessage());
+			String revertMessageError = "REVERSO NO EJECUTADA";
 
-			messageOutputConsultDTO.setCodigoError("300");
-			messageOutputConsultDTO.setMensajeUsuario("EMPRESA DESTINO NO DISPONIBLE");
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
-			messageOutputProcessDTO.setCodigo("0");
-			messageOutputProcessDTO.setMensajeUsuario("CONSULTA NO EJECUTADA");
+			messageOutputProcessDTO.setCodigo(this.errorStatus);
+			messageOutputConsultDTO.setCodigoError(this.errorCode);
+			messageOutputConsultDTO.setMensajeSistema(revertMessageError);
+			messageOutputConsultDTO.setMensajeUsuario(this.errorMessage);
+			messageOutputProcessDTO.setMensajeUsuario(revertMessageError);
 
 			messageOutputProcessDTO.setMensajeSalidaConsultarDeuda(messageOutputConsultDTO);
 
-			jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE, messageOutputProcessDTO, correlationId);
+			jmsService.sendResponseMessage(mqConfig.getResponse_queue(), messageOutputProcessDTO, correlationId);
 		}
 
 	}
@@ -183,7 +199,7 @@ public class ConsumerService {
 					.getDatosAdicionales();
 
 			MessageAditionalDataDTO terminal = Arrays.stream(aditionalsData.getDatoAdicional())
-					.filter(item -> item.getCodigo().equals("e_term"))
+					.filter(item -> item.getCodigo().equals(this.terminal))
 					.findFirst()
 					.orElse(null);
 
@@ -200,35 +216,38 @@ public class ConsumerService {
 			// tengo que parchear una fecha actual de la maquina +5m en el futuro porque no
 			// puedo pagar en tiempo pasado, entenderia que pudiera pagar dentro de un rango
 			// de tiempo
-			LocalDateTime TEST_HORA = LocalDateTime.now().plusMinutes(5);
+			LocalDateTime testHora = LocalDateTime.now().plusMinutes(5);
 
 			paymentRequest.setSecuencial(secuencial);
 			paymentRequest.setTerminal(terminal.getValor());
 			paymentRequest.setFecha(messageInputProcess.getFecha());
-			paymentRequest.setHora(TEST_HORA.toString()); // ! hay que quitar esta vaina, es un parche
+			paymentRequest.setHora(testHora.toString()); // ! hay que quitar esta vaina, es un parche
 			paymentRequest.setCod_cliente(identifier);
 			paymentRequest.setImporte(importe);
 
 			PaymentResponseDTO payment = this.providerService.setPayment(paymentRequest);
 
 			if (payment.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
-				// Buscamos y Actualizamos el e_cod_respuesta que hara referencia a el CAMP_ALT1
-
+				
+				/*
+				* Buscamos y Actualizamos el e_cod_respuesta que hara referencia a el CAMP_ALT1
+				*/ 
 				MessageProcessAditionalDataDTO messageProcessAditionalDataDTO = new MessageProcessAditionalDataDTO();
 				ArrayList<MessageAditionalDataDTO> listAditionalData = new ArrayList<>();
 
-				listAditionalData.add(new MessageAditionalDataDTO() {
-					{
-						setCodigo("e_cod_respuesta");
-						setValor(payment.getCod_trx());
-					}
-				});
+
+				MessageAditionalDataDTO codTrx = new MessageAditionalDataDTO();
+
+				codTrx.setCodigo("e_cod_respuesta");
+				codTrx.setValor(payment.getCod_trx());
+
+				listAditionalData.add(codTrx);
 
 				messageProcessAditionalDataDTO
 						.setDatoAdicional(listAditionalData.toArray(new MessageAditionalDataDTO[0]));
 				log.debug(messageProcessAditionalDataDTO.getDatoAdicional());
 
-				// Mesaje Salida Pago
+				
 				messageOutputPaymentDTO.setMensajeSistema("PAGO EJECUTADA");
 				messageOutputPaymentDTO.setMontoTotal(messageInputProcess.getValorPago());
 				messageOutputPaymentDTO.setFechaDebito(messageInputProcess.getFecha());
@@ -238,7 +257,7 @@ public class ConsumerService {
 				messageOutputPaymentDTO.setReferencia(identifier);
 			}
 			
-			// Mensaje de salida proceso;
+			
 			messageOutputProcessDTO.setEstado(MessageStatus.OK);
 			messageOutputPaymentDTO.setCodigoError(payment.getCod_respuesta().toString());
 			messageOutputProcessDTO.setCodigo(payment.getCod_respuesta().toString());
@@ -248,7 +267,7 @@ public class ConsumerService {
 			log.info("📥 FINALIZANDO PROCESO DE PAGO");
 
 			jmsService.sendResponseMessage(
-					MqConfig.CHANNEL_RESPONSE,
+				mqConfig.getResponse_queue(),
 					messageOutputProcessDTO,
 					correlationId);
 
@@ -257,17 +276,18 @@ public class ConsumerService {
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 			MessageOutputPaymentDTO messageOutputConsultDTO = new MessageOutputPaymentDTO();
 
-			log.error(e.getMessage());
-
-			messageOutputProcessDTO.setMensajeUsuario("PAGO NO EJECUTADA");
+			String revertMessageError = "PAGO NO EJECUTADA";
+			
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
-			messageOutputConsultDTO.setMensajeUsuario("EMPRESA DESTINO NO DISPONIBLE");
-			messageOutputConsultDTO.setCodigoError("300");
-			messageOutputProcessDTO.setCodigo("300");
+			messageOutputProcessDTO.setCodigo(this.errorStatus);
+			messageOutputConsultDTO.setCodigoError(this.errorCode);
+			messageOutputConsultDTO.setMensajeSistema(revertMessageError);
+			messageOutputConsultDTO.setMensajeUsuario(this.errorMessage);
+			messageOutputProcessDTO.setMensajeUsuario(revertMessageError);
 
 			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputConsultDTO);
 
-			jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE, messageOutputProcessDTO, correlationId);
+			jmsService.sendResponseMessage(mqConfig.getResponse_queue(), messageOutputProcessDTO, correlationId);
 		}
 	}
 
@@ -295,7 +315,7 @@ public class ConsumerService {
 					.getDatosAdicionales();
 
 			String terminal = Arrays.stream(aditionalsData.getDatoAdicional())
-					.filter(item -> (item.getCodigo().equals("e_term") && !item.getValor().isEmpty()))
+					.filter(item -> (item.getCodigo().equals(this.terminal) && !item.getValor().isEmpty()))
 					.findFirst()
 					.orElse(null)
 					.getValor();
@@ -331,12 +351,12 @@ public class ConsumerService {
 			System.out.println(secuencialPago);
 			System.out.println(secuencial);
 
-
 			RevertRequestDTO revertRequest = new RevertRequestDTO();
+
 			// tengo que parchear una fecha actual de la maquina +5m en el futuro porque no
 			// puedo pagar en tiempo pasado, entenderia que pudiera pagar dentro de un rango
 			// de tiempo
-			LocalDateTime TEST_HORA = LocalDateTime.now().plusMinutes(5);
+			LocalDateTime fakeHora = LocalDateTime.now().plusMinutes(5);
 
 			revertRequest.setSecuencial(secuencialPago);
 			revertRequest.setImporte(importe);
@@ -344,12 +364,11 @@ public class ConsumerService {
 			revertRequest.setTerminal(terminal);
 			revertRequest.setCod_trx(trxCode);
 			revertRequest.setFecha(messageInputProcess.getFechaPago());
-			revertRequest.setHora(TEST_HORA.toString());
+			revertRequest.setHora(fakeHora.toString());
 
 			RevertResponseDTO revertPayment = this.providerService.setRevert(revertRequest);
 
 			if (revertPayment.getCod_respuesta().equals(ProviderErrorCode.TRANSACCION_ACEPTADA.getcode())) {
-				// Mesaje Salida Reversos
 				messageOutputRevertPaymentDTO.setMensajeSistema("REVERSO EJECUTADA");
 				messageOutputRevertPaymentDTO.setFechaDebito(messageInputProcess.getFechaPago());
 				messageOutputRevertPaymentDTO.setMontoTotal(messageInputProcess.getValorPago());
@@ -359,7 +378,6 @@ public class ConsumerService {
 				messageOutputRevertPaymentDTO.setReferencia(identifier);
 			}
 			
-			// Mensaje de salida proceso;
 			messageOutputProcessDTO.setEstado(MessageStatus.OK);
 			messageOutputProcessDTO.setMensajeUsuario(revertPayment.getMsg_respuesta());
 			messageOutputRevertPaymentDTO.setMensajeUsuario(revertPayment.getMsg_respuesta());
@@ -370,7 +388,7 @@ public class ConsumerService {
 			log.info("📥 FINALIZANDO PROCESO DE REVERSO");
 
 			jmsService.sendResponseMessage(
-					MqConfig.CHANNEL_RESPONSE,
+				mqConfig.getResponse_queue(),
 					messageOutputProcessDTO,
 					correlationId);
 
@@ -379,17 +397,19 @@ public class ConsumerService {
 			MessageOutputProcessDTO messageOutputProcessDTO = new MessageOutputProcessDTO();
 			MessageOutputPaymentDTO messageOutputConsultDTO = new MessageOutputPaymentDTO();
 
-			log.error(e.getMessage());
+			String revertMessageError = "REVERSO NO EJECUTADA";
 
-			messageOutputConsultDTO.setMensajeUsuario("EMPRESA DESTINO NO DISPONIBLE");
+			
 			messageOutputProcessDTO.setEstado(MessageStatus.ERROR);
-			messageOutputProcessDTO.setCodigo("300");
-			messageOutputConsultDTO.setCodigoError("300");
-			messageOutputProcessDTO.setMensajeUsuario("REVERSO NO EJECUTADA");
+			messageOutputProcessDTO.setCodigo(this.errorStatus);
+			messageOutputConsultDTO.setCodigoError(this.errorCode);
+			messageOutputConsultDTO.setMensajeSistema(revertMessageError);
+			messageOutputConsultDTO.setMensajeUsuario(this.errorMessage);
+			messageOutputProcessDTO.setMensajeUsuario(revertMessageError);
 
 			messageOutputProcessDTO.setMensajeSalidaEjecutarPago(messageOutputConsultDTO);
 
-			jmsService.sendResponseMessage(MqConfig.CHANNEL_RESPONSE, messageOutputProcessDTO, correlationId);
+			jmsService.sendResponseMessage(mqConfig.getResponse_queue(), messageOutputProcessDTO, correlationId);
 		}
 	}
 }

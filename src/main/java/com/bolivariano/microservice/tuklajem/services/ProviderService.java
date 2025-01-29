@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestClient;
@@ -55,7 +56,7 @@ public class ProviderService {
                     .getBody();
         }
         log.info("🔵 TOKEN GENERADO");
-        return this.token.getAccess_token();
+        return String.format("Bearer %s", this.token.getAccess_token());
     }
 
     public DebtResponseDTO getDebt(DebtRequestDTO debtRequest)
@@ -64,7 +65,7 @@ public class ProviderService {
         return this.restClient
                 .post()
                 .uri("/api/bc/ConsultaDeuda")
-                .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", this.getToken()))
+                .header(HttpHeaders.AUTHORIZATION, this.getToken())
                 .body(debtRequest)
                 .retrieve()
                 .toEntity(DebtResponseDTO.class)
@@ -77,7 +78,7 @@ public class ProviderService {
         return this.restClient
                 .post()
                 .uri("/api/bc/InformarPago")
-                .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", this.getToken()))
+                .header(HttpHeaders.AUTHORIZATION, this.getToken())
                 .body(paymentRequest)
                 .retrieve()
                 .toEntity(PaymentResponseDTO.class)
@@ -91,7 +92,7 @@ public class ProviderService {
         return this.restClient
                 .post()
                 .uri("/api/bc/ReversarPago")
-                .header(HttpHeaders.AUTHORIZATION, String.format("Bearer %s", this.getToken()))
+                .header(HttpHeaders.AUTHORIZATION, this.getToken())
                 .body(revertPayment)
                 .retrieve()
                 .toEntity(RevertResponseDTO.class)
@@ -100,6 +101,7 @@ public class ProviderService {
 
     // DATA BURN
     public DebtResponseDTO getDebtMock(DebtRequestDTO debtRequest) {
+        log.debug(debtRequest);
 
         DebtResponseDTO debResponse = new DebtResponseDTO();
 
@@ -118,6 +120,7 @@ public class ProviderService {
     }
 
     public PaymentResponseDTO setPaymentMock(PaymentRequestDTO paymentRequest) {
+        log.debug(paymentRequest);
 
         PaymentResponseDTO paymentResponse = new PaymentResponseDTO();
 
@@ -133,6 +136,8 @@ public class ProviderService {
     }
 
     public RevertResponseDTO setRevertMock(RevertRequestDTO revertRequestDTO){
+        log.debug(revertRequestDTO);
+
         RevertResponseDTO revertResponse = new RevertResponseDTO();
 
         revertResponse.setTerminal("D00561");
@@ -146,8 +151,9 @@ public class ProviderService {
         return revertResponse;
     }
 
-    public PaymentResponseDTO setPaymentTrowableMock ( PaymentRequestDTO paymentRequestDTO) throws Exception{
+    public PaymentResponseDTO setPaymentTrowableMock ( PaymentRequestDTO paymentRequestDTO) throws ResponseExecption, InterruptedException{
+        log.debug(paymentRequestDTO);
         Thread.sleep(5000);
-        throw new Exception("TEST SLEEP");
+        throw new ResponseExecption(HttpStatus.INTERNAL_SERVER_ERROR, "TEST SLEEP");
     }
 }

@@ -10,12 +10,12 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = false)
 public class ResponseExecption extends RuntimeException {
 
-    private HttpStatus status;
+    private final HttpStatus status;
 
-    public ResponseExecption(@NonNull HttpStatus _httpStatus, String _message) {
-        super(_message);
+    public ResponseExecption(@NonNull HttpStatus httpStatus, String message) {
+        super(message);
 
-        this.status = _httpStatus == null ? HttpStatus.BAD_REQUEST : _httpStatus;
+        this.status = httpStatus == null ? HttpStatus.BAD_REQUEST : httpStatus;
     }
 
 }

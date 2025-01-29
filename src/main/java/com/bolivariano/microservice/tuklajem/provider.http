@@ -20,12 +20,12 @@ Content-Type: application/json
 }
 
 ### ENVS
-@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzY0Mzg0MzksImV4cCI6MTczNjQzODQ5OSwiaWF0IjoxNzM2NDM4NDM5LCJpc3MiOiIqIiwiYXVkIjoiKiJ9.ALbU0QT7UoA0kir4bmQtTI5tgFgMsEqx4Nf5No7iues
-@URL = https://servicioscalt.andinave.com:9068
+@TOKEN = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1bmlxdWVfbmFtZSI6IkNhbHRBTkQiLCJuYmYiOjE3MzczODc5MTYsImV4cCI6MTczNzM4Nzk3NiwiaWF0IjoxNzM3Mzg3OTE2LCJpc3MiOiIqIiwiYXVkIjoiKiJ9.KyL2HRS19xSxYmfVYigy6Mq4UWA3Wd-bNOPTRzql6Xw
+@URL = https://servicioscalt.andinave.com:9069
 @TERMINAL = D00561
 @IDENTIFICADOR = 22004455
 
-@SECUENCIAL = 4714FB1E
+@SECUENCIAL = 4714FB1Eq
 ### GET CONSULT
 
 POST {{URL}}/api/bc/ConsultaDeuda HTTP/1.1
@@ -40,11 +40,15 @@ Authorization: Bearer {{TOKEN}}
 }
 
 ### SET PAYMENT
+@SECUENCIAL = 0000
+# ?Este Campo es referenciado desde el pago junto a todas las variables mencionadas en la peticion
+@COD_TRX = 4C524515-16EE-45B7-AA48-868254355127
+
 
 # Este campo lo referenciamos para tener una referencia al momento de reversar el pago
 # IMPORTE 100,000,000.00
 # 10<-00
-@IMPORTE = 2050
+@IMPORTE = 1000
 # ? Es de suma importancia rescatar el cod_trx de la respuesta ya que sera necesaria para reversar la transaccion
 POST {{URL}}/api/bc/InformarPago HTTP/1.1
 Content-Type: application/json
@@ -54,15 +58,13 @@ Authorization: Bearer {{TOKEN}}
   "secuencial":"{{SECUENCIAL}}",
   "cod_cliente": "{{IDENTIFICADOR}}",
   "terminal": "{{TERMINAL}}",
-  "fecha": "20250106",
+  "fecha": "20250120",
   "hora": "160000",
   "importe": {{IMPORTE}},
 }
  
 ### SET REVERT PAYMENT
 
-# ?Este Campo es referenciado desde el pago junto a todas las variables mencionadas en la peticion
-@COD_TRX = 68CA8D14-61D0-4F9C-B7B4-9F13ABF3C80C
 
 POST {{URL}}/api/bc/ReversarPago HTTP/1.1
 Content-Type: application/json
@@ -73,8 +75,8 @@ Authorization: Bearer {{TOKEN}}
   "cod_trx":"{{COD_TRX}}", 
   "cod_cliente": "{{IDENTIFICADOR}}",
   "terminal": "{{TERMINAL}}",
-  "fecha": "20190106",
-  "hora": "101940",
+  "fecha": "20250114",
+  "hora": "160000",
   "importe": {{IMPORTE}}
 }
 

@@ -9,7 +9,6 @@ import com.ibm.mq.jakarta.jms.MQQueueConnectionFactory;
 import com.ibm.msg.client.jakarta.wmq.WMQConstants;
 import com.ibm.msg.client.jakarta.wmq.common.CommonConstants;
 
-import jakarta.annotation.PostConstruct;
 import jakarta.jms.JMSException;
 import lombok.Data;
 
@@ -17,10 +16,6 @@ import lombok.Data;
 @Configuration
 @ConfigurationProperties(prefix = "mq.config")
 public class MqConfig {
-
-    public static String CHANNEL_REQUEST;
-    public static String CHANNEL_RESPONSE;
-
 
     private String host;
     private String channel;
@@ -43,12 +38,6 @@ public class MqConfig {
         factory.setStringProperty(WMQConstants.USERID, this.user);
         factory.setStringProperty(WMQConstants.PASSWORD, this.password);
         return factory;
-    }
-
-    @PostConstruct()
-    private void run(){
-        MqConfig.CHANNEL_REQUEST = this.getRequest_queue();
-        MqConfig.CHANNEL_RESPONSE = this.getResponse_queue();
     }
 }
 
