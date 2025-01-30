@@ -13,7 +13,7 @@ import lombok.extern.log4j.Log4j2;
 @EnableJms
 public class TuklajemApplication {
     public static void main(String... args) {
-        // Deshabilitar los logs de IBM MQ (opcional)
+        // Deshabilitar los logs de IBM MQ
         System.setProperty("com.ibm.msg.client.commonservices.log.disable", "true");
         System.setProperty("com.ibm.msg.client.commonservices.log.status", "OFF");
         

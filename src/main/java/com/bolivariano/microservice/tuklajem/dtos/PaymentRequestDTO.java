@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,12 +15,17 @@ public class PaymentRequestDTO {
 
     @JsonFormat(pattern = "yyyyMMdd")
     private String fecha;
+
     @JsonFormat(pattern = "HHmmsss")
     private String hora;
 
-    private String cod_cliente;
+    @JsonProperty("cod_cliente")
+    private String codCliente;
+
     private String terminal;
+    
     private String secuencial;
+    
     private Integer importe;
 
     public void setFecha(String date) {

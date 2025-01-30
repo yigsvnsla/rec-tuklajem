@@ -1,5 +1,7 @@
 package com.bolivariano.microservice.tuklajem.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,12 +10,20 @@ import lombok.NoArgsConstructor;
 public class PaymentResponseDTO {
 
     private String terminal;
+
     private String fecha;
+
     private String hora;
-    private String cod_trx;
-    private String msg_respuesta;
+
+    @JsonProperty("cod_trx")
+    private String codTrx;
+    
+    @JsonProperty("msg_respuesta")
+    private String msgRespuesta;
+
     private String secuencial;
 
-    private Integer cod_respuesta;
+    @JsonProperty("cod_respuesta")
+    private Integer codRespuesta;
 
 }

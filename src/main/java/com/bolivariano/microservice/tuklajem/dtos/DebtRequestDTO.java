@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,7 +19,9 @@ public class DebtRequestDTO {
     @JsonFormat(pattern = "HHmmsss")
     private String hora;
 
-    private String Identificador;
+    @JsonProperty("Identificador") 
+    private String identificador;
+    
     private String terminal;
 
 

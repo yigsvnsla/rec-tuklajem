@@ -38,7 +38,7 @@ public class ProviderService {
 
     private String getToken()
             throws JWTDecodeException, ResourceAccessException, RestClientResponseException {
-        if (this.token == null || JWT.decode(token.getAccess_token()).getExpiresAt().before(new Date())) {
+        if (this.token == null || JWT.decode(token.getAccessToken()).getExpiresAt().before(new Date())) {
 
             SingInDTO singInDTO = new SingInDTO();
 
@@ -56,7 +56,7 @@ public class ProviderService {
                     .getBody();
         }
         log.info("🔵 TOKEN GENERADO");
-        return String.format("Bearer %s", this.token.getAccess_token());
+        return String.format("Bearer %s", this.token.getAccessToken());
     }
 
     public DebtResponseDTO getDebt(DebtRequestDTO debtRequest)
@@ -99,23 +99,22 @@ public class ProviderService {
                 .getBody();
     }
 
-    // DATA BURN
     public DebtResponseDTO getDebtMock(DebtRequestDTO debtRequest) {
         log.debug(debtRequest);
 
         DebtResponseDTO debResponse = new DebtResponseDTO();
 
-        debResponse.setNom_cliente("Gonzalo Fienco");
-        debResponse.setCod_cliente("22004477");
-        debResponse.setCod_respuesta(0);
-        debResponse.setMsg_respuesta("Transacción aceptada");
+        debResponse.setNombreCliente("Gonzalo Fienco");
+        debResponse.setCodCliente("22004477");
+        debResponse.setCodRespuesta(0);
+        debResponse.setMsgRespuesta("Transacción aceptada");
         debResponse.setFecha("20241203");
         debResponse.setHora("152553");
-        debResponse.setIdentificador_deuda("4");
+        debResponse.setIdentificadorDeuda("4");
         debResponse.setImporte(376150);
-        debResponse.setMonto_abierto(false);
-        debResponse.setValor_minimo(20);
-        debResponse.setValor_maximo(1000);
+        debResponse.setMontoAbierto(false);
+        debResponse.setValorMinimo(20);
+        debResponse.setValorMaximo(1000);
         return debResponse;
     }
 
@@ -127,10 +126,10 @@ public class ProviderService {
         paymentResponse.setTerminal("D00561");
         paymentResponse.setFecha("20241203");
         paymentResponse.setHora("163919");
-        paymentResponse.setCod_trx("B9DF593B-A7EB-4139-9A49-D9550090FA9A");
+        paymentResponse.setCodTrx("B9DF593B-A7EB-4139-9A49-D9550090FA9A");
         paymentResponse.setSecuencial("42275263");
-        paymentResponse.setCod_respuesta(0);
-        paymentResponse.setMsg_respuesta("Transaccion aceptada");
+        paymentResponse.setCodRespuesta(0);
+        paymentResponse.setMsgRespuesta("Transaccion aceptada");
 
         return paymentResponse;
     }
@@ -143,10 +142,10 @@ public class ProviderService {
         revertResponse.setTerminal("D00561");
         revertResponse.setFecha("20241203");
         revertResponse.setHora("163919");
-        revertResponse.setCod_trx("B9DF593B-A7EB-4139-9A49-D9550090FA9A");
+        revertResponse.setCodTrx("B9DF593B-A7EB-4139-9A49-D9550090FA9A");
         revertResponse.setSecuencial("42275263");
-        revertResponse.setCod_respuesta(0);
-        revertResponse.setMsg_respuesta("Transaccion aceptada");
+        revertResponse.setCodRespuesta(0);
+        revertResponse.setMsgRespuesta("Transaccion aceptada");
 
         return revertResponse;
     }

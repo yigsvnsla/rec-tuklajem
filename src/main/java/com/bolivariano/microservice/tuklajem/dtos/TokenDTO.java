@@ -1,5 +1,7 @@
 package com.bolivariano.microservice.tuklajem.dtos;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -7,9 +9,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TokenDTO {
 
-    private String access_token;
-    private Number expires_in;
-    private Number cod_respuesta;
-    private String msg_respuesta;
-      
+    @JsonProperty("access_token")
+    private String accessToken;
+
+    @JsonProperty("expires_in")
+    private Number expiresIn;
+
+    @JsonProperty("cod_respuesta")
+    private Number codRespuesta;
+
+    @JsonProperty("msg_respuesta")
+    private String msgRespuesta;
+
 }
