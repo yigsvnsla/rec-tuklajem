@@ -51,7 +51,7 @@ public class ConsumerService {
 	@Autowired
 	private ProviderService providerService;
 
-	private String terminal = "e_term";
+	private String proceesTerminal = "e_term";
 	private String errorMessage = "EMPRESA DESTINO NO DISPONIBLE";
 	private String errorCode =  "300";
 	private String errorStatus = "0";
@@ -121,7 +121,7 @@ public class ConsumerService {
 					.getDatosAdicionales();
 
 			MessageAditionalDataDTO terminal = Arrays.stream(aditionalsData.getDatoAdicional())
-					.filter(item -> item.getCodigo().equals(this.terminal))
+					.filter(item -> item.getCodigo().equals(this.proceesTerminal))
 					.findFirst()
 					.orElse(null);
 
@@ -200,7 +200,7 @@ public class ConsumerService {
 					.getDatosAdicionales();
 
 			MessageAditionalDataDTO terminal = Arrays.stream(aditionalsData.getDatoAdicional())
-					.filter(item -> item.getCodigo().equals(this.terminal))
+					.filter(item -> item.getCodigo().equals(this.proceesTerminal))
 					.findFirst()
 					.orElse(null);
 
@@ -317,7 +317,7 @@ public class ConsumerService {
 					.getDatosAdicionales();
 
 			String terminal = Arrays.stream(aditionalsData.getDatoAdicional())
-					.filter(item -> (item.getCodigo().equals(this.terminal) && !item.getValor().isEmpty()))
+					.filter(item -> (item.getCodigo().equals(this.proceesTerminal) && !item.getValor().isEmpty()))
 					.findFirst()
 					.orElse(null)
 					.getValor();

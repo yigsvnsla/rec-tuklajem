@@ -15,6 +15,7 @@ import lombok.extern.log4j.Log4j2;
 
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 @Log4j2
@@ -31,10 +32,11 @@ public class MessageController {
     @Autowired
     private ObjectMapper objectMapper;
 
+    private Random rand = new SecureRandom();
+
     @PostMapping("/consult")
     public void consulting(@RequestBody MessageInputProcessDTO messageInputProcess) throws JsonProcessingException {
-        String messageSerialized = this.objectMapper.writeValueAsString(messageInputProcess); 
-        Random rand = new Random(); 
+        String messageSerialized = this.objectMapper.writeValueAsString(messageInputProcess);
         Integer randomId = rand.nextInt(32);
         jmsService.sendRequestMessage(mqConfig.getRequest_queue(), messageSerialized, String.format("%s", randomId));
     }
